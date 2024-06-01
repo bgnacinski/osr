@@ -23,7 +23,7 @@
     <nav id="main-nav">
         <div class="container">
             <div id="logo">
-                <?= env("company.name"); ?> - <span id="logo-sufix">OSR</span>
+                <?= $this->renderSection("logo"); ?> - <?= env("company.name"); ?> <span id="logo-sufix">OSR</span>
             </div>
             <div id="buttons"><?= $this->renderSection("buttons"); ?></div>
         </div>

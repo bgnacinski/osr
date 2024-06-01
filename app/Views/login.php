@@ -1,11 +1,9 @@
 <?= $this->extend("templates/primary"); ?>
-<?= $this->section("title"); ?>Logowanie<?= $this->endSection(); ?>
+<?= $this->section("title"); ?>Panel logowania<?= $this->endSection(); ?>
+<?= $this->section("logo"); ?>Panel logowania<?= $this->endSection(); ?>
+
 <?= $this->section("links"); ?>
 <link rel="stylesheet" href="/css/login.css">
-<?= $this->endSection(); ?>
-
-<?= $this->section("buttons"); ?>
-<a href="/test/" class="button">test</a>
 <?= $this->endSection(); ?>
 
 <?= $this->section("main"); ?>
