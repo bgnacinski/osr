@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
                 "name" => "Admin",
                 "login" => "admin",
                 "password" => "admin",
-                "role" => "superuser"
+                "role" => "admin"
             ],
             [
                 "name" => "Henryk Budowa",

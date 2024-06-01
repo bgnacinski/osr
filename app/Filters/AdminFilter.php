@@ -29,7 +29,7 @@ class AdminFilter implements FilterInterface
 
         if(isset($session->user)){
             $role = $session->user->role;
-            if($role != "superuser"){
+            if($role != "admin"){
                 return redirect()->to("/");
             }
         }

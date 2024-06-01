@@ -33,7 +33,7 @@ class UserModel extends Model
         "name" => "required|min_length[4]|max_length[50]",
         "login" => "required|min_length[4]|max_length[50]|is_unique[users.login]",
         "password" => "required|min_length[8]",
-        "role" => "required|in_list[superuser,manager,regular,viewer]"
+        "role" => "required|in_list[admin,manager,regular,viewer]"
     ];
     protected $validationMessages   = [
         "name" => [
