@@ -1,0 +1,100 @@
+:root{
+    --font-color: black;
+    --accent-blue: #4663ac;
+    --accent-blue-darker: #24418a;
+    --accent-white: #e3f1fd;
+    --backround-color: white;
+
+    --main-font: "Open Sans", sans-serif;
+    --accent-font: "Gabarito", sans-serif;
+}
+
+body{
+    background-color: var(--backround-color);
+    color: var(--font-color);
+
+    font-family: var(--main-font);
+}
+
+nav#main-nav{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+
+    font-family: var(--accent-font);
+
+    padding: 2.5vh 0;
+
+    box-shadow: 0 0 3px #aaa;
+}
+nav > .container{
+    width: 70%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#logo{
+    flex: 3;
+    font-size: 1.5rem;
+
+    margin: 0 2.5vw;
+}
+#logo-sufix{
+    color: var(--accent-blue);
+    font-weight: bold;
+}
+#buttons{
+    flex: 2;
+    margin: 0 2.5vw;
+
+    text-align: right;
+}
+.button{
+    text-decoration: none;
+    color: inherit;
+
+    padding: 1vh 1.5vw;
+
+    border-radius: 10px;
+
+    transition: .3s ease-in-out;
+}
+.button:hover{
+    background-color: var(--accent-blue);
+    color: white;
+}
+
+main{
+    margin-top: 15vh;
+}
+
+.errors{
+    margin: auto;
+    
+    display: inline-block;
+
+    padding: 0.01vh 1vw;
+
+    background-color: var(--bs-danger);
+    color: rgb(100, 2, 2);
+
+    border: 3px solid rgb(99, 7, 7);
+
+    font-size: 0.8rem;
+
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 800px) {
+    nav > .container{
+        flex-direction: column;
+    }
+
+    #buttons{
+        text-align: center;
+    }    
+}
