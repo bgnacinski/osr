@@ -9,3 +9,7 @@ $routes->get('/', 'Home::index', ["filter" => "webauth"]);
 
 $routes->get("login", "Home::login_page");
 $routes->post("login", "Home::login");
+
+$routes->group('admin', ["filter" => "admin"], function($routes){
+    $routes->get("/", "Admin::index");
+});
