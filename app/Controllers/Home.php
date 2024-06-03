@@ -11,14 +11,14 @@ class Home extends BaseController
         $user = $this->session->user;
 
         switch($user->role){
-            case "superuser":
+            case "admin":
                 return redirect()->to("/admin");
             
             case "manager":
                 return redirect()->to("/manage");
             
             default:
-                return view("main", ["user" => $user]);
+                return view("welcome_message", ["user" => $user]);
         }
     }
 
