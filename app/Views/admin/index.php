@@ -13,10 +13,24 @@
 
 <?= $this->section("main"); ?>
 <?php
-if(isset($_COOKIE["result"])){
-    echo <<<ENDL
-    <script>alert("Usunięcie użytkownika nie powiodło się.");</script>
-    ENDL;
+if (session()->has('message')){
+    $message = session("message");
+    $success = (bool)session("success");
+
+    if($success){
+        echo <<<ENDL
+            <div class="alert alert-success">
+                $message
+            </div>
+        ENDL;
+    }
+    else{
+        echo <<<ENDL
+            <div class="alert alert-danger">
+                $message
+            </div>
+        ENDL;
+    }
 }
 ?>
 <form id="search-bar" method="get">

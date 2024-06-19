@@ -96,9 +96,18 @@ class Admin extends BaseController
         $model = new UserModel();
         $result = $model->deleteUser($user_id);
 
-        $_COOKIE["result"] = $result;
+        switch($result["status"]){
+            case "success":
+                $message = "Usunięcie użytkownika powiodło się";
+                $success = 1;
+                break;
 
-        return redirect()->to("/admin");
+            default:
+                $message = "Usunięcie użytkownika nie powiodło się";
+                $success = 0;
+        }
+
+        return redirect()->to("/admin")->with("success", $success)->with("message", $message);
     }
 
     public function restore_page(int $user_id){
@@ -120,6 +129,17 @@ class Admin extends BaseController
         $model = new UserModel();
         $result = $model->restoreUser($user_id);
 
-        return redirect()->to("/admin")->with("message", $result["status"]);
+        switch($result["status"]){
+            case "success":
+                $message = "Przywrócenie użytkownika powiodło się";
+                $success = 1;
+                break;
+
+            default:
+                $message = "Przywrócenie użytkownika nie powiodło się";
+                $success = 0;
+        }
+
+        return redirect()->to("/admin")->with("success", $success)->with("message", $message);
     }
 }
