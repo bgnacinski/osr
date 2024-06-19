@@ -28,3 +28,21 @@ $routes->group('admin', ["filter" => "admin"], function($routes){
         $routes->post("restore/(:num)", "Admin::restore/$1");
     });
 });
+
+$routes->group("panel", ["filter" => "webauth"], function($routes){
+    $routes->get("/", "Panel::index");
+    $routes->get("(:num)", "Panel::index/$1");
+
+    $routes->group("bills", function($routes){
+        $routes->get("view/(:num)", "Panel::view/$1");
+
+        $routes->get("add", "Panel::add_page");
+        $routes->post("add", "Panel::add");
+
+        $routes->get("edit/(:num)", "Panel::edit_page/$1");
+        $routes->post("edit/(:num)", "Panel::edit/$1");
+
+        $routes->get("delete/(:num)", "Panel::delete_page/$1");
+        $routes->post("delete/(:num)", "Panel::delete/$1");
+    });
+});

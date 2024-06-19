@@ -10,10 +10,7 @@ class BillEntryEntity extends Entity
         "id" => "id",
         "bill_id" => "bill_id",
         "product_name" => "product_name",
-        "quantity" => "quantity",
-        "created_at" => "created_at",
-        "updated_at" => "updated_at",
-        "deleted_at" => "deleted_at"
+        "quantity" => "quantity"
     ];
     protected $dates   = ['created_at', 'updated_at', 'deleted_at'];
     protected $casts   = [];

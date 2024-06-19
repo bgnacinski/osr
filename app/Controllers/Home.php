@@ -18,7 +18,7 @@ class Home extends BaseController
                 return redirect()->to("/manage");
             
             default:
-                return view("welcome_message", ["user" => $user]);
+                return redirect()->to("/panel");
         }
     }
 

@@ -1,3 +1,4 @@
+/* table search bar */
 #search-bar{
     display: flex;
     flex-direction: row;
@@ -28,42 +29,20 @@
     background-color: var(--accent-blue-darker);
 }
 
-#users-table{
+table{
     margin: auto;
     width: 100%;
 
-    box-shadow: 0 0 5px #aaa;
+    box-shadow: 0 0 2px #aaa;
 }
-#users-table > tbody > tr.data:nth-child(2n){
+table > tbody > tr.data:nth-child(2n){
     background-color: #ededee;
 }
-#users-table > tbody > tr.data:hover{
+table > tbody > tr.data:hover{
     background-color: #cecece;
 }
 th,td{
     padding: 1vh 1vw;
-}
-
-.edit-icon{
-    background-color: #fd7e14;
-    border-radius: 50%;
-
-    padding: 1%;
-}
-
-.delete-icon{
-    background-color: red;
-    border-radius: 50%;
-
-    padding: 1%;
-}
-
-.restore-icon{
-    background-color: green;
-    border-radius: 50%;
-    color: white;
-
-    padding: 1%;
 }
 
 .table-button{
@@ -71,7 +50,7 @@ th,td{
     color: inherit;
 }
 
-.page-link{
-    color: var(--accent-blue);
+tr.sum{
     font-weight: bold;
+    background-color: #bbb;
 }

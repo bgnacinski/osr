@@ -5,7 +5,7 @@ namespace App\Models;
 use CodeIgniter\Model;
 use App\Entities\BillEntryEntity;
 
-class EntryModel extends Model
+class BillEntryModel extends Model
 {
     protected $table            = 'bill_contents';
     protected $primaryKey       = 'id';
@@ -62,4 +62,43 @@ class EntryModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getBillContents($bill_id){
+        $result = $this->where("bill_id", $bill_id)->findAll();
+
+        $model = new ProductModel();
+
+        if(!is_null($result)){
+            $data = [];
+
+            foreach($result as $entry){
+                $name = $entry->product_name;
+                $quantity = $entry->quantity;
+
+                $product = $model->where("name", $name)->first();
+                $amount = $product->amount;
+                $description = $product->description;
+
+                $total = $quantity * $amount;
+
+                $data[] = [
+                    "name" => $name,
+                    "description" => $description,
+                    "quantity" => $quantity,
+                    "amount" => $amount,
+                    "total" => $total
+                ];
+            }
+
+            return [
+                "status" => "success",
+                "data" => $data
+            ];
+        }
+        else{
+            return [
+                "status" => "notfound"
+            ];
+        }
+    }
 }

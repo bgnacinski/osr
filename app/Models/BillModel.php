@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Entities\BillEntity;
 use CodeIgniter\Model;
 
 class BillModel extends Model
@@ -9,8 +10,8 @@ class BillModel extends Model
     protected $table            = 'bills';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $returnType       = BillEntity::class;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ["identificator", "status", "created_by"];
 
@@ -29,7 +30,7 @@ class BillModel extends Model
 
     // Validation
     protected $validationRules      = [
-        "identificator" => "required|min_length[6]|max_length[50]",
+        "identificator" => "required|min_length[6]|max_length[50]|is_unique_with_deleted[bills.identificator]",
         "status" => "required|in_list[ok,pending,payment,returned]",
         "created_by" => "required|matches[users.name]"
     ];
@@ -72,5 +73,21 @@ class BillModel extends Model
         $data["data"]["identificator"] = env("company.prefix")."_".substr($hash, 0, 15);
         
         return $data;
+    }
+
+    public function getBill(int $id){
+        $result = $this->find($id);
+
+        if(!is_null($result)){
+            return [
+                "status" => "success",
+                "data" => $result
+            ];
+        }
+        else{
+            return [
+                "status" => "notfound"
+            ];
+        }
     }
 }
