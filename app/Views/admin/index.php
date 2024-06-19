@@ -3,6 +3,8 @@
 <?= $this->section("logo"); ?>Panel administracyjny<?= $this->endSection(); ?>
 <?= $this->section("links"); ?>
 <link rel="stylesheet" href="/css/admin/index.css">
+
+<script src="/js/notify.js"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section("buttons"); ?>
@@ -10,6 +12,13 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section("main"); ?>
+<?php
+if(isset($_COOKIE["result"])){
+    echo <<<ENDL
+    <script>alert("Usunięcie użytkownika nie powiodło się.");</script>
+    ENDL;
+}
+?>
 <form id="search-bar" method="get">
     <div class="form-floating">
         <input type="text" name="login" class="form-control" id="floatingInput" placeholder="Login użytkownika">
@@ -33,21 +42,40 @@
         foreach($users as $user){
             $deleted_at = $user->deleted_at ?? "-";
 
-            echo <<<ENDL
-            <tr class="data">
-                <td>$user->id</td>
-                <td>$user->name</td>
-                <td>$user->login</td>
-                <td>$user->role</td>
-                <td>$user->created_at</td>
-                <td>$user->updated_at</td>
-                <td>$deleted_at</td>
-                <td>
-                    <a class="table-button" href="/admin/user/edit/$user->id"><span class="material-symbols-outlined edit-icon">edit</span></a>
-                    <a class="table-button" href="/admin/user/delete/$user->id"><span class="material-symbols-outlined delete-icon">delete</span></a>
-                </td>
-            </tr>
-            ENDL;
+            if($deleted_at == "-"){
+                echo <<<ENDL
+                    <tr class="data">
+                        <td>$user->id</td>
+                        <td>$user->name</td>
+                        <td>$user->login</td>
+                        <td>$user->role</td>
+                        <td>$user->created_at</td>
+                        <td>$user->updated_at</td>
+                        <td>$deleted_at</td>
+                        <td>
+                            <a class="table-button" href="/admin/user/edit/$user->id"><span class="material-symbols-outlined edit-icon">edit</span></a>
+                            <a class="table-button" href="/admin/user/delete/$user->id"><span class="material-symbols-outlined delete-icon">delete</span></a>
+                        </td>
+                    </tr>
+                ENDL;
+            }
+            else{
+                echo <<<ENDL
+                <tr class="data">
+                    <td>$user->id</td>
+                    <td>$user->name</td>
+                    <td>$user->login</td>
+                    <td>$user->role</td>
+                    <td>$user->created_at</td>
+                    <td>$user->updated_at</td>
+                    <td>$deleted_at</td>
+                    <td>
+                        <a class="table-button" href="/admin/user/edit/$user->id"><span class="material-symbols-outlined edit-icon">edit</span></a>
+                        <a class="table-button" href="/admin/user/restore/$user->id"><span class="material-symbols-outlined restore-icon">replay</span></a>
+                    </td>
+                </tr>
+                ENDL;
+            }
         }
         ?>
     </tbody>

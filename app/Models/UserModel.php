@@ -31,7 +31,7 @@ class UserModel extends Model
     // Validation
     protected $validationRules      = [
         "name" => "required|min_length[4]|max_length[50]",
-        "login" => "required|min_length[4]|max_length[50]|is_unique[users.login]",
+        "login" => "required|min_length[4]|max_length[50]|is_unique_soft_deleted[users.login]",
         "password" => "required|min_length[8]",
         "role" => "required|in_list[admin,manager,regular,viewer]"
     ];
@@ -45,7 +45,7 @@ class UserModel extends Model
             "required" => "Login użytkownika jest wymagany.",
             "min_length" => "Minimalna długość loginu to 4 znaki.",
             "max_length" => "Maksymalna długość loginu to 50 znaków.",
-            "is_unique" => "Ten login jest już używany."
+            "is_unique_soft_deleted" => "Ten login jest już używany."
         ],
         "password" => [
             "required" => "Hasło jest wymagane.",
@@ -99,6 +99,70 @@ class UserModel extends Model
             return [
                 "success" => false,
                 "type" => "notfound"
+            ];
+        }
+    }
+
+    public function newUser(string $name, string $login, string $password, string $role){
+        $user = new UserEntity();
+        $user->name = $name;
+        $user->login = $login;
+        $user->password = $password;
+        $user->role = $role;
+
+        if($this->validate($user)){
+            unset($user->password);
+
+            $this->save($user);
+
+            return [
+                "status" => "success",
+                "data" => $user
+            ];
+        }
+        else{
+            return [
+                "status" => "valerr",
+                "errors" => $this->errors()
+            ];
+        }
+    }
+
+    public function deleteUser(int $id){
+        $result = $this->find($id);
+
+        if($result){
+            $this->delete($id);
+
+            return [
+                "status" => "success"
+            ];
+        }
+        else{
+            return[
+                "status" => "notfound"
+            ];
+        }
+    }
+
+    public function restoreUser(int $id){
+        $user = $this->withDeleted()->find($id);
+
+        if(!is_null($user)){
+            $db = \Config\Database::connect();
+            $builder = $db->table('users');
+
+            $builder->set('deleted_at', null);
+            $builder->where('id', $id);
+            $builder->update();
+
+            return [
+                "status" => "success"
+            ];
+        }
+        else{
+            return [
+                "status" => "notfound"
             ];
         }
     }

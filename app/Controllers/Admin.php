@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
+use Couchbase\User;
 
 class Admin extends BaseController
 {
@@ -26,17 +27,16 @@ class Admin extends BaseController
             if(isset($page)) {
                 $offset = $page * $limit - 30;
                 $limit = $offset + 30;
-                $data = $model->findAll($limit, $offset);
+                $data = $model->withDeleted()->findAll($limit, $offset);
             }
             else {
                 $page = 1;
-                $data = $model->findAll($limit);
+                $data = $model->withDeleted()->findAll($limit);
             }
         }
         else{
-            $data = $model->like("login", $_GET["login"])->findAll();
+            $data = $model->like("login", $_GET["login"])->withDeleted()->findAll();
         }
-
 
         $page_data = [
             "current" => $page,
@@ -44,5 +44,82 @@ class Admin extends BaseController
         ];
 
         return view("admin/index", ["users" => $data, "page_data" => $page_data]);
+    }
+
+    public function add_page(){
+        return view("admin/add");
+    }
+
+    public function add(){
+        $name = $this->request->getPost("name");
+        $login = $this->request->getPost("login");
+        $password = $this->request->getPost("password");
+        $role = $this->request->getPost("role");
+
+        $model = new UserModel();
+        $result = $model->newUser($name, $login, $password, $role);
+
+        switch($result["status"]){
+            case "success":
+                return redirect()->to("/admin");
+
+            default:
+                var_dump($result);
+                die;
+                //return add_page($result["errors"]);
+        }
+    }
+
+    public function edit_page(int $user_id = null){
+        if(is_null($user_id)){
+            return redirect()->to("/admin");
+        }
+
+        $model = new UserModel();
+        $user = $model->find($user_id);
+
+        return view("admin/edit", ["user" => $user]);
+    }
+
+    public function delete_page(int $user_id = null){
+        if(is_null($user_id)){
+            return redirect()->to("/admin");
+        }
+
+        $model = new UserModel();
+        $user = $model->find($user_id);
+
+        return view("admin/confirm", ["action" => "delete", "user" => $user]);
+    }
+
+    public function delete(int $user_id){
+        $model = new UserModel();
+        $result = $model->deleteUser($user_id);
+
+        $_COOKIE["result"] = $result;
+
+        return redirect()->to("/admin");
+    }
+
+    public function restore_page(int $user_id){
+        if(is_null($user_id)){
+            return redirect()->to("/admin");
+        }
+
+        $model = new UserModel();
+        $user = $model->withDeleted()->find($user_id);
+
+        return view("admin/confirm", ["action" => "restore", "user" => $user]);
+    }
+
+    public function restore(int $user_id){
+        if(is_null($user_id)){
+            return redirect()->to("/admin");
+        }
+
+        $model = new UserModel();
+        $result = $model->restoreUser($user_id);
+
+        return redirect()->to("/admin")->with("message", $result["status"]);
     }
 }
