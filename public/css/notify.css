@@ -1,0 +1,40 @@
+#confirmation{
+    color: white;
+
+    border-radius: 15px;
+
+    padding: 1vh 1vw;
+}
+#confirmation.delete{
+    background-color: darkred;
+    border: 3px solid black;
+}
+#confirmation.restore{
+    background-color: green;
+    border: 3px solid darkgreen;
+}
+
+#confirm-buttons{
+    display: flex;
+}
+
+#confirm-buttons > a, input{
+    font-size: 1.5rem;
+    background-color: inherit;
+    border: none;
+    border-radius: 10px;
+    color: inherit;
+
+    text-decoration: none;
+
+    margin: 0 2.5vw;
+    padding: 1vh 1vw;
+
+    transition: .3s ease-in-out;
+}
+#confirm-buttons > a.delete:hover, input.delete:hover{
+    background-color: #7a0000;
+}
+#confirm-buttons > a.restore:hover, input.restore:hover{
+    background-color: #005300;
+}

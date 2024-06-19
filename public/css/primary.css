@@ -66,6 +66,8 @@ nav > .container{
     border-radius: 10px;
 
     transition: .3s ease-in-out;
+
+    white-space: nowrap;
 }
 .button:hover{
     background-color: var(--accent-blue);
