@@ -6,9 +6,20 @@ use App\Models\UserModel;
 
 class Home extends BaseController
 {
-    public function index(): string
+    public function index()
     {
-        return view('welcome_message');
+        $user = $this->session->user;
+
+        switch($user->role){
+            case "admin":
+                return redirect()->to("/admin");
+            
+            case "manager":
+                return redirect()->to("/manage");
+            
+            default:
+                return view("welcome_message", ["user" => $user]);
+        }
     }
 
     public function login_page(){

@@ -32,7 +32,7 @@ class Users extends Migration
             ],
             "role" => [
                 "type" => "set",
-                "constraint" => ["superuser", "manager", "regular", "viewer"],
+                "constraint" => ["admin", "manager", "regular", "viewer"],
                 "null" => false
             ],
             "created_at" => [
