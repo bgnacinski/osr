@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Bills extends Migration
+class Clients extends Migration
 {
     public function up()
     {
@@ -17,55 +17,48 @@ class Bills extends Migration
                 "auto_increment" => true,
                 "null" => false
             ],
-            "identificator" => [
+            "name" => [
                 "type" => "varchar",
-                "constraint" => 50,
+                "constraint" => 250,
                 "null" => false
             ],
-            "client" => [
+            "nip" => [
                 "type" => "varchar",
                 "constraint" => 15,
                 "null" => false
             ],
-            "tax_rate" => [
-                "type" => "float",
-                "constraint" => 5,
-                "null" => true
-            ],
-            "status" => [
-                "type" => "set",
-                "constraint" => ["ok", "pending", "payment", "returned"],
+            "email" => [
+                "type" => "varchar",
+                "constraint" => 250,
                 "null" => false
             ],
-            "created_by" => [
-                "type" => "varchar",
-                "constraint" => 20
-            ],
             "created_at" => [
-                "type" => "datetime",
+                "type" => "varchar",
+                "constraint" => 50,
                 "null" => false
             ],
             "updated_at" => [
-                "type" => "datetime",
+                "type" => "varchar",
+                "constraint" => 50,
                 "null" => true
             ],
             "deleted_at" => [
-                "type" => "datetime",
+                "type" => "varchar",
+                "constraint" => 50,
                 "null" => true
             ]
         ]);
 
         $this->forge->addPrimaryKey("id");
-        $this->forge->addForeignKey("created_by", "users", "login", "CASCADE", "NO ACTION");
-        $this->forge->addForeignKey("client", "clients", "nip", "CASCADE", "NO ACTION");
+        $this->forge->addKey("nip");
 
-        $this->forge->createTable("bills");
+        $this->forge->createTable("clients");
 
         $this->db->enableForeignKeyChecks();
     }
 
     public function down()
     {
-        $this->forge->dropTable("bills");
+        $this->forge->dropTable("clients");
     }
 }

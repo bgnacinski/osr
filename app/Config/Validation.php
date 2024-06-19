@@ -26,7 +26,8 @@ class Validation extends BaseConfig
         FormatRules::class,
         FileRules::class,
         CreditCardRules::class,
-        CustomRules::class
+        CustomRules::class,
+        NipValidator::class
     ];
 
     /**

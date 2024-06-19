@@ -2,22 +2,20 @@
 
 namespace App\Database\Seeds;
 
-use App\Models\BillModel;
+use App\Models\ClientModel;
 use CodeIgniter\Database\Seeder;
 
-class BillSeeder extends Seeder
+class ClientSeeder extends Seeder
 {
     public function run()
     {
         $data = [
-            "identificator" => "testststs",
-            "client" => 8961017023,
-            "tax_rate" => 23,
-            "status" => "ok",
-            "created_by" => "anowak"
+            "name" => "Januszex",
+            "nip" => "8961017023",
+            "email" => "test@example.com"
         ];
 
-        $model = new BillModel();
+        $model = new ClientModel();
         try {
             $model->insert($data);
         }

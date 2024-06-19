@@ -13,7 +13,7 @@ class BillModel extends Model
     protected $returnType       = BillEntity::class;
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["identificator", "status", "created_by"];
+    protected $allowedFields    = ["identificator", "client", "tax_rate", "status", "created_by"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -30,7 +30,7 @@ class BillModel extends Model
 
     // Validation
     protected $validationRules      = [
-        "identificator" => "required|min_length[6]|max_length[50]|is_unique_with_deleted[bills.identificator]",
+        "identificator" => "required|min_length[6]|max_length[50]|is_unique[bills.identificator]",
         "status" => "required|in_list[ok,pending,payment,returned]",
         "created_by" => "required|matches[users.name]"
     ];
