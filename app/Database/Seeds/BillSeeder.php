@@ -10,7 +10,6 @@ class BillSeeder extends Seeder
     public function run()
     {
         $data = [
-            "identificator" => "testststs",
             "client" => 8961017023,
             "tax_rate" => 23,
             "status" => "ok",
@@ -20,6 +19,7 @@ class BillSeeder extends Seeder
         $model = new BillModel();
         try {
             $model->insert($data);
+            var_dump($model->errors());
         }
         catch(\ReflectionException $ex){
             echo $ex;
