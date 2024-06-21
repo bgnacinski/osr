@@ -31,7 +31,7 @@ class UserModel extends Model
     // Validation
     protected $validationRules      = [
         "name" => "required|min_length[4]|max_length[50]",
-        "login" => "required|min_length[4]|max_length[50]|is_unique_soft_deleted[users.login]",
+        "login" => "required|min_length[4]|max_length[50]|is_unique_users_soft_deleted[users.login]",
         "password" => "required|min_length[8]",
         "role" => "required|in_list[admin,manager,regular,viewer]"
     ];
@@ -45,7 +45,7 @@ class UserModel extends Model
             "required" => "Login użytkownika jest wymagany.",
             "min_length" => "Minimalna długość loginu to 4 znaki.",
             "max_length" => "Maksymalna długość loginu to 50 znaków.",
-            "is_unique_soft_deleted" => "Ten login jest już używany."
+            "is_unique_users_soft_deleted" => "Ten login jest już używany."
         ],
         "password" => [
             "required" => "Hasło jest wymagane.",

@@ -30,15 +30,15 @@ class BillModel extends Model
 
     // Validation
     protected $validationRules      = [
-        "identificator" => "required|min_length[6]|max_length[50]|is_unique[bills.identificator]",
+//        "identificator" => "required|min_length[6]|max_length[50]|is_unique[bills.identificator]",
+        "tax_rate" => "required|in_list[23,8,5,0]",
         "status" => "required|in_list[ok,pending,payment,returned]",
-        "created_by" => "required|matches[users.name]"
+        "created_by" => "required|matches_users[users.login]"
     ];
     protected $validationMessages   = [
-        "identificator" => [
-            "required" => "Identyfikator zamówienia jest wymagany.",
-            "min_length" => "Minimalna długość identyfikatora to 6 znaków.",
-            "max_lenght" => "Maksymalna długość identyfikatora to 50 znaków."
+        "tax_rate" => [
+            "required" => "Procent podatku VAT jest wymagana.",
+            "in_list" => "Procent podatku VAT może przyjąć wartość 23%, 8%, 5% lub 0%."
         ],
         "status" => [
             "required" => "Pole statusu jest wymagane.",
@@ -46,7 +46,7 @@ class BillModel extends Model
         ],
         "created_by" => [
             "required" => "Podanie autora jest wymagane.",
-            "matches" => "Autor nie znajduje się w bazie danych."
+            "matches_users" => "Autor nie znajduje się w bazie danych."
         ]
     ];
     protected $skipValidation       = false;
@@ -87,6 +87,41 @@ class BillModel extends Model
         else{
             return [
                 "status" => "notfound"
+            ];
+        }
+    }
+
+    public function addBill(int $nip, int $tax_rate, string $status, string $created_by, array $bill_contents){
+        $bill_contents_model = new BillEntryModel();
+        $bill = new BillEntity();
+        $bill->fill([
+            "client" => $nip,
+            "tax_rate" => $tax_rate,
+            "status" => $status,
+            "created_by" => $created_by
+        ]);
+
+        if($this->validate($bill)){
+            foreach($bill_contents as $entry){
+                $val_result = $bill_contents_model->validate($entry);
+
+                if(!$val_result){
+                    return [
+                        "status" => "valerr",
+                        "errors" => $bill_contents_model->errors()
+                    ];
+                }
+            }
+
+            $this->insert($bill);
+            $result = $bill_contents_model->addBillEntries($this->getInsertID(), $bill_contents);
+
+            return $result;
+        }
+        else{
+            return [
+                "status" => "valerr",
+                "errors" => $this->errors()
             ];
         }
     }

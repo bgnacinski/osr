@@ -2,6 +2,12 @@
 <?= $this->section("title"); ?>Dodawanie rachunku<?= $this->endSection(); ?>
 <?= $this->section("logo"); ?>Dodawanie rachunku<?= $this->endSection(); ?>
 <?= $this->section("links"); ?>
+    <link rel="stylesheet" href="/css/panel/add.css">
+    <link rel="stylesheet" href="/css/table.css">
+    <link rel="stylesheet" href="/css/icons.css">
+<script>
+    var data = <?php echo json_encode($products, JSON_HEX_TAG); ?>;
+</script>
 <?= $this->endSection(); ?>
 
 <?= $this->section("buttons"); ?>
@@ -9,28 +15,89 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section("main"); ?>
+<?php
+if (session()->has('message')){
+    $message = session("message");
+    $success = (bool)session("success");
+
+    if($success){
+        echo <<<ENDL
+            <div class="alert alert-success">
+                $message
+            </div>
+        ENDL;
+    }
+    else{
+        echo <<<ENDL
+            <div class="alert alert-danger">
+                $message
+            </div>
+        ENDL;
+    }
+}
+?>
+
     <form method="post">
         <div class="form-floating mb-3">
-            <input name="name" type="text" class="form-control" id="floatingName" placeholder="Imię i nazwisko">
-            <label for="floatingName">Imię i nazwisko</label>
+            <input required name="nip" type="numeric" class="form-control" id="floatingName" placeholder="NIP klienta">
+            <label for="floatingName">NIP klienta</label>
         </div>
         <div class="form-floating mb-3">
-            <input name="login" type="text" class="form-control" id="floatingLogin" placeholder="login">
-            <label for="floatingLogin">Login</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Hasło">
-            <label for="floatingPassword">Hasło</label>
-        </div>
-        <div class="form-floating mb-3">
-            <select class="form-select" id="floatingSelect" name="role" aria-label="Rola">
-                <option value="regular">Normalny</option>
-                <option value="admin">Administrator</option>
-                <option value="manager">Menadżer</option>
-                <option value="viewer">Przeglądający</option>
+            <select required id="tax_rate" class="form-select" name="tax_rate" aria-label="Poziom VAT">
+                <option value="23">23%</option>
+                <option value="8">8%</option>
+                <option value="5">5%</option>
+                <option value="0">0%</option>
             </select>
-            <label for="floatingSelect">Rola</label>
+            <label for="tax_rate">Poziom VAT</label>
         </div>
-        <button type="submit" class="btn btn-primary">Dodaj użytkownika</button>
+        <div class="form-floating mb-3">
+            <select required id="status" class="form-select" name="status" aria-label="Status">
+                <option value="ok">Zrealizowane</option>
+                <option selected value="pending">W trakcie</option>
+                <option value="payment">Do opłacenia</option>
+            </select>
+            <label for="tax_rate">Status</label>
+        </div>
+
+        <input type="text" required hidden id="bill_contents" name="bill_contents">
+
+        <table id="bill_contents_table" class="mb-3">
+            <tbody>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Opis</th>
+                    <th>Cena</th>
+                    <th>Ilość</th>
+                    <th>Wartość netto</th>
+                    <th>Wartość brutto</th>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary">Dodaj rachunek</button>
     </form>
+
+    <div id="insert-form">
+        <div class="form-floating mb-3">
+            <select class="form-select" id="product_name" name="role" aria-label="Nazwa produktu">
+                <?php
+                foreach($products as $product){
+                    echo <<<ENDL
+                        <option value="$product->name">$product->name</option>
+                    ENDL;
+                }
+                ?>
+            </select>
+            <label for="product_name">Nazwa produktu</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="numeric" class="form-control" id="quantity" placeholder="Ilość">
+            <label for="quantity">Ilość</label>
+        </div>
+
+        <button class="btn btn-secondary" onclick="addEntry()">Dodaj</button>
+    </div>
+
+<script src="/js/entry.js"></script>
 <?= $this->endSection(); ?>

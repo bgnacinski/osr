@@ -30,18 +30,18 @@ class BillEntryModel extends Model
 
     // Validation
     protected $validationRules      = [
-        "bill_id" => "required|matches[bills.id]",
-        "product_name" => "required|matches[products.name]",
+        "bill_id" => "required|matches_bills[bills.id]",
+        "product_name" => "required|matches_products[products.name]",
         "quantity" => "required|numeric|greater_than[0]"
     ];
     protected $validationMessages   = [
         "bill_id" => [
             "required" => "ID rachunku jest wymagane.",
-            "matches" => "Rachunek z tym ID nie istnieje w bazie danych."
+            "matches_bills" => "Rachunek z tym ID nie istnieje w bazie danych."
         ],
         "product_name" => [
             "required" => "Nazwa produktu jest wymagana",
-            "matches" => "Produkt o tej nazwie nie istnieje w bazie danych"
+            "matches_products" => "Produkt o tej nazwie nie istnieje w bazie danych"
         ],
         "quantity" => [
             "required" => "Ilość jest wymagana",
@@ -99,6 +99,32 @@ class BillEntryModel extends Model
             return [
                 "status" => "notfound"
             ];
+        }
+    }
+
+    public function addBillEntries(int $bill_id, array $bill_contents){
+        foreach($bill_contents as $entry_data){
+            $entry = new BillEntryEntity();
+            $entry->fill([
+                "bill_id" => $bill_id,
+                "product_name" => $entry_data[0],
+                "quantity" => $entry_data[1]
+            ]);
+
+            $val_result = $this->validate($entry);
+            if($val_result){
+                $this->save($entry);
+
+                return [
+                    "status" => "success"
+                ];
+            }
+            else{
+                return [
+                    "status" => "valerr",
+                    "errors" => $this->errors()
+                ];
+            }
         }
     }
 }

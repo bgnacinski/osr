@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use App\Models\BillModel;
+use App\Models\ProductModel;
 use App\Models\UserModel;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Validation\StrictRules\CreditCardRules;
@@ -49,7 +51,7 @@ class Validation extends BaseConfig
 
 class CustomRules
 {
-    public function is_unique_soft_deleted(string $str, string $field, array $data, string &$error = null): bool
+    public function is_unique_users_soft_deleted(string $str, string $field, array $data, string &$error = null): bool
     {
         [$table, $field] = explode('.', $field);
         $model = new UserModel();
@@ -65,5 +67,50 @@ class CustomRules
         }
 
         return true;
+    }
+
+    public static function matches_users(string $str, string $field, array $data, string &$error = null): bool
+    {
+        $model = new UserModel();
+        $login = $data["created_by"];
+
+        $result = $model->where("login", $login)->findAll();
+
+        if(count($result) > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static function matches_products(string $str, string $field, array $data, string &$error = null): bool
+    {
+        $model = new ProductModel();
+        $product_name = $data["product_name"];
+
+        $result = $model->where("name", $product_name)->findAll();
+
+        if(count($result) > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static function matches_bills($str, string $field, array $data, string &$error = null): bool
+    {
+        $model = new BillModel();
+        $bill_id = $data["bill_id"];
+
+        $result = $model->where("id", $bill_id)->findAll();
+
+        if(count($result) > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

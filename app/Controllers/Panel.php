@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\BillEntryModel;
 use App\Models\BillModel;
 use App\Models\BillEntityModel;
+use App\Models\ProductModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Panel extends BaseController
@@ -76,6 +77,33 @@ class Panel extends BaseController
     }
 
     public function add_page(){
-        return view("panel/add");
+        $product_model = new ProductModel();
+
+        $products = $product_model->findAll();
+
+        return view("panel/add", ["products" => $products]);
+    }
+
+    public function add(){
+        $nip = (int)$this->request->getPost("nip");
+        $tax_rate = (int)$this->request->getPost("tax_rate");
+        $status = $this->request->getPost("status");
+        $bill_contents_dump = $this->request->getPost("bill_contents");
+        $bill_contents = [];
+
+        $bill_contents_dump = explode(";", $bill_contents_dump);
+        foreach($bill_contents_dump as $element){
+            $element = explode(",", $element);
+
+            $bill_contents[] = $element;
+        }
+
+        $session = \Config\Services::session();
+        $created_by = $session->user->login;
+
+        $model = new BillModel();
+        $result = $model->addBill($nip, $tax_rate, $status, $created_by, $bill_contents);
+
+        return redirect()->to("/panel")->with("success", 1)->with("message", "Pomyślnie dodano rachunek");
     }
 }
