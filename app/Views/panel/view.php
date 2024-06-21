@@ -1,6 +1,6 @@
 <?= $this->extend("templates/primary"); ?>
-<?= $this->section("title"); ?>Strona główna<?= $this->endSection(); ?>
-<?= $this->section("logo"); ?>Strona główna<?= $this->endSection(); ?>
+<?= $this->section("title"); ?>Rachunek - <?= $bill_data->identificator; ?><?= $this->endSection(); ?>
+<?= $this->section("logo"); ?>Przeglądanie rachunku<?= $this->endSection(); ?>
 <?= $this->section("links"); ?>
     <link rel="stylesheet" href="/css/panel/view.css">
     <link rel="stylesheet" href="/css/table.css">
