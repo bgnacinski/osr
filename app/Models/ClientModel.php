@@ -78,6 +78,22 @@ class ClientModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function getClient(int $nip){
+        $result = $this->where("nip", $nip)->first();
+
+        if(!is_null($result)){
+            return $result;
+        }
+        else{
+            return [
+                "name" => "Nie znaleziono klienta.",
+                "nip" => "Nie znaleziono klienta.",
+                "email" => "Nie znaleziono klienta.",
+                "address" => "Nie znaleziono klienta."
+            ];
+        }
+    }
+
     public function addClient(string $name, int $nip, string $email, string $address){
         $client_data = [
             "name" => $name,

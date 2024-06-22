@@ -6,3 +6,12 @@
 #bill-info > *{
     margin: 1vh 1vw;
 }
+
+#bill-sides{
+    display: flex;
+    flex-display: row;
+    justify-content: space-between;
+}
+#bill-sides > div:nth-child(2n){
+    text-align: right;
+}

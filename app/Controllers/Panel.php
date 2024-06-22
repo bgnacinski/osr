@@ -69,7 +69,15 @@ class Panel extends BaseController
         $bill_contents_model = new BillEntryModel();
 
         $bill_data = $bill_model->getBill($bill_id);
+
+        if($bill_data["status"] == "notfound"){
+            return redirect()->to("/panel")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
+        }
+
         $bill_contents = $bill_contents_model->getBillContents($bill_id);
+
+        $client_model = new ClientModel();
+        $client_data = $client_model->getClient($bill_data["data"]->client);
 
         $user_model = new UserModel();
         $bill_data["data"]->created_by = $user_model->getUser($bill_data["data"]->created_by)->name;
@@ -78,7 +86,7 @@ class Panel extends BaseController
             return redirect()->to("/panel")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
 
-        return view("panel/view", ["bill_data" => $bill_data["data"], "bill_contents" => $bill_contents["data"]]);
+        return view("panel/view", ["bill_data" => $bill_data["data"], "bill_contents" => $bill_contents["data"], "client_data" => $client_data]);
     }
 
     public function add_page(){

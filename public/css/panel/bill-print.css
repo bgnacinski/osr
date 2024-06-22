@@ -1,0 +1,26 @@
+@media print{
+    body{
+        font-size: 0.8rem !important;
+    }
+
+    h5{
+        font-size: 0.9rem;
+    }
+
+    main{
+        margin-top: 5vh;
+        width: 90%;
+    }
+
+    nav{
+        display: none;
+    }
+
+    #bills-table{
+        box-shadow: none;
+    }
+
+    .hide-print{
+        display: none;
+    }
+}

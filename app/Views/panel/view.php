@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/css/panel/view.css">
     <link rel="stylesheet" href="/css/table.css">
     <link rel="stylesheet" href="/css/icons.css">
+    <link rel="stylesheet" media="print" href="/css/panel/bill-print.css">
 <?= $this->endSection(); ?>
 
 <?= $this->section("buttons"); ?>
@@ -39,15 +40,42 @@ if (session()->has('message')){
         <p>
             <b>Identyfikator:</b> <?= $bill_data->identificator; ?>
         </p>
-        <p>
+        <p class="hide-print">
             <b>Wysokość podatku:</b> <?= $bill_data->tax_rate; ?>%
         </p>
         <p>
             <b>Data wystawienia:</b> <?= $bill_data->created_at; ?>
         </p>
-        <p>
+        <p class="hide-print">
             <b>Dodane przez:</b> <?= $bill_data->created_by; ?>
         </p>
+    </div>
+    <div id="bill-sides">
+        <div id="biller">
+            <h5>Sprzedawca</h5>
+            <p><?= env("company.bill_name"); ?></p>
+            <p>
+                <b>Adres:</b><br>
+                <?= str_replace("|", "<br>", env("company.address")); ?>
+            </p>
+            <p>
+                <b>NIP:</b><br>
+                <?= env("company.nip"); ?>
+            </p>
+            <p><?= str_replace("|", " ", env("company.bank_account")); ?></p>
+        </div>
+        <div id="consumer">
+            <h5>Nabywca</h5>
+            <p><?= $client_data->name; ?></p>
+            <p>
+                <b>Adres:</b><br>
+                <?= str_replace("|", "<br>", $client_data->address); ?>
+            </p>
+            <p>
+                <b>NIP:</b><br>
+                <?= $client_data->nip; ?>
+            </p>
+        </div>
     </div>
     <div id="bill-contents">
         <table id="bills-table">
@@ -81,10 +109,10 @@ if (session()->has('message')){
                 <tr class="data">
                     <td>$name</td>
                     <td>$description</td>
-                    <td>$amount zł</td>
+                    <td>$amount <span class="hide-print">PLN</span></td>
                     <td>$quantity</td>
-                    <td>$total zł</td>
-                    <td>$total_tax zł</td>
+                    <td>$total <span class="hide-print">PLN</span></td>
+                    <td>$total_tax <span class="hide-print">PLN</span></td>
                 </tr>
                 ENDL;
             }
@@ -94,8 +122,14 @@ if (session()->has('message')){
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><?= $bill_total; ?> zł</td>
-                <td><?= $bill_total_tax; ?> zł</td>
+                <td>
+                    <?= $bill_total; ?>
+                    <span>PLN</span>
+                </td>
+                <td>
+                    <?= $bill_total_tax; ?>
+                    <span>PLN</span>
+                </td>
             </tr>
             </tbody>
         </table>
