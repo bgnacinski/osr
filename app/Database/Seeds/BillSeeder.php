@@ -10,7 +10,7 @@ class BillSeeder extends Seeder
     public function run()
     {
         $data = [
-            "client" => 8961017023,
+            "client" => "8961017023",
             "tax_rate" => 23,
             "status" => "ok",
             "created_by" => "anowak"
