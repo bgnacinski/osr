@@ -111,7 +111,7 @@ if (session()->has('success')){
             <label for="quantity">Ilość</label>
         </div>
 
-        <button class="btn btn-secondary" onclick="addEntry()">Dodaj</button>
+        <button class="btn btn-secondary" onclick="addEntry()">Dodaj do rachunku</button>
     </div>
 
 <script src="/js/entry.js"></script>
