@@ -48,5 +48,9 @@ $routes->group("panel", ["filter" => "webauth"], function($routes){
 
     $routes->group("clients", ["filter" => "webauth"], function($routes){
         $routes->get("/", "Client::index");
+        $routes->get("(:num)", "Client::index/$1");
+
+        $routes->get("add", "Client::add_page");
+        $routes->post("add", "Client::add");
     });
 });
