@@ -71,5 +71,11 @@
 #--------------------------------------------------------------------
 # Company 
 #--------------------------------------------------------------------
-company.name = Gorąca Woda Company
-company.prefix = OSR
+company.name = ""
+company.prefix = ""
+company.logo = ""
+# billing info
+company.bill_name = ""
+company.address = ""
+company.nip = ""
+company.bank_account = ""
