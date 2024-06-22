@@ -76,6 +76,26 @@ class UserModel extends Model
         return $data;
     }
 
+    public function getUser(string $login){
+        $result = $this->where("login", $login)->first();
+
+        if(!is_null($result)){
+            return $result;
+        }
+        else{
+            $data = new UserEntity();
+            $data->fill([
+                "Nie znaleziono użytkownika",
+                "Nie znaleziono użytkownika",
+                "Nie znaleziono użytkownika",
+                "Nie znaleziono użytkownika",
+                "viewer",
+            ]);
+
+            return $data;
+        }
+    }
+
     public function login($login, $password){
         $user = $this->where("login", $login)->first();
 

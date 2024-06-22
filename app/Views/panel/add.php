@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/css/panel/add.css">
     <link rel="stylesheet" href="/css/table.css">
     <link rel="stylesheet" href="/css/icons.css">
+    <link rel="stylesheet" href="/css/form.css">
 <script>
     var data = <?php echo json_encode($products, JSON_HEX_TAG); ?>;
 </script>

@@ -7,6 +7,7 @@ use App\Models\BillEntryModel;
 use App\Models\BillModel;
 use App\Models\BillEntityModel;
 use App\Models\ProductModel;
+use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Panel extends BaseController
@@ -68,6 +69,9 @@ class Panel extends BaseController
 
         $bill_data = $bill_model->getBill($bill_id);
         $bill_contents = $bill_contents_model->getBillContents($bill_id);
+
+        $user_model = new UserModel();
+        $bill_data["data"]->created_by = $user_model->getUser($bill_data["data"]->created_by)->name;
 
         if($bill_contents["status"] != "success" || $bill_data["status"] != "success"){
             return redirect()->to("/panel")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");

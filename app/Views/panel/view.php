@@ -42,6 +42,9 @@ if (session()->has('message')){
         <p>
             <b>Wysokość podatku:</b> <?= $bill_data->tax_rate; ?>%
         </p>
+        <p>
+            <b>Dodane przez:</b> <?= $bill_data->created_by; ?>
+        </p>
     </div>
     <div id="bill-contents">
         <table id="bills-table">

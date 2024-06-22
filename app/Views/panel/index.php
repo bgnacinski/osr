@@ -4,6 +4,7 @@
 <?= $this->section("links"); ?>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/icons.css">
+<link rel="stylesheet" href="/css/form.css">
 <?= $this->endSection(); ?>
 
 <?= $this->section("buttons"); ?>
