@@ -44,8 +44,17 @@ if (session()->has('success')){
 
     <form method="post">
         <div class="form-floating mb-3">
-            <input required name="nip" type="numeric" class="form-control" id="floatingName" placeholder="NIP klienta">
+            <input required list="nip" name="nip" type="numeric" class="form-control" id="floatingName" placeholder="NIP klienta">
             <label for="floatingName">NIP klienta</label>
+            <datalist id="nip">
+                <?php
+                foreach($clients as $client){
+                    echo <<<ENDL
+                        <option value="$client->nip">$client->nip - $client->name</option>
+                    ENDL;
+                }
+                ?>
+            </datalist>
         </div>
         <div class="form-floating mb-3">
             <select required id="tax_rate" class="form-select" name="tax_rate" aria-label="Poziom VAT">

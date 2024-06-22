@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\BillEntryModel;
 use App\Models\BillModel;
 use App\Models\BillEntityModel;
+use App\Models\ClientModel;
 use App\Models\ProductModel;
 use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -82,10 +83,13 @@ class Panel extends BaseController
 
     public function add_page(){
         $product_model = new ProductModel();
-
         $products = $product_model->findAll();
 
-        return view("panel/add", ["products" => $products]);
+        $clients_model = new ClientModel();
+        $clients = $clients_model->findAll();
+
+
+        return view("panel/add", ["products" => $products, "clients" => $clients]);
     }
 
     public function add(){
