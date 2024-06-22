@@ -9,7 +9,8 @@
 
 <?= $this->section("buttons"); ?>
 <a href="/panel/bills/add" class="button">Dodaj rachunek</a>
-<a href="/account/" class="button">Moje konto</a>
+<a href="/panel/clients/" class="button">Klienci</a>
+    <a href="/account/" class="button">Mój profil</a>
 <?= $this->endSection(); ?>
 
 <?= $this->section("main"); ?>

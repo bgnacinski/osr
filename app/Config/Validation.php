@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Models\BillModel;
+use App\Models\ClientModel;
 use App\Models\ProductModel;
 use App\Models\UserModel;
 use CodeIgniter\Config\BaseConfig;
@@ -67,6 +68,20 @@ class CustomRules
         }
 
         return true;
+    }
+
+    public function matches_clients($str, string $field, array $data, string &$error = null): bool{
+        $model = new ClientModel();
+        $nip = $data["client"];
+
+        $result = $model->where("nip", $nip)->findAll();
+
+        if(count($result) > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public static function matches_users(string $str, string $field, array $data, string &$error = null): bool

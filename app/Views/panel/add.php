@@ -13,11 +13,13 @@
 
 <?= $this->section("buttons"); ?>
     <a href="/panel" class="button">Strona główna</a>
+    <a href="/panel/clients/" class="button">Klienci</a>
+    <a href="/account/" class="button">Mój profil</a>
 <?= $this->endSection(); ?>
 
 <?= $this->section("main"); ?>
 <?php
-if (session()->has('message')){
+if (session()->has('success')){
     $message = session("message");
     $success = (bool)session("success");
 
@@ -29,11 +31,13 @@ if (session()->has('message')){
         ENDL;
     }
     else{
-        echo <<<ENDL
-            <div class="alert alert-danger">
-                $message
-            </div>
-        ENDL;
+        $errors = session("errors");
+
+        echo '<div class="alert alert-danger"><ul>';
+        foreach($errors as $error){
+            echo "<li>".$error."</li>";
+        }
+        echo '</ul></div>';
     }
 }
 ?>

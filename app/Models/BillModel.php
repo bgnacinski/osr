@@ -30,12 +30,20 @@ class BillModel extends Model
 
     // Validation
     protected $validationRules      = [
-//        "identificator" => "required|min_length[6]|max_length[50]|is_unique[bills.identificator]",
+        "client" => "required|min_length[10]|max_length[10]|integer|valid_nip|matches_clients[clients.nip]",
         "tax_rate" => "required|in_list[23,8,5,0]",
         "status" => "required|in_list[ok,pending,payment,returned]",
         "created_by" => "required|matches_users[users.login]"
     ];
     protected $validationMessages   = [
+        "client" => [
+            "required" => "NIP jest wymagany.",
+            "min_length" => "NIP musi składać się z 10 znaków.",
+            "max_length" => "NIP musi składać się z 10 znaków.",
+            "integer" => "NIP musi być numerem.",
+            "valid_nip" => "NIP jest niepoprawny.",
+            "matches_clients" => "Podany NIP nie jest powiązany z żadnym klientem."
+        ],
         "tax_rate" => [
             "required" => "Procent podatku VAT jest wymagana.",
             "in_list" => "Procent podatku VAT może przyjąć wartość 23%, 8%, 5% lub 0%."
@@ -93,15 +101,17 @@ class BillModel extends Model
 
     public function addBill(int $nip, int $tax_rate, string $status, string $created_by, array $bill_contents){
         $bill_contents_model = new BillEntryModel();
-        $bill = new BillEntity();
-        $bill->fill([
-            "client" => $nip,
+
+        $bill_data = [
+            "client" => (string)$nip,
             "tax_rate" => $tax_rate,
             "status" => $status,
             "created_by" => $created_by
-        ]);
+        ];
 
-        if($this->validate($bill)){
+        $val_result = $this->validate($bill_data);
+
+        if($val_result){
             foreach($bill_contents as $entry){
                 $val_result = $bill_contents_model->validate($entry);
 
@@ -113,7 +123,7 @@ class BillModel extends Model
                 }
             }
 
-            $this->insert($bill);
+            $this->insert($bill_data);
             $result = $bill_contents_model->addBillEntries($this->getInsertID(), $bill_contents);
 
             return $result;

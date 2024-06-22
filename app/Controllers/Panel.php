@@ -111,6 +111,12 @@ class Panel extends BaseController
         $model = new BillModel();
         $result = $model->addBill($nip, $tax_rate, $status, $created_by, $bill_contents);
 
-        return redirect()->to("/panel")->with("success", 1)->with("message", "Pomyślnie dodano rachunek");
+        switch($result["status"]){
+            case "success":
+                return redirect()->to("/panel")->with("success", 1)->with("message", "Pomyślnie dodano rachunek");
+
+            default:
+                return redirect()->to("/panel/bills/add")->with("success", 0)->with("errors", $model->errors());
+        }
     }
 }

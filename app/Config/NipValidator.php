@@ -19,8 +19,6 @@ class NipValidator
             return true;
         }
 
-        $error = "Invalid NIP number";
-
         return false;
     }
 

@@ -45,4 +45,8 @@ $routes->group("panel", ["filter" => "webauth"], function($routes){
         $routes->get("delete/(:num)", "Panel::delete_page/$1");
         $routes->post("delete/(:num)", "Panel::delete/$1");
     });
+
+    $routes->group("clients", ["filter" => "webauth"], function($routes){
+        $routes->get("/", "Client::index");
+    });
 });
