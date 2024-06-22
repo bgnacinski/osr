@@ -114,10 +114,6 @@ class BillEntryModel extends Model
             $val_result = $this->validate($entry);
             if($val_result){
                 $this->save($entry);
-
-                return [
-                    "status" => "success"
-                ];
             }
             else{
                 return [
@@ -126,5 +122,9 @@ class BillEntryModel extends Model
                 ];
             }
         }
+
+        return [
+            "status" => "success"
+        ];
     }
 }

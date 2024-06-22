@@ -62,8 +62,8 @@ if (session()->has('message')){
 
         <input type="text" required hidden id="bill_contents" name="bill_contents">
 
-        <table id="bill_contents_table" class="mb-3">
-            <tbody>
+        <table class="mb-3">
+            <tbody id="bill_contents_table">
                 <tr>
                     <th>Nazwa</th>
                     <th>Opis</th>
@@ -71,6 +71,7 @@ if (session()->has('message')){
                     <th>Ilość</th>
                     <th>Wartość netto</th>
                     <th>Wartość brutto</th>
+                    <th></th>
                 </tr>
             </tbody>
         </table>

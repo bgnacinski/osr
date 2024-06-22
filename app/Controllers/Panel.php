@@ -89,9 +89,12 @@ class Panel extends BaseController
         $tax_rate = (int)$this->request->getPost("tax_rate");
         $status = $this->request->getPost("status");
         $bill_contents_dump = $this->request->getPost("bill_contents");
+
         $bill_contents = [];
 
         $bill_contents_dump = explode(";", $bill_contents_dump);
+        array_pop($bill_contents_dump);
+
         foreach($bill_contents_dump as $element){
             $element = explode(",", $element);
 
