@@ -37,6 +37,11 @@ class Bills extends Migration
                 "constraint" => ["ok", "pending", "payment", "returned"],
                 "null" => false
             ],
+            "currency" => [
+                "type" => "varchar",
+                "constraint" => 3,
+                "null" => false
+            ],
             "created_by" => [
                 "type" => "varchar",
                 "constraint" => 20

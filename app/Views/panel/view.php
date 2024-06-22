@@ -40,9 +40,6 @@ if (session()->has('message')){
         <p>
             <b>Identyfikator:</b> <?= $bill_data->identificator; ?>
         </p>
-        <p class="hide-print">
-            <b>Wysokość podatku:</b> <?= $bill_data->tax_rate; ?>%
-        </p>
         <p>
             <b>Data wystawienia:</b> <?= $bill_data->created_at; ?>
         </p>
@@ -109,10 +106,10 @@ if (session()->has('message')){
                 <tr class="data">
                     <td>$name</td>
                     <td>$description</td>
-                    <td>$amount <span class="hide-print">PLN</span></td>
+                    <td>$amount <span class="hide-print"><?= $bill_data->currency ;?></span></td>
                     <td>$quantity</td>
-                    <td>$total <span class="hide-print">PLN</span></td>
-                    <td>$total_tax <span class="hide-print">PLN</span></td>
+                    <td>$total <span class="hide-print"><?= $bill_data->currency ;?></span></td>
+                    <td>$total_tax <span class="hide-print"><?= $bill_data->currency ;?></span></td>
                 </tr>
                 ENDL;
             }
@@ -124,15 +121,23 @@ if (session()->has('message')){
                 <td></td>
                 <td>
                     <?= $bill_total; ?>
-                    <span>PLN</span>
+                    <span><?= $bill_data->currency ;?></span>
                 </td>
                 <td>
                     <?= $bill_total_tax; ?>
-                    <span>PLN</span>
+                    <span><?= $bill_data->currency ;?></span>
                 </td>
             </tr>
             </tbody>
         </table>
+        <div id="bill-metadata">
+            <p>
+                <b>VAT:</b> <?= $bill_data->tax_rate; ?>%
+            </p>
+            <p>
+                <b>Waluta:</b> <?= $bill_data->currency; ?>
+            </p>
+        </div>
     </div>
 </div>
 <?= $this->endSection(); ?>

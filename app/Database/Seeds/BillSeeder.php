@@ -13,6 +13,7 @@ class BillSeeder extends Seeder
             "client" => "8961017023",
             "tax_rate" => 23,
             "status" => "ok",
+            "currency" => "PLN",
             "created_by" => "anowak"
         ];
 
