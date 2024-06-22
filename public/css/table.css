@@ -10,6 +10,8 @@
 #search-bar > *{
     flex: 4;
     margin: 0 1vw;
+
+    z-index: 1;
 }
 #search-bar > input[type="submit"]{
     flex: 1;
