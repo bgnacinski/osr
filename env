@@ -72,7 +72,6 @@
 # Company 
 #--------------------------------------------------------------------
 company.name = ""
-company.prefix = ""
 company.logo = ""
 # billing info
 company.bill_name = ""
