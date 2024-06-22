@@ -24,7 +24,7 @@
         display: none;
     }
 
-    #company-logo{
+    #company-logo > img{
         display: block;
     }
 }
