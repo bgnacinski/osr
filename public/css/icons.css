@@ -27,3 +27,15 @@
 
     padding: 1%
 }
+
+.ok-icon{
+    color: green;
+}
+
+.pending-icon{
+    color: #fd7e14;
+}
+
+.payment-icon{
+    color: red;
+}
