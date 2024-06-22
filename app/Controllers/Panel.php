@@ -82,7 +82,7 @@ class Panel extends BaseController
         $user_model = new UserModel();
         $bill_data["data"]->created_by = $user_model->getUser($bill_data["data"]->created_by)->name;
 
-        if($bill_contents["status"] != "success" || $bill_data["status"] != "success"){
+        if($bill_contents["status"] != "success"){
             return redirect()->to("/panel")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
 
@@ -102,8 +102,8 @@ class Panel extends BaseController
 
     public function add(){
         $nip = (int)$this->request->getPost("nip");
-        $tax_rate = (int)$this->request->getPost("tax_rate");
         $status = $this->request->getPost("status");
+        $currency = $this->request->getPost("currency");
         $bill_contents_dump = $this->request->getPost("bill_contents");
 
         $bill_contents = [];
@@ -121,7 +121,7 @@ class Panel extends BaseController
         $created_by = $session->user->login;
 
         $model = new BillModel();
-        $result = $model->addBill($nip, $tax_rate, $status, $created_by, $bill_contents);
+        $result = $model->addBill($nip, $status, $currency, $created_by, $bill_contents);
 
         switch($result["status"]){
             case "success":

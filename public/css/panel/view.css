@@ -15,11 +15,3 @@
 #bill-sides > div:nth-child(2n){
     text-align: right;
 }
-
-#bill-metadata{
-    display: flex;
-    justify-content: right;
-}
-#bill-metadata > p{
-    margin: 1vh 1vw;
-}

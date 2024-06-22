@@ -83,6 +83,7 @@ if (session()->has('message')){
                 <th>Cena</th>
                 <th>Ilość</th>
                 <th>Wartość netto</th>
+                <th>VAT</th>
                 <th>Wartość brutto</th>
             </tr>
             <?php
@@ -90,13 +91,14 @@ if (session()->has('message')){
             $bill_total_tax = 0;
 
             foreach($bill_contents as $bill){
-                $multiplier = (100 + $bill_data->tax_rate)/100;
-
                 $name = $bill["name"];
                 $description = $bill["description"];
                 $amount = $bill["amount"];
                 $quantity = $bill["quantity"];
+                $tax_rate = $bill["tax_rate"];
+
                 $total = $bill["total"];
+                $multiplier = (100 + $tax_rate)/100;
                 $total_tax = round($bill["total"] * $multiplier, 2);
 
                 $bill_total += $total;
@@ -109,6 +111,7 @@ if (session()->has('message')){
                     <td>$amount <span class="hide-print"><?= $bill_data->currency ;?></span></td>
                     <td>$quantity</td>
                     <td>$total <span class="hide-print"><?= $bill_data->currency ;?></span></td>
+                    <td>$tax_rate%</td>
                     <td>$total_tax <span class="hide-print"><?= $bill_data->currency ;?></span></td>
                 </tr>
                 ENDL;
@@ -124,20 +127,16 @@ if (session()->has('message')){
                     <span><?= $bill_data->currency ;?></span>
                 </td>
                 <td>
+                    <?= round($bill_total_tax - $bill_total, 2); ?>
+                    <span><?= $bill_data->currency ;?></span>
+                </td>
+                <td>
                     <?= $bill_total_tax; ?>
                     <span><?= $bill_data->currency ;?></span>
                 </td>
             </tr>
             </tbody>
         </table>
-        <div id="bill-metadata">
-            <p>
-                <b>VAT:</b> <?= $bill_data->tax_rate; ?>%
-            </p>
-            <p>
-                <b>Waluta:</b> <?= $bill_data->currency; ?>
-            </p>
-        </div>
     </div>
 </div>
 <?= $this->endSection(); ?>

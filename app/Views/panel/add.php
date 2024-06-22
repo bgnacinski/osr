@@ -57,15 +57,6 @@ if (session()->has('success')){
             </datalist>
         </div>
         <div class="form-floating mb-3">
-            <select required id="tax_rate" class="form-select" name="tax_rate" aria-label="Poziom VAT">
-                <option value="23">23%</option>
-                <option value="8">8%</option>
-                <option value="5">5%</option>
-                <option value="0">0%</option>
-            </select>
-            <label for="tax_rate">Poziom VAT</label>
-        </div>
-        <div class="form-floating mb-3">
             <select required id="currency" class="form-select" name="currency" aria-label="Waluta">
                 <option value='AED'>AED - Dirham Zjednoczonych Emiratów Arabskich</option>
                 <option value='AFN'>AFN - Afgani afgański</option>
@@ -252,8 +243,8 @@ if (session()->has('success')){
                     <th>Cena</th>
                     <th>Ilość</th>
                     <th>Wartość netto</th>
+                    <th>VAT</th>
                     <th>Wartość brutto</th>
-                    <th></th>
                 </tr>
             </tbody>
         </table>

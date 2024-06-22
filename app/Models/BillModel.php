@@ -99,13 +99,13 @@ class BillModel extends Model
         }
     }
 
-    public function addBill(int $nip, int $tax_rate, string $status, string $created_by, array $bill_contents){
+    public function addBill(int $nip, string $status, string $currency, string $created_by, array $bill_contents){
         $bill_contents_model = new BillEntryModel();
 
         $bill_data = [
             "client" => (string)$nip,
-            "tax_rate" => $tax_rate,
             "status" => $status,
+            "currency" => $currency,
             "created_by" => $created_by
         ];
 

@@ -1,8 +1,6 @@
 var parent_table = document.getElementById("bill_contents_table");
 var bill_input = document.getElementById("bill_contents");
 
-var tax_rate = document.getElementById("tax_rate").value;
-
 function refreshTable(){
     let input_val = bill_input.value;
     if(input_val != ""){
@@ -34,6 +32,10 @@ function refreshTable(){
                 sum_netto.textContent = Math.round(product.amount * parseInt(quantity) * 100) / 100;//round to 2 decimals
                 tr.appendChild(sum_netto);
 
+                let vat = document.createElement("td");
+                vat.textContent = product.vat;
+                tr.appendChild(vat);
+
                 let sum_brutto = document.createElement("td");
                 let brutto_value = ((product.amount * parseInt(quantity)) * multiplier);
                 sum_brutto.textContent = Math.round(brutto_value * 100) / 100;
@@ -50,8 +52,6 @@ function refreshTable(){
 }
 
 function addEntry(){
-    let multiplier = (100 + parseInt(tax_rate)) / 100;
-
     let product_name = document.getElementById("product_name").value;
     let quantity = document.getElementById("quantity").value;
 
@@ -89,6 +89,12 @@ function addEntry(){
             let sum_netto = document.createElement("td");
             sum_netto.textContent = Math.round(product.amount * parseInt(quantity) * 100) / 100;//round to 2 decimals
             tr.appendChild(sum_netto);
+
+            let vat = document.createElement("td");
+            vat.textContent = product.tax_rate;
+            tr.appendChild(vat);
+
+            let multiplier = (100 + parseInt(product.tax_rate)) / 100;
 
             let sum_brutto = document.createElement("td");
             let brutto_value = ((product.amount * parseInt(quantity)) * multiplier);

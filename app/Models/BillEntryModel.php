@@ -86,6 +86,7 @@ class BillEntryModel extends Model
                     "description" => $description,
                     "quantity" => $quantity,
                     "amount" => $amount,
+                    "tax_rate" => $product->tax_rate,
                     "total" => $total
                 ];
             }
