@@ -15,3 +15,12 @@
 #bill-sides > div:nth-child(2n){
     text-align: right;
 }
+
+#company-logo > img{
+    width: 25%;
+    height: auto;
+
+    margin: 2.5vh 0;
+
+    display: none;
+}

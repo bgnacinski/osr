@@ -47,6 +47,9 @@ if (session()->has('message')){
             <b>Dodane przez:</b> <?= $bill_data->created_by; ?>
         </p>
     </div>
+    <div id="company-logo">
+        <img src="<?= env("company.logo"); ?>">
+    </div>
     <div id="bill-sides">
         <div id="biller">
             <h5>Sprzedawca</h5>

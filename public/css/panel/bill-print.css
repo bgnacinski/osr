@@ -23,4 +23,8 @@
     .hide-print{
         display: none;
     }
+
+    #company-logo{
+        display: block;
+    }
 }
