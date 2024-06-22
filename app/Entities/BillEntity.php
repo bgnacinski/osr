@@ -10,7 +10,6 @@ class BillEntity extends Entity
         "id" => "id",
         "identificator" => "identificator",
         "client" => "client",
-        "tax_rate" => "tax_rate",
         "status" => "status",
         "currency" => "currency",
         "created_by" => "created_by"

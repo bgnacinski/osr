@@ -27,11 +27,6 @@ class Bills extends Migration
                 "constraint" => 15,
                 "null" => false
             ],
-            "tax_rate" => [
-                "type" => "float",
-                "constraint" => 5,
-                "null" => true
-            ],
             "status" => [
                 "type" => "set",
                 "constraint" => ["ok", "pending", "payment", "returned"],

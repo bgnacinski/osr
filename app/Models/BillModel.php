@@ -13,7 +13,7 @@ class BillModel extends Model
     protected $returnType       = BillEntity::class;
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["identificator", "client", "tax_rate", "status", "currency", "created_by"];
+    protected $allowedFields    = ["identificator", "client", "status", "currency", "created_by"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -31,7 +31,6 @@ class BillModel extends Model
     // Validation
     protected $validationRules      = [
         "client" => "required|min_length[10]|max_length[10]|integer|valid_nip|matches_clients[clients.nip]",
-        "tax_rate" => "required|in_list[23,8,5,0]",
         "status" => "required|in_list[ok,pending,payment,returned]",
         "currency" => "required|in_list[AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BRL, BSD, BTN, BWP, BYN, BZD, CAD, CDF, CHF, CLP, CNY, COP, CRC, CUC, CUP, CVE, CZK, DJF, DKK, DOP, DZD, EGP, ERN, ETB, EUR, FJD, FKP, FOK, GBP, GEL, GGP, GHS, GIP, GMD, GNF, GTQ, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, IMP, INR, IQD, IRR, ISK, JEP, JMD, JOD, JPY, KES, KGS, KHR, KID, KMF, KRW, KWD, KYD, KZT, LAK, LBP, LKR, LRD, LSL, LYD, MAD, MDL, MGA, MKD, MMK, MNT, MOP, MRU, MUR, MVR, MWK, MXN, MYR, MZN, NAD, NGN, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SEK, SGD, SHP, SLL, SOS, SRD, SSP, STN, SYP, SZL, THB, TJS, TMT, TND, TOP, TRY, TTD, TVD, TWD, TZS, UAH, UGX, USD, UYU, UZS, VED, VES, VND, VUV, WST, XAF, XCD, XDR, XOF, XPF, YER, ZAR, ZMW, ZWL]",
         "created_by" => "required|matches_users[users.login]"
@@ -44,10 +43,6 @@ class BillModel extends Model
             "integer" => "NIP musi być numerem.",
             "valid_nip" => "NIP jest niepoprawny.",
             "matches_clients" => "Podany NIP nie jest powiązany z żadnym klientem."
-        ],
-        "tax_rate" => [
-            "required" => "Procent podatku VAT jest wymagana.",
-            "in_list" => "Procent podatku VAT może przyjąć wartość 23%, 8%, 5% lub 0%."
         ],
         "status" => [
             "required" => "Pole statusu jest wymagane.",

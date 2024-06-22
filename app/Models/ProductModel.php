@@ -13,7 +13,7 @@ class ProductModel extends Model
     protected $returnType       = ProductEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name", "description", "amount"];
+    protected $allowedFields    = ["name", "description", "amount", "tax_rate"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -32,7 +32,8 @@ class ProductModel extends Model
     protected $validationRules      = [
         "name" => "required|min_length[4]|max_length[100]|is_unique[products.name]",
         "description" => "permit_empty|min_length[4]|max_length[250]",
-        "amount" => "required|decimal"
+        "amount" => "required|decimal",
+        "tax_rate" => "required|in_list[23,8,5,0]"
     ];
     protected $validationMessages   = [
         "name" => [
@@ -48,6 +49,10 @@ class ProductModel extends Model
         "amount" => [
             "required" => "Cena jest wymagana",
             "decimal" => "Cena musi być liczbą(może zawierać przecinki)."
+        ],
+        "tax_rate" => [
+            "required" => "Procent podatku VAT jest wymagana.",
+            "in_list" => "Procent podatku VAT może przyjąć wartość 23%, 8%, 5% lub 0%."
         ]
     ];
     protected $skipValidation       = false;
