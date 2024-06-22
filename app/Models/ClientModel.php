@@ -13,7 +13,7 @@ class ClientModel extends Model
     protected $returnType       = ClientEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name", "nip", "email"];
+    protected $allowedFields    = ["name", "nip", "email", "address"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -32,7 +32,8 @@ class ClientModel extends Model
     protected $validationRules      = [
         "name" => "required|min_length[4]|max_length[255]|alpha_numeric_punct|is_unique[clients.name]",
         "nip" => "required|min_length[10]|max_length[10]|integer|valid_nip|is_unique[clients.nip]",
-        "email" => "required|min_length[4]|max_length[255]|valid_email|is_unique[clients.email]"
+        "email" => "required|min_length[4]|max_length[255]|valid_email|is_unique[clients.email]",
+        "address" => "required|min_length[10]|max_length[300]"
     ];
     protected $validationMessages   = [
         "name" => [
@@ -56,6 +57,11 @@ class ClientModel extends Model
             "max_length" => "Adres e-mail musi mieć od 4 do 250 znaków.",
             "valid_email" => "Adres e-mail nie jest poprawny.",
             "is_unique" => "Podany adres e-mail jest powiązany z innym klientem."
+        ],
+        "address" => [
+            "required" => "Adres jest wymagany.",
+            "min_length" => "Adres powinien zawierać od 10 do 300 znaków.",
+            "max_length" => "Adres powinien zawierać do 10 do 300 znaków."
         ]
     ];
     protected $skipValidation       = false;

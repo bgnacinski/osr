@@ -32,6 +32,11 @@ class Clients extends Migration
                 "constraint" => 250,
                 "null" => false
             ],
+            "address" => [
+                "type" => "varchar",
+                "constraint" => 300,
+                "null" => false
+            ],
             "created_at" => [
                 "type" => "varchar",
                 "constraint" => 50,

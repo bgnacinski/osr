@@ -12,12 +12,14 @@ class ClientSeeder extends Seeder
         $data = [
             "name" => "Januszex",
             "nip" => "8961017023",
-            "email" => "test@example.com"
+            "email" => "test@example.com",
+            "address" => "Kiełczowska 77/79|51-315 Wrocław, Polska"
         ];
 
         $model = new ClientModel();
         try {
             $model->insert($data);
+            var_dump($model->errors());
         }
         catch(\ReflectionException $ex){
             echo $ex;
