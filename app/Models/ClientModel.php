@@ -77,4 +77,28 @@ class ClientModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function addClient(string $name, int $nip, string $email, string $address){
+        $client_data = [
+            "name" => $name,
+            "nip" => (string)$nip,
+            "email" => $email,
+            "address" => $address
+        ];
+
+        if($this->validate($client_data)){
+            $this->save($client_data);
+
+            return [
+                "status" => "success",
+                "data" => $client_data
+            ];
+        }
+        else{
+            return [
+                "status" => "valerr",
+                "errors" => $this->errors()
+            ];
+        }
+    }
 }

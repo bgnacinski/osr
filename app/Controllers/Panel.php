@@ -44,8 +44,8 @@ class Panel extends BaseController
             if (is_null($page)) {
                 $data = $model->orderBy("id", "DESC")->findAll($limit);
             } else {
-                $offset = $page * $limit - 30;
-                $limit = $offset + 30;
+                $offset = $page * $limit - $limit;
+                $limit = $offset + $limit;
 
                 $data = $model->orderBy("id", "DESC")->findAll($limit, $offset);
             }
