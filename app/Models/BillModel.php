@@ -78,7 +78,7 @@ class BillModel extends Model
 
         $hash = hash("sha512", $hash_data);
 
-        $data["data"]["identificator"] = env("company.prefix")."_".substr($hash, 0, 15);
+        $data["data"]["identificator"] = date("Y/m/d")."_".substr($hash, 0, 5);
         
         return $data;
     }
