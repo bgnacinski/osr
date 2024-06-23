@@ -74,11 +74,9 @@ class BillModel extends Model
     protected $afterDelete    = [];
 
     public function addIdentificator($data): array{
-        $hash_data = (string)time().random_bytes(15);
+        $index = $this->like("created_at", date("Y-m-d"))->countAllResults() + 1;
 
-        $hash = hash("sha512", $hash_data);
-
-        $data["data"]["identificator"] = date("Y/m/d")."_".substr($hash, 0, 5);
+        $data["data"]["identificator"] = date("Y/m/d")."_".$index;
         
         return $data;
     }

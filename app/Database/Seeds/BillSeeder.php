@@ -18,7 +18,10 @@ class BillSeeder extends Seeder
 
         $model = new BillModel();
         try {
-            $model->insert($data);
+            for($i = 0; $i <= 52; $i++){
+                $model->insert($data);
+            }
+
             var_dump($model->errors());
         }
         catch(\ReflectionException $ex){
