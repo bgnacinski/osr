@@ -186,4 +186,23 @@ class UserModel extends Model
             ];
         }
     }
+
+    public function changePassword($id, $password_first, $password_second){
+        if($password_first === $password_second){
+            $user_obj = $this->find($id);
+
+            $user_obj->password = password_hash($password_first, PASSWORD_DEFAULT);
+
+            $this->save($user_obj);
+
+            return [
+                "status" => "success"
+            ];
+        }
+        else{
+            return [
+                "status" => "nomatch"
+            ];
+        }
+    }
 }

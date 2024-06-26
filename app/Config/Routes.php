@@ -10,6 +10,16 @@ $routes->get('/', 'Home::index', ["filter" => "webauth"]);
 $routes->get("login", "Home::login_page");
 $routes->post("login", "Home::login");
 
+$routes->group("account", ["filter" => "webauth"], function ($routes) {
+    $routes->get("/","Home::account_page");
+    $routes->post("/","Home::account_update");
+
+    $routes->post("logout", "Home::logout");
+
+    $routes->get("change-password", "Home::change_password_page");
+    $routes->post("change-password", "Home::change_password");
+});
+
 $routes->group('admin', ["filter" => "admin"], function($routes){
     $routes->get("/", "Admin::index");
     $routes->get("(:num)", "Admin::index/$1");

@@ -42,7 +42,7 @@ if (session()->has('success')){
 }
 ?>
 
-    <form method="post">
+    <form method="post" onload="refreshTable()">
         <div class="form-floating mb-3">
             <input required list="nip" name="nip" type="numeric" class="form-control" id="floatingName" placeholder="NIP klienta">
             <label for="floatingName">NIP klienta</label>
@@ -274,4 +274,5 @@ if (session()->has('success')){
     </div>
 
 <script src="/js/entry.js"></script>
+<script>refreshTable();</script>
 <?= $this->endSection(); ?>
