@@ -1,53 +1,65 @@
 var parent_table = document.getElementById("bill_contents_table");
 var bill_input = document.getElementById("bill_contents");
 
+
+window.onload = refreshTable();
+
 function refreshTable(){
     let input_val = bill_input.value;
+
     if(input_val != ""){
         let buffer = input_val.split(";");
         buffer.pop();
 
-        let product_name = buffer.split(",")[0];
-        let quantity = buffer.split(",")[1];
+        for(let i = 0; i <= buffer.length - 1; i++){
+            let product_name = buffer[i].split(",")[0];
+            let quantity = buffer[i].split(",")[1];
 
-        data.forEach((product) => {
-            if(product.name == product_name){
-                let product_name_el = document.createElement("td");
-                product_name_el.textContent = product_name;
-                tr.appendChild(product_name_el);
+            tr = document.createElement("tr");
 
-                let description = document.createElement("td");
-                description.textContent = product.description
-                tr.appendChild(description);
+            data.forEach((product) => {
+                if(product.name == product_name){
+                    let product_name_el = document.createElement("td");
+                    product_name_el.textContent = product_name;
+                    tr.appendChild(product_name_el);
 
-                let amount = document.createElement("td");
-                amount.textContent = product.amount;
-                tr.appendChild(amount);
+                    let description = document.createElement("td");
+                    description.textContent = product.description
+                    tr.appendChild(description);
 
-                let quantity_el = document.createElement("td");
-                quantity_el.textContent = quantity;
-                tr.appendChild(quantity_el);
+                    let amount = document.createElement("td");
+                    amount.textContent = product.amount;
+                    tr.appendChild(amount);
 
-                let sum_netto = document.createElement("td");
-                sum_netto.textContent = Math.round(product.amount * parseInt(quantity) * 100) / 100;//round to 2 decimals
-                tr.appendChild(sum_netto);
+                    let quantity_el = document.createElement("td");
+                    quantity_el.textContent = quantity;
+                    tr.appendChild(quantity_el);
 
-                let vat = document.createElement("td");
-                vat.textContent = product.vat;
-                tr.appendChild(vat);
+                    let sum_netto = document.createElement("td");
+                    sum_netto.textContent = Math.round(product.amount * parseInt(quantity) * 100) / 100;//round to 2 decimals
+                    tr.appendChild(sum_netto);
 
-                let sum_brutto = document.createElement("td");
-                let brutto_value = ((product.amount * parseInt(quantity)) * multiplier);
-                sum_brutto.textContent = Math.round(brutto_value * 100) / 100;
-                tr.appendChild(sum_brutto);
+                    let vat = document.createElement("td");
+                    vat.textContent = product.tax_rate;
+                    tr.appendChild(vat);
 
-                let delete_button = document.createElement("td");
-                delete_button.innerHTML = `<a onclick='deleteEntry("` + product_name + "," + quantity +  "." + tr.id + `")'>
+                    let multiplier = (100 + parseInt(product.tax_rate)) / 100;
+
+                    let sum_brutto = document.createElement("td");
+                    let brutto_value = ((product.amount * parseInt(quantity)) * multiplier);
+                    sum_brutto.textContent = Math.round(brutto_value * 100) / 100;
+                    tr.appendChild(sum_brutto);
+
+                    let delete_button = document.createElement("td");
+                    delete_button.innerHTML = `<a onclick='deleteEntry("` + product_name + "," + quantity +  "." + tr.id + `")'>
                     <span class="material-symbols-outlined delete-icon">delete</span>
                 </a>`;
-                tr.appendChild(delete_button);
-            }
-        });
+                    tr.appendChild(delete_button);
+                }
+            });
+
+            parent_table.appendChild(tr);
+        }
     }
 }
 
