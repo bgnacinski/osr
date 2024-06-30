@@ -15,7 +15,7 @@ class Panel extends BaseController
 {
     public function index(int $page = null)
     {
-        $limit = 50;
+        $limit = 30;
         $model = new BillModel();
 
         // pagination
@@ -28,7 +28,31 @@ class Panel extends BaseController
             $pages = round($no_bills / $limit);
         }
 
+        $page = $page ?? 1;
+
+        if($page == 1){
+            $last_page = 1;
+            $previous = "disabled";
+        }
+        else{
+            $last_page = $page - 1;
+            $previous = "";
+        }
+
+        if($page == $pages){
+            $next_page = $page;
+            $next = "disabled";
+        }
+        else{
+            $next_page = $page + 1;
+            $next = "";
+        }
+
         $page_data = [
+            "previous" => $previous,
+            "next" => $next,
+            "last_page" => $last_page,
+            "next_page" => $next_page,
             "current" => $page,
             "available" => $pages
         ];
@@ -117,8 +141,7 @@ class Panel extends BaseController
             $bill_contents[] = $element;
         }
 
-        $session = \Config\Services::session();
-        $created_by = $session->user->login;
+        $created_by = $this->session->user->login;
 
         $model = new BillModel();
         $result = $model->addBill($nip, $status, $currency, $created_by, $bill_contents);
