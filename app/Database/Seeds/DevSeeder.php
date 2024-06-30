@@ -10,6 +10,7 @@ class DevSeeder extends Seeder
     {
         $this->call("UserSeeder");
         $this->call("ProductSeeder");
+        $this->call("ClientSeeder");
         $this->call("BillSeeder");
         $this->call("BillContentsSeeder");
     }

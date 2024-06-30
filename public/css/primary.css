@@ -33,7 +33,7 @@ nav#main-nav{
     background-color: var(--backround-color);
 }
 nav > .container{
-    width: 70%;
+    width: 90%;
 
     display: flex;
     flex-direction: row;
@@ -42,7 +42,6 @@ nav > .container{
 }
 
 #logo{
-    flex: 3;
     font-size: 1.5rem;
 
     margin: 0 2.5vw;
@@ -52,16 +51,18 @@ nav > .container{
     font-weight: bold;
 }
 #buttons{
-    flex: 2;
+    flex: 3;
     margin: 0 2.5vw;
 
-    text-align: right;
+    align-self: center;
+    text-align: end;
 }
 .button{
     text-decoration: none;
     color: inherit;
 
     padding: 1vh 1.5vw;
+    margin: 0 0.25vw;
 
     border-radius: 10px;
 

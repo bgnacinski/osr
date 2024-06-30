@@ -1,0 +1,21 @@
+#user-data{
+    font-size: 1.1rem;
+
+    margin: auto;
+
+    display: flex;
+    align-content: space-between;
+}
+#user-data > *{
+    margin: 1vh 2.5vw;
+}
+
+#user-buttons{
+    width: 50%;
+
+    display: flex;
+    flex-direction: row;
+}
+#user-buttons > *{
+    margin: auto;
+}

@@ -31,7 +31,7 @@ class UserModel extends Model
     // Validation
     protected $validationRules      = [
         "name" => "required|min_length[4]|max_length[50]",
-        "login" => "required|min_length[4]|max_length[50]|is_unique_soft_deleted[users.login]",
+        "login" => "required|min_length[4]|max_length[50]|is_unique_users_soft_deleted[users.login]",
         "password" => "required|min_length[8]",
         "role" => "required|in_list[admin,manager,regular,viewer]"
     ];
@@ -45,7 +45,7 @@ class UserModel extends Model
             "required" => "Login użytkownika jest wymagany.",
             "min_length" => "Minimalna długość loginu to 4 znaki.",
             "max_length" => "Maksymalna długość loginu to 50 znaków.",
-            "is_unique_soft_deleted" => "Ten login jest już używany."
+            "is_unique_users_soft_deleted" => "Ten login jest już używany."
         ],
         "password" => [
             "required" => "Hasło jest wymagane.",
@@ -74,6 +74,26 @@ class UserModel extends Model
         $data["data"]["password"] = password_hash($data["data"]["password"], PASSWORD_DEFAULT);
 
         return $data;
+    }
+
+    public function getUser(string $login){
+        $result = $this->where("login", $login)->first();
+
+        if(!is_null($result)){
+            return $result;
+        }
+        else{
+            $data = new UserEntity();
+            $data->fill([
+                "Nie znaleziono użytkownika",
+                "Nie znaleziono użytkownika",
+                "Nie znaleziono użytkownika",
+                "Nie znaleziono użytkownika",
+                "viewer",
+            ]);
+
+            return $data;
+        }
     }
 
     public function login($login, $password){
@@ -163,6 +183,25 @@ class UserModel extends Model
         else{
             return [
                 "status" => "notfound"
+            ];
+        }
+    }
+
+    public function changePassword($id, $password_first, $password_second){
+        if($password_first === $password_second){
+            $user_obj = $this->find($id);
+
+            $user_obj->password = password_hash($password_first, PASSWORD_DEFAULT);
+
+            $this->save($user_obj);
+
+            return [
+                "status" => "success"
+            ];
+        }
+        else{
+            return [
+                "status" => "nomatch"
             ];
         }
     }

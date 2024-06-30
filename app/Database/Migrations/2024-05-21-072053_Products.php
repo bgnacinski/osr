@@ -30,6 +30,11 @@ class Products extends Migration
                 "constraint" => "10,2",
                 "null" => false
             ],
+            "tax_rate" => [
+                "type" => "float",
+                "constraint" => 5,
+                "null" => true
+            ],
             "created_at" => [
                 "type" => "datetime",
                 "null" => false

@@ -2,13 +2,13 @@
 <?= $this->section("title"); ?>Panel administracyjny<?= $this->endSection(); ?>
 <?= $this->section("logo"); ?>Panel administracyjny<?= $this->endSection(); ?>
 <?= $this->section("links"); ?>
-<link rel="stylesheet" href="/css/admin/index.css">
-
-<script src="/js/notify.js"></script>
+<link rel="stylesheet" href="/css/icons.css">
+<link rel="stylesheet" href="/css/table.css">
 <?= $this->endSection(); ?>
 
 <?= $this->section("buttons"); ?>
 <a href="/admin/user/add/" class="button">Dodaj użytkownika</a>
+<a href="/account/" class="button">Moje konto</a>
 <?= $this->endSection(); ?>
 
 <?= $this->section("main"); ?>

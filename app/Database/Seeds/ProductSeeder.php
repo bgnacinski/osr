@@ -12,7 +12,8 @@ class ProductSeeder extends Seeder
         $data = [
             "name" => "Wymiana filtra oleju",
             "description" => "Wymiana filtra bez wymiany oleju",
-            "amount" => 99.99
+            "amount" => 99.99,
+            "tax_rate" => 8
         ];
 
         $model = new ProductModel();

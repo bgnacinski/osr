@@ -4,10 +4,12 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Users extends Migration
+class Bills extends Migration
 {
     public function up()
     {
+        $this->db->disableForeignKeyChecks();
+
         $this->forge->addField([
             "id" => [
                 "type" => "int",
@@ -15,25 +17,29 @@ class Users extends Migration
                 "auto_increment" => true,
                 "null" => false
             ],
-            "name" => [
+            "identificator" => [
                 "type" => "varchar",
                 "constraint" => 50,
                 "null" => false
             ],
-            "login" => [
+            "client" => [
                 "type" => "varchar",
-                "constraint" => 50,
+                "constraint" => 15,
                 "null" => false
             ],
-            "password" => [
-                "type" => "varchar",
-                "constraint" => 255,
-                "null" => false
-            ],
-            "role" => [
+            "status" => [
                 "type" => "set",
-                "constraint" => ["admin", "manager", "regular", "viewer"],
+                "constraint" => ["ok", "pending", "payment", "returned"],
                 "null" => false
+            ],
+            "currency" => [
+                "type" => "varchar",
+                "constraint" => 3,
+                "null" => false
+            ],
+            "created_by" => [
+                "type" => "varchar",
+                "constraint" => 20
             ],
             "created_at" => [
                 "type" => "datetime",
@@ -50,12 +56,16 @@ class Users extends Migration
         ]);
 
         $this->forge->addPrimaryKey("id");
+        $this->forge->addForeignKey("created_by", "users", "login", "CASCADE", "NO ACTION");
+        $this->forge->addForeignKey("client", "clients", "nip", "CASCADE", "NO ACTION");
 
-        $this->forge->createTable("users");
+        $this->forge->createTable("bills");
+
+        $this->db->enableForeignKeyChecks();
     }
 
     public function down()
     {
-        $this->forge->dropTable("users");
+        $this->forge->dropTable("bills");
     }
 }

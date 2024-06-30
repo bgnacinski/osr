@@ -4,13 +4,12 @@ namespace App\Entities;
 
 use CodeIgniter\Entity\Entity;
 
-class BillEntryEntity extends Entity
+class ClientEntity extends Entity
 {
     protected $datamap = [
-        "id" => "id",
-        "bill_id" => "bill_id",
-        "product_name" => "product_name",
-        "quantity" => "quantity"
+        "company" => "company",
+        "nip" => "nip",
+        "email" => "email"
     ];
     protected $dates   = ['created_at', 'updated_at', 'deleted_at'];
     protected $casts   = [];
