@@ -83,7 +83,7 @@ if (session()->has('message')){
             <tbody>
             <tr>
                 <th>Nazwa</th>
-                <th>Opis</th>
+                <th class="hide-print">Opis</th>
                 <th>Cena</th>
                 <th>Ilość</th>
                 <th>Wartość netto</th>
@@ -111,7 +111,7 @@ if (session()->has('message')){
                 echo <<<ENDL
                 <tr class="data">
                     <td>$name</td>
-                    <td>$description</td>
+                    <td class="hide-print">$description</td>
                     <td>$amount <span class="hide-print"><?= $bill_data->currency ;?></span></td>
                     <td>$quantity</td>
                     <td>$total <span class="hide-print"><?= $bill_data->currency ;?></span></td>
@@ -123,7 +123,7 @@ if (session()->has('message')){
             ?>
             <tr class="sum">
                 <td>Suma</td>
-                <td></td>
+                <td class="hide-print"></td>
                 <td></td>
                 <td></td>
                 <td>
