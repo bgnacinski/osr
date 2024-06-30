@@ -38,7 +38,31 @@ class Admin extends BaseController
             $data = $model->like("login", $_GET["login"])->withDeleted()->findAll();
         }
 
+        $page = $page ?? 1;
+
+        if($page == 1){
+            $last_page = 1;
+            $previous = "disabled";
+        }
+        else{
+            $last_page = $page - 1;
+            $previous = "";
+        }
+
+        if($page == $pages){
+            $next_page = $page;
+            $next = "disabled";
+        }
+        else{
+            $next_page = $page + 1;
+            $next = "";
+        }
+
         $page_data = [
+            "previous" => $previous,
+            "next" => $next,
+            "last_page" => $last_page,
+            "next_page" => $next_page,
             "current" => $page,
             "available" => $pages
         ];
