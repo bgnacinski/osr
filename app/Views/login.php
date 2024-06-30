@@ -7,6 +7,27 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section("main"); ?>
+<?php
+if (session()->has('message')){
+    $message = session("message");
+    $success = (bool)session("success");
+
+    if($success){
+        echo <<<ENDL
+            <div class="alert alert-success">
+                $message
+            </div>
+        ENDL;
+    }
+    else{
+        echo <<<ENDL
+            <div class="alert alert-danger">
+                $message
+            </div>
+        ENDL;
+    }
+}
+?>
 <form method="post">
     <div class="form-floating mb-3">
         <input name="login" type="login" class="form-control" id="floatingInput" placeholder="nazwa użytkownika">

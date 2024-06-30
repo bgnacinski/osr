@@ -23,6 +23,10 @@ class Home extends BaseController
     }
 
     public function login_page(){
+        if(isset($this->session->user)){
+            $this->index();
+        }
+
         return view("login");
     }
 
@@ -41,7 +45,7 @@ class Home extends BaseController
                 return redirect()->to("/");
 
             default:
-                return view("login", ["success" => false]);
+                return redirect()->to("/login")->with("success", 0)->with("message", "Niepoprawny login lub hasło.");
         }
     }
 
