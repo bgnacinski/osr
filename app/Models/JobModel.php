@@ -11,9 +11,9 @@ class JobModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = JobEntity::class;
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["identificator", "client", "status", "description", "comment"];
+    protected $allowedFields    = ["identificator", "client", "status", "description", "comment", "created_by"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -29,8 +29,39 @@ class JobModel extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
+    protected $validationRules      = [
+        "client" => "required|matches_clients[clients.nip]|min_length[10]|max_length[10]|integer|valid_nip",
+        "status" => "required|in_list[ok,pending,payment]",
+        "description" => "required|min_length[5]|max_length[500]",
+        "comment" => "max_length[500]",
+        "created_by" => "required|matches_users[users.login]"
+    ];
+    protected $validationMessages   = [
+        "client" => [
+            "required" => "NIP jest wymagany.",
+            "min_length" => "NIP musi składać się z 10 znaków.",
+            "max_length" => "NIP musi składać się z 10 znaków.",
+            "integer" => "NIP musi być numerem.",
+            "valid_nip" => "NIP jest niepoprawny.",
+            "matches_clients" => "Podany NIP nie jest powiązany z żadnym klientem."
+        ],
+        "status" => [
+            "required" => "Pole statusu jest wymagane.",
+            "in_list" => "Wartością pola statusu mogą być tylko ('ok', 'pending', 'payment', 'returned')."
+        ],
+        "description" => [
+            "required" => "Opis zlecenia jest wymagany.",
+            "min_length" => "Minimalna długość opisu to 5 znaków.",
+            "max_length" => "Maksymalna długość opisu to 500 znaków."
+        ],
+        "comment" => [
+            "max_length" => "Maksymalna długość komentarza to 500 znaków."
+        ],
+        "created_by" => [
+            "required" => "Podanie autora jest wymagane.",
+            "matches_users" => "Autor nie znajduje się w bazie danych."
+        ]
+    ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 

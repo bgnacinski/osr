@@ -13,7 +13,8 @@ class JobSeeder extends Seeder
             "client" => "8961017023",
             "status" => "pending",
             "description" => "Test job description. 1 PC to build",
-            "comment" => "AMD-based"
+            "comment" => "AMD-based",
+            "created_by" => "anowak"
         ];
 
         $model = new JobModel();

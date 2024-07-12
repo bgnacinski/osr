@@ -11,9 +11,9 @@ class ReportsModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = ReportEntity::class;
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["job_id", "content", "files"];
+    protected $allowedFields    = ["job_id", "content", "files", "created_by"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -29,8 +29,27 @@ class ReportsModel extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
+    protected $validationRules      = [
+        "job_id" => "required|integer|matches[jobs.id]",
+        "content" => "required|min_length[25]|max_length[1000]",
+        "created_by" => "required|matches_users[users.login]"
+    ];
+    protected $validationMessages   = [
+        "job_id" => [
+            "required" => "ID zlecenia jest wymagane.",
+            "integer" => "ID zlecenia musi być liczbą.",
+            "matches" => "Zlecenie o podanym ID nie istnieje."
+        ],
+        "content" => [
+            "required" => "Zawartość raportu jest wymagana.",
+            "min_length" => "Zawartość raportu może mieć minimalnie 25 znaków.",
+            "max_length" => "Zawartość raportu może mieć maksymalnie 1000 znaków."
+        ],
+        "created_by" => [
+            "required" => "Podanie autora jest wymagane.",
+            "matches_users" => "Autor nie znajduje się w bazie danych."
+        ]
+    ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 

@@ -11,7 +11,8 @@ class ReportSeeder extends Seeder
     {
         $data = [
             "job_id" => 1,
-            "content" => "Test report to job of ID 1"
+            "content" => "Test report to job of ID 1",
+            "created_by" => "anowak"
         ];
 
         $model = new ReportsModel();

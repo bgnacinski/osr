@@ -39,6 +39,11 @@ class Jobs extends Migration
                 "type" => "text",
                 "null" => true
             ],
+            "created_by" => [
+                "type" => "varchar",
+                "constraint" => 50,
+                "null" => false
+            ],
             "created_at" => [
                 "type" => "varchar",
                 "constraint" => 50,

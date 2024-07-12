@@ -11,7 +11,8 @@ class JobEntity extends Entity
         "client" => "client",
         "status" => "status",
         "description" => "description",
-        "comment" => "comment"
+        "comment" => "comment",
+        "created_by" => "created_by"
     ];
     protected $dates   = ['created_at', 'updated_at', 'deleted_at'];
     protected $casts   = [];
