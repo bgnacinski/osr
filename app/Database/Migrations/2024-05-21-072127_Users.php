@@ -13,6 +13,7 @@ class Users extends Migration
                 "type" => "int",
                 "constraint" => 11,
                 "auto_increment" => true,
+                "unsigned" => true,
                 "null" => false
             ],
             "name" => [

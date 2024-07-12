@@ -4,39 +4,32 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Clients extends Migration
+class Reports extends Migration
 {
     public function up()
     {
-        $this->db->disableForeignKeyChecks();
-
         $this->forge->addField([
             "id" => [
-                "type" => "int",
-                "constraint" => 11,
+                "type" => "INT",
                 "auto_increment" => true,
+                "constraint" => 11,
                 "unsigned" => true,
                 "null" => false
             ],
-            "name" => [
+            "job_id" => [
+                "type" => "int",
+                "constraint" => 11,
+                "unsigned" => true,
+                "null" => false
+            ],
+            "content" => [
+                "type" => "text",
+                "null" => false
+            ],
+            "files" => [
                 "type" => "varchar",
                 "constraint" => 250,
-                "null" => false
-            ],
-            "nip" => [
-                "type" => "varchar",
-                "constraint" => 15,
-                "null" => false
-            ],
-            "email" => [
-                "type" => "varchar",
-                "constraint" => 250,
-                "null" => false
-            ],
-            "address" => [
-                "type" => "varchar",
-                "constraint" => 300,
-                "null" => false
+                "null" => true
             ],
             "created_at" => [
                 "type" => "varchar",
@@ -46,7 +39,7 @@ class Clients extends Migration
             "updated_at" => [
                 "type" => "varchar",
                 "constraint" => 50,
-                "null" => true
+                "null" => false
             ],
             "deleted_at" => [
                 "type" => "varchar",
@@ -56,15 +49,13 @@ class Clients extends Migration
         ]);
 
         $this->forge->addPrimaryKey("id");
-        $this->forge->addKey("nip");
+        $this->forge->addForeignKey("job_id", "jobs", "id", "CASCADE", "CASCADE");
 
-        $this->forge->createTable("clients");
-
-        $this->db->enableForeignKeyChecks();
+        $this->forge->createTable("reports");
     }
 
     public function down()
     {
-        $this->forge->dropTable("clients");
+        $this->forge->dropTable("reports");
     }
 }

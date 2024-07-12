@@ -13,5 +13,7 @@ class DevSeeder extends Seeder
         $this->call("ClientSeeder");
         $this->call("BillSeeder");
         $this->call("BillContentsSeeder");
+        $this->call("JobSeeder");
+        $this->call("ReportSeeder");
     }
 }
