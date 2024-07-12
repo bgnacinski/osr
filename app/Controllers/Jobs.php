@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\JobModel;
+use App\Models\ReportsModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Jobs extends BaseController
@@ -69,5 +70,35 @@ class Jobs extends BaseController
         }
 
         return view('jobs/index', ["page_data" => $page_data, "jobs" => $data]);
+    }
+
+    public function view($identificator = null){
+        if(is_null($identificator)){
+            return redirect()->to("/panel/jobs")->with("success", 0)->with("message", "Nie znaleziono określonego zlecenia.");
+        }
+
+        $job_model = new JobModel();
+        $reports_model = new ReportsModel();
+
+        $job_data = $job_model->getJob($identificator);
+
+        if($job_data["status"] == "notfound"){
+            return redirect()->to("/panel/jobs")->with("success", 0)->with("message", "Nie znaleziono określonego zlecenia.");
+        }
+
+        $reports = $reports_model->where("job_id", $job_data["data"]->id)->orderBy("id", "DESC")->findAll();
+
+        $reports_data = [];
+        $no_reports = count($reports);
+
+        foreach($reports as $report){
+            $reports_data[] = [
+                "id" => $report->id,
+                "preview" => substr($report->content, 0, 50),
+                "date" => (string)$report->created_at
+            ];
+        }
+
+        return view("jobs/view", ["job_data" => $job_data["data"], "no_reports" => $no_reports, "reports_data" => $reports_data]);
     }
 }

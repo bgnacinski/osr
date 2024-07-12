@@ -1,6 +1,6 @@
 <?= $this->extend("templates/primary"); ?>
-<?= $this->section("title"); ?>Klienci<?= $this->endSection(); ?>
-<?= $this->section("logo"); ?>Klienci<?= $this->endSection(); ?>
+<?= $this->section("title"); ?>Zlecenia<?= $this->endSection(); ?>
+<?= $this->section("logo"); ?>Zlecenia<?= $this->endSection(); ?>
 <?= $this->section("links"); ?>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/icons.css">
@@ -8,7 +8,7 @@
 
 <?= $this->section("buttons"); ?>
 <a href="/panel/" class="button">Strona główna</a>
-<a href="/panel/clients/add" class="button">Dodaj klienta</a>
+<a href="/panel/jobs/add" class="button">Dodaj zlecenie</a>
 <a href="/account/" class="button">Mój profil</a>
 <?= $this->endSection(); ?>
 
@@ -72,7 +72,7 @@ if (session()->has('message')){
                     <td>$updated_at</td>
                     <td>$deleted_at</td>
                     <td>
-                        <a class="table-button" href="/panel/jobs/view/$job->id"><span class="material-symbols-outlined view-icon">visibility</span></a>
+                        <a class="table-button" href="/panel/jobs/view/$job->identificator"><span class="material-symbols-outlined view-icon">visibility</span></a>
                     </td>
                 </tr>
             ENDL;

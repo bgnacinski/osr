@@ -86,4 +86,20 @@ class JobModel extends Model
 
         return $data;
     }
+
+    public function getJob(string $identificator){
+        $result = $this->where("identificator", $identificator)->first();
+
+        if($result){
+            return [
+                "status" => "success",
+                "data" => $result
+            ];
+        }
+        else{
+            return [
+                "status" => "notfound"
+            ];
+        }
+    }
 }
