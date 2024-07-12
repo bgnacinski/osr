@@ -30,7 +30,7 @@ class ReportsModel extends Model
 
     // Validation
     protected $validationRules      = [
-        "job_id" => "required|integer|matches[jobs.id]",
+        "job_id" => "required|integer|matches_jobs[jobs.id]",
         "content" => "required|min_length[25]|max_length[1000]",
         "created_by" => "required|matches_users[users.login]"
     ];
