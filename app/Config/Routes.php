@@ -65,4 +65,8 @@ $routes->group("panel", ["filter" => "webauth"], function($routes){
         $routes->get("add", "Client::add_page");
         $routes->post("add", "Client::add");
     });
+
+    $routes->group("jobs", ["filter" => "webauth"], function($routes){
+        $routes->get("/", "Jobs::index");
+    });
 });
