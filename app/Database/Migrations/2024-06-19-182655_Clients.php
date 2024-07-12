@@ -39,18 +39,15 @@ class Clients extends Migration
                 "null" => false
             ],
             "created_at" => [
-                "type" => "varchar",
-                "constraint" => 50,
+                "type" => "datetime",
                 "null" => false
             ],
             "updated_at" => [
-                "type" => "varchar",
-                "constraint" => 50,
+                "type" => "datetime",
                 "null" => true
             ],
             "deleted_at" => [
-                "type" => "varchar",
-                "constraint" => 50,
+                "type" => "datetime",
                 "null" => true
             ]
         ]);
