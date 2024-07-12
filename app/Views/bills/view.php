@@ -53,7 +53,7 @@ if (session()->has('message')){
             ?>
         </p>
         <p>
-            <b>Identyfikator:</b> <?= $bill_data->identificator; ?>
+            <b>Numer:</b> <?= $bill_data->identificator; ?>
         </p>
         <p>
             <b>Data dodania:</b> <?= $bill_data->created_at; ?>

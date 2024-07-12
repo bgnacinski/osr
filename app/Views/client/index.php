@@ -63,6 +63,8 @@ if (session()->has('message')){
         <th>Operacje</th>
     </tr>
     <?php
+
+    #TODO: Remove view button and add see all jobs(for selected client)
     foreach($clients as $client){
         $address = str_replace("|", ", ", $client->address);
         $updated_at = $client->updated_at ?? "-";

@@ -1,6 +1,6 @@
 <?= $this->extend("templates/primary"); ?>
-<?= $this->section("title"); ?>Strona główna<?= $this->endSection(); ?>
-<?= $this->section("logo"); ?>Strona główna<?= $this->endSection(); ?>
+<?= $this->section("title"); ?>Rachunki<?= $this->endSection(); ?>
+<?= $this->section("logo"); ?>Rachunki<?= $this->endSection(); ?>
 <?= $this->section("links"); ?>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/icons.css">
@@ -8,9 +8,9 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section("buttons"); ?>
+<a href="/panel" class="button">Strona główna</a>
 <a href="/panel/bills/add" class="button">Dodaj rachunek</a>
-<a href="/panel/clients/" class="button">Klienci</a>
-    <a href="/account/" class="button">Mój profil</a>
+<a href="/account/" class="button">Mój profil</a>
 <?= $this->endSection(); ?>
 
 <?= $this->section("main"); ?>

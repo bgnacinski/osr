@@ -83,4 +83,8 @@ class Home extends BaseController
 
         return redirect()->to("/");
     }
+
+    public function panel(){
+        return view("panel");
+    }
 }

@@ -40,20 +40,22 @@ $routes->group('admin', ["filter" => "admin"], function($routes){
 });
 
 $routes->group("panel", ["filter" => "webauth"], function($routes){
-    $routes->get("/", "Panel::index");
-    $routes->get("(:num)", "Panel::index/$1");
+    $routes->get("/", "Home::panel");
 
     $routes->group("bills", function($routes){
-        $routes->get("view/(:num)", "Panel::view/$1");
+        $routes->get("/", "Bills::index");
+        $routes->get("(:num)", "Bills::index/$1");
 
-        $routes->get("add", "Panel::add_page");
-        $routes->post("add", "Panel::add");
+        $routes->get("view/(:num)", "Bills::view/$1");
 
-        $routes->get("edit/(:num)", "Panel::edit_page/$1");
-        $routes->post("edit/(:num)", "Panel::edit/$1");
+        $routes->get("add", "Bills::add_page");
+        $routes->post("add", "Bills::add");
 
-        $routes->get("delete/(:num)", "Panel::delete_page/$1");
-        $routes->post("delete/(:num)", "Panel::delete/$1");
+        $routes->get("edit/(:num)", "Bills::edit_page/$1");
+        $routes->post("edit/(:num)", "Bills::edit/$1");
+
+        $routes->get("delete/(:num)", "Bills::delete_page/$1");
+        $routes->post("delete/(:num)", "Bills::delete/$1");
     });
 
     $routes->group("clients", ["filter" => "webauth"], function($routes){

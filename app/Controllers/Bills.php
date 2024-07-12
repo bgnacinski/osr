@@ -11,7 +11,7 @@ use App\Models\ProductModel;
 use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class Panel extends BaseController
+class Bills extends BaseController
 {
     public function index(int $page = null)
     {
@@ -81,12 +81,12 @@ class Panel extends BaseController
             $session->setFlashdata("message", "Brak rekordów");
         }
 
-        return view("panel/index", ["bills" => $data, "page_data" => $page_data]);
+        return view("bills/index", ["bills" => $data, "page_data" => $page_data]);
     }
 
     public function view(int $bill_id = null){
         if(is_null($bill_id)){
-            return redirect()->to("/panel")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
+            return redirect()->to("/panel/bills")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
 
         $bill_model = new BillModel();
@@ -95,7 +95,7 @@ class Panel extends BaseController
         $bill_data = $bill_model->getBill($bill_id);
 
         if($bill_data["status"] == "notfound"){
-            return redirect()->to("/panel")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
+            return redirect()->to("/panel/bills")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
 
         $bill_contents = $bill_contents_model->getBillContents($bill_id);
@@ -110,7 +110,7 @@ class Panel extends BaseController
             return redirect()->to("/panel")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
 
-        return view("panel/view", ["bill_data" => $bill_data["data"], "bill_contents" => $bill_contents["data"], "client_data" => $client_data]);
+        return view("bills/view", ["bill_data" => $bill_data["data"], "bill_contents" => $bill_contents["data"], "client_data" => $client_data]);
     }
 
     public function add_page(){
@@ -121,7 +121,7 @@ class Panel extends BaseController
         $clients = $clients_model->findAll();
 
 
-        return view("panel/add", ["products" => $products, "clients" => $clients]);
+        return view("bills/add", ["products" => $products, "clients" => $clients]);
     }
 
     public function add(){
@@ -148,7 +148,7 @@ class Panel extends BaseController
 
         switch($result["status"]){
             case "success":
-                return redirect()->to("/panel")->with("success", 1)->with("message", "Pomyślnie dodano rachunek");
+                return redirect()->to("/panel/bills")->with("success", 1)->with("message", "Pomyślnie dodano rachunek");
 
             default:
                 return redirect()->to("/panel/bills/add")->with("success", 0)->with("errors", $model->errors());
