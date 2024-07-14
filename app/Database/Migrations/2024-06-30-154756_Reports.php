@@ -36,6 +36,12 @@ class Reports extends Migration
                 "constraint" => 50,
                 "null" => false
             ],
+            "number" => [
+                "type" => "int",
+                "constraint" => 11,
+                "unsigned" => true,
+                "null" => false
+            ],
             "created_at" => [
                 "type" => "datetime",
                 "null" => false

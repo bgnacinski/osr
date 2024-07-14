@@ -13,7 +13,7 @@ class ReportsModel extends Model
     protected $returnType       = ReportEntity::class;
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["job_id", "content", "files", "created_by"];
+    protected $allowedFields    = ["job_id", "content", "files", "number", "created_by"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -55,7 +55,7 @@ class ReportsModel extends Model
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
+    protected $beforeInsert   = ["addNumber"];
     protected $afterInsert    = [];
     protected $beforeUpdate   = [];
     protected $afterUpdate    = [];
@@ -63,4 +63,30 @@ class ReportsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function addNumber($data){
+        $result = $this->where("job_id", $data["data"]["job_id"])->findAll();
+
+        $number = count($result) + 1;
+
+        $data["data"]["number"] = $number;
+
+        return $data;
+    }
+
+    public function getReport($id){
+        $result = $this->find($id);
+
+        if(!is_null($result)){
+            return [
+                "status" => "success",
+                "data" => $result
+            ];
+        }
+        else{
+            return [
+                "status" => "notfound"
+            ];
+        }
+    }
 }

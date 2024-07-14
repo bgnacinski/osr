@@ -37,7 +37,7 @@ if (session()->has('message')){
 }
 ?>
 <div id="bill">
-    <div id="bill-info">
+    <div id="bill-info" class="heading">
         <p class="hide-print status">
             <?php
 

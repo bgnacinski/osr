@@ -1,9 +1,9 @@
-#bill-info{
+.heading{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
-#bill-info > *{
+.heading > *{
     margin: 1vh 1vw;
 }
 
@@ -23,4 +23,11 @@
     margin: 2.5vh 0;
 
     display: none;
+}
+
+.text-content{
+    text-align: justify;
+    width: 90%;
+
+    margin: auto;
 }

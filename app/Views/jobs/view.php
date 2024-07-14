@@ -85,7 +85,7 @@ if (session()->has('message')){
                     <td>$preview</td>
                     <td>$date</td>
                     <td>
-                        <a class="table-button" href="/panel/bills/view/$id"><span class="material-symbols-outlined view-icon">visibility</span></a>
+                        <a class="table-button" href="/panel/reports/view/$id"><span class="material-symbols-outlined view-icon">visibility</span></a>
                     </td>
                 </tr>
                 ENDL;

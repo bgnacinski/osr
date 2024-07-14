@@ -70,4 +70,8 @@ $routes->group("panel", ["filter" => "webauth"], function($routes){
         $routes->get("/", "Jobs::index");
         $routes->get("view/(:any)", "Jobs::view/$1");
     });
+
+    $routes->group("reports", ["filter" => "webauth"], function($routes){
+        $routes->get("view/(:num)", "Reports::view/$1");
+    });
 });

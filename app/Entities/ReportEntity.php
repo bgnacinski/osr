@@ -10,7 +10,8 @@ class ReportEntity extends Entity
         "job_id" => "job_id",
         "content" => "content",
         "files" => "files",
-        "created_by" => "created_by"
+        "created_by" => "created_by",
+        "number" => "number"
     ];
     protected $dates   = ['created_at', 'updated_at', 'deleted_at'];
     protected $casts   = [];
