@@ -41,7 +41,7 @@ if (session()->has('message')){
             <div id="job-description">
                 <h4>Opis zlecenia:</h4>
                 <p>
-                    <?= $job_data->description; ?>
+                    <?= str_replace("\n", "<br>", $job_data->description); ?>
                 </p>
             </div>
             <div class="cell-2">
@@ -67,7 +67,7 @@ if (session()->has('message')){
                         <b>Ilość raportów:</b> <?= $no_reports; ?>
                     </p>
                     <p>
-                        <b>Ostatni raport:</b> <?= end($reports_data)["date"];?>
+                        <b>Ostatni raport:</b> <?= end($reports_data)["date"] ?? "Brak raportów"; ?>
                     </p>
                 </div>
                 <div id="comment">

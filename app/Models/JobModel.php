@@ -128,4 +128,30 @@ class JobModel extends Model
             ];
         }
     }
+
+    public function addJob($client, $description, $comment, $created_by){
+        $data = [
+            "client" => $client,
+            "status" => "pending",
+            "description" => $description,
+            "comment" => $comment,
+            "created_by" => $created_by
+        ];
+
+        $val_result = $this->validate($data);
+
+        if($val_result){
+            $this->save($data);
+
+            return [
+                "status" => "success"
+            ];
+        }
+        else{
+            return [
+                "status" => "valerr",
+                "errors" => $this->errors()
+            ];
+        }
+    }
 }

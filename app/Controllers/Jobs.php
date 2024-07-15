@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\ClientModel;
 use App\Models\JobModel;
 use App\Models\ReportsModel;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -140,5 +141,31 @@ class Jobs extends BaseController
         }
 
         return redirect()->to($redirect_to)->with("success", $success)->with("message", $message);
+    }
+
+    public function add_page(){
+        $client_model = new ClientModel();
+        $clients = $client_model->findAll();
+
+        return view("jobs/add", ["clients" => $clients]);
+    }
+
+    public function add(){
+        $model = new JobModel();
+
+        $client = $this->request->getPost("client");
+        $description = $this->request->getPost("description");
+        $comment = $this->request->getPost("comment");
+        $created_by = $this->session->user->login;
+
+        $result = $model->addJob($client, $description, $comment, $created_by);
+
+        switch($result["status"]){
+            case "success":
+                return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 1)->with("message", "Dodano zlecenie.");
+
+            case "valerr":
+                return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("errors", $result["errors"]);
+        }
     }
 }
