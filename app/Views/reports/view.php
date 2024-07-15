@@ -3,6 +3,7 @@
 <?= $this->section("logo"); ?>Przeglądanie raportu<?= $this->endSection(); ?>
 <?= $this->section("links"); ?>
     <link rel="stylesheet" href="/css/panel/view.css">
+    <link rel="stylesheet" href="/css/panel/bill-print.css">
     <link rel="stylesheet" href="/css/table.css">
     <link rel="stylesheet" href="/css/icons.css">
 <?= $this->endSection(); ?>
@@ -68,8 +69,8 @@ if (session()->has('message')){
         <p id="report-content" class="text-content">
             <?= str_replace("\n", "<br>", $report_data->content); ?>
         </p>
-        <h6>Załączniki:</h6>
-        <div id="report-files" class="file-list">
+        <h6 class="hide-print">Załączniki:</h6>
+        <div id="report-files" class="file-list hide-print">
             <?php
             $files = explode(",", $report_data->files);
             $file_counter = 0;
