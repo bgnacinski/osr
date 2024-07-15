@@ -82,15 +82,15 @@ class Reports extends BaseController
 
                     $filepath = WRITEPATH . 'uploads';
 
-                    $files[] = $filepath."/".$newName;
-
                     $file->move($filepath, $newName);
+
+                    $files[] = $newName;
                 }
             }
         }
 
         if(!empty($files)){
-            $report->files = $files;
+            $report->files = implode(",", $files);
         }
         else{
             $report->files = null;
