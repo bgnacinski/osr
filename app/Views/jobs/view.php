@@ -36,7 +36,7 @@ if (session()->has('message')){
     }
 }
 ?>
-    <div id="job">
+    <div id="job" class="mb-3">
         <div id="job-data">
             <div id="job-description">
                 <h4>Opis zlecenia:</h4>
@@ -69,6 +69,22 @@ if (session()->has('message')){
                     <p>
                         <b>Ostatni raport:</b> <?= end($reports_data)["date"];?>
                     </p>
+                </div>
+                <div id="comment">
+                    <h4>Komentarz:</h4>
+                    <form method="post" action="/panel/jobs/update-comment/<?= $job_data->id; ?>">
+                        <div class="mb-3">
+                            <div class="col-auto">
+                                <span id="commentHelpInline" class="form-text">
+                                  Komentarz nie jest widoczny dla klienta.
+                                </span>
+                            </div>
+                            <textarea class="form-control" id="comment-input" name="comment" rows="5"><?= $job_data->comment; ?></textarea>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-3">Zaktualizuj</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

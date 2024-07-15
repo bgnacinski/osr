@@ -102,4 +102,30 @@ class JobModel extends Model
             ];
         }
     }
+
+    public function updateComment($id, $comment){
+        $job = $this->find($id);
+
+        if($job){
+            if($job->comment != $comment){
+                $job->comment = $comment;
+
+                $this->save($job);
+
+                return [
+                    "status" => "success"
+                ];
+            }
+            else{
+                return [
+                    "status" => "nodata"
+                ];
+            }
+        }
+        else{
+            return [
+                "status" => "notfound"
+            ];
+        }
+    }
 }

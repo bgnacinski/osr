@@ -92,13 +92,53 @@ class Jobs extends BaseController
         $no_reports = count($reports);
 
         foreach($reports as $report){
+            if(strlen($report->content) > 50){
+                $preview = substr($report->content, 0, 47) . "...";
+            }
+            else{
+                $preview = $report->content;
+            }
+
             $reports_data[] = [
                 "id" => $report->id,
-                "preview" => substr($report->content, 0, 50),
+                "preview" => $preview,
                 "date" => (string)$report->created_at
             ];
         }
 
         return view("jobs/view", ["job_data" => $job_data["data"], "no_reports" => $no_reports, "reports_data" => $reports_data]);
+    }
+
+    public function update_comment($job_id){
+        $model = new JobModel();
+
+        $comment = $this->request->getPost("comment");
+
+        $result = $model->updateComment($job_id, $comment);
+
+        switch($result["status"]){
+            case "success":
+                $success = 1;
+                $message = "Pomyślnie zmieniono komentarz.";
+
+                $redirect_to = $_SERVER["HTTP_REFERER"];
+                break;
+
+            case "nodata":
+                $success = 0;
+                $message = "Nie zmieniono komentarza.";
+
+                $redirect_to = $_SERVER["HTTP_REFERER"];
+                break;
+
+            case "notfound":
+                $success = 0;
+                $message = "Nie znaleziono zadania o takim ID.";
+
+                $redirect_to = "/panel/jobs";
+                break;
+        }
+
+        return redirect()->to($redirect_to)->with("success", $success)->with("message", $message);
     }
 }
