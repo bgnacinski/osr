@@ -75,6 +75,7 @@ $routes->group("panel", ["filter" => "webauth"], function($routes){
 
     $routes->group("reports", ["filter" => "webauth"], function($routes){
         $routes->get("view/(:num)", "Reports::view/$1");
+        $routes->get("view/(:num)/file/(:any)", "Reports::show_file/$1/$2");
 
         $routes->get("add/(:num)", "Reports::add_page/$1");
         $routes->post("add/(:num)", "Reports::add/$1");

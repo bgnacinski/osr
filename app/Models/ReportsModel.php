@@ -43,8 +43,8 @@ class ReportsModel extends Model
         ],
         "content" => [
             "required" => "Zawartość raportu jest wymagana.",
-            "min_length" => "Zawartość raportu może mieć minimalnie 25 znaków.",
-            "max_length" => "Zawartość raportu może mieć maksymalnie 1000 znaków."
+            "min_length" => "Zawartość raportu musi mieć minimalnie 25 znaków.",
+            "max_length" => "Zawartość raportu musi mieć maksymalnie 1000 znaków."
         ],
         "created_by" => [
             "required" => "Podanie autora jest wymagane.",
@@ -92,7 +92,7 @@ class ReportsModel extends Model
     }
 
     public function addReport($report){
-        $val_result = $this->validate($report);
+        $val_result = $this->validate($report->toArray());
 
         if($val_result){
             $this->insert($report);

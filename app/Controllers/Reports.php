@@ -65,7 +65,7 @@ class Reports extends BaseController
         $report->content = $report_content;
         $report->created_by = $this->session->user->login;
 
-        $val_result = $model->validate($report);
+        $val_result = $model->validate($report->toArray());
 
         if(!$val_result){
             $errors = $model->errors();
@@ -105,5 +105,24 @@ class Reports extends BaseController
             case "valerr":
                 return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("errors", $result["errors"]);
         }
+    }
+
+    public function show_file($identificator = null, $filename = null){
+        if(is_null($identificator) || is_null($filename)){
+            return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("message", "Nie znaleziono pliku.");
+        }
+
+        helper("filesystem");
+        $path = WRITEPATH . 'uploads/';
+
+        $fullpath = $path . $filename;
+        $file = new \CodeIgniter\Files\File($fullpath, true);
+        $binary = readfile($fullpath);
+
+        return $this->response
+            ->setHeader('Content-Type', $file->getMimeType())
+            ->setHeader('Content-disposition', 'inline; filename="' . $file->getBasename() . '"')
+            ->setStatusCode(200)
+            ->setBody($binary);
     }
 }

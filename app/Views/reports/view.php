@@ -10,7 +10,7 @@
 
 <?= $this->section("buttons"); ?>
     <a href="/panel/" class="button">Strona główna</a>
-    <a href="/panel/reports/add" class="button">Dodaj raport</a>
+    <a href="/panel/reports/add/<?= $job_data->id; ?>" class="button">Dodaj raport</a>
     <a href="/account/" class="button">Mój profil</a>
 <?= $this->endSection(); ?>
 
@@ -66,9 +66,29 @@ if (session()->has('message')){
         </p>
     </div>
     <div id="report-data">
-        TODO: DODAĆ WYŚWIETLANIE ZDJĘĆ
         <p id="report-content" class="text-content">
-            <?= $report_data->content?>
+            <?= str_replace("\n", "<br>", $report_data->content); ?>
         </p>
+        <div id="report-files">
+            <?php
+            $files = explode(",", $report_data->files);
+            $file_counter = 0;
+            $image_counter = 0;
+
+            foreach($files as $file){
+                $extension = explode(".", $file);
+
+                if(in_array($extension[1], ["jpg", "png", "jpeg", "heic"])){
+                    $image_counter++;
+
+                    echo '<a href="/panel/reports/view/'.$report_data->id.'/file/'.$file.'">Zdjęcie '.$image_counter.'</a>';
+                }
+                else{
+                    $file_counter += 1;
+                    echo '<a href="/panel/reports/view/'.$report_data->id.'/file/'.$file.'">Dokument '.$file_counter.'</a>';
+                }
+            }
+            ?>
+        </div>
     </div>
 <?= $this->endSection(); ?>
