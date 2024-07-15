@@ -162,10 +162,10 @@ class Jobs extends BaseController
 
         switch($result["status"]){
             case "success":
-                return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 1)->with("message", "Dodano zlecenie.");
+                return redirect()->to("/panel/jobs")->with("success", 1)->with("message", "Dodano zlecenie.");
 
             case "valerr":
-                return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("errors", $result["errors"]);
+                return redirect()->to("/panel/jobs")->with("success", 0)->with("errors", $result["errors"]);
         }
     }
 }
