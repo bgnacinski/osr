@@ -8,6 +8,10 @@ class Home extends BaseController
 {
     public function index()
     {
+        if(isset($_SERVER["HTTP_REFERER"])){
+            redirect()->to($_SERVER["HTTP_REFERER"]);
+        }
+
         $user = $this->session->user;
 
         switch($user->role){
