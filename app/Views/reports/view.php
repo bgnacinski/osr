@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="/css/panel/view.css">
     <link rel="stylesheet" href="/css/table.css">
     <link rel="stylesheet" href="/css/icons.css">
-    <link rel="stylesheet" media="print" href="/css/panel/bill-print.css">
 <?= $this->endSection(); ?>
 
 <?= $this->section("buttons"); ?>
@@ -69,7 +68,8 @@ if (session()->has('message')){
         <p id="report-content" class="text-content">
             <?= str_replace("\n", "<br>", $report_data->content); ?>
         </p>
-        <div id="report-files">
+        <h6>Załączniki:</h6>
+        <div id="report-files" class="file-list">
             <?php
             $files = explode(",", $report_data->files);
             $file_counter = 0;
@@ -81,11 +81,15 @@ if (session()->has('message')){
                 if(in_array($extension[1], ["jpg", "png", "jpeg", "heic"])){
                     $image_counter++;
 
-                    echo '<a href="/panel/reports/view/'.$report_data->id.'/file/'.$file.'">Zdjęcie '.$image_counter.'</a>';
+                    echo '<a class="document-link image" href="/panel/reports/view/'.$report_data->id.'/file/'.$file.'">
+                    <span class="material-symbols-outlined">photo_camera</span> Zdjęcie '.$image_counter.'
+                    </a>';
                 }
                 else{
                     $file_counter += 1;
-                    echo '<a href="/panel/reports/view/'.$report_data->id.'/file/'.$file.'">Dokument '.$file_counter.'</a>';
+                    echo '<a class="document-link" href="/panel/reports/view/'.$report_data->id.'/file/'.$file.'">
+                    <span class="material-symbols-outlined">description</span> Dokument '.$file_counter.'
+                    </a>';
                 }
             }
             ?>
