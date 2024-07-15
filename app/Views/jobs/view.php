@@ -10,7 +10,7 @@
 
 <?= $this->section("buttons"); ?>
     <a href="/panel/" class="button">Strona główna</a>
-    <a href="/panel/jobs/add" class="button">Dodaj zlecenie</a>
+    <a href="/panel/reports/add/<?= $job_data->id; ?>" class="button">Dodaj raport</a>
     <a href="/account/" class="button">Mój profil</a>
 <?= $this->endSection(); ?>
 

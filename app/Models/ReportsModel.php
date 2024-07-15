@@ -32,13 +32,14 @@ class ReportsModel extends Model
     protected $validationRules      = [
         "job_id" => "required|integer|matches_jobs[jobs.id]",
         "content" => "required|min_length[25]|max_length[1000]",
-        "created_by" => "required|matches_users[users.login]"
+        "created_by" => "required|matches_users[users.login]",
+        "files" => "permit_empty"
     ];
     protected $validationMessages   = [
         "job_id" => [
             "required" => "ID zlecenia jest wymagane.",
             "integer" => "ID zlecenia musi być liczbą.",
-            "matches" => "Zlecenie o podanym ID nie istnieje."
+            "matches_jobs" => "Zlecenie o podanym ID nie istnieje."
         ],
         "content" => [
             "required" => "Zawartość raportu jest wymagana.",
@@ -86,6 +87,24 @@ class ReportsModel extends Model
         else{
             return [
                 "status" => "notfound"
+            ];
+        }
+    }
+
+    public function addReport($report){
+        $val_result = $this->validate($report);
+
+        if($val_result){
+            $this->insert($report);
+
+            return [
+                "status" => "success"
+            ];
+        }
+        else{
+            return [
+                "status" => "valerr",
+                "errors" => $this->errors()
             ];
         }
     }

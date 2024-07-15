@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Entities\ReportEntity;
 use App\Models\JobModel;
 use App\Models\ReportsModel;
 use App\Models\UserModel;
@@ -39,5 +40,70 @@ class Reports extends BaseController
         $report_data->created_by = $users_model->where("login", $report_data->created_by)->first()->name;
 
         return view("reports/view", ["report_data" => $result["data"], "job_data" => $job_data]);
+    }
+
+    public function add_page($job_id = null){
+        if(is_null($job_id)){
+            redirect("/panel/jobs")->with("success", 0)->with("message", "Nie znaleziono zlecenia z tym ID");
+        }
+
+        return view("reports/add");
+    }
+
+    public function add($job_id = null){
+        if(is_null($job_id)){
+            redirect()->to("/panel/jobs")->with("success", 0)->with("message", "Nie znaleziono zlecenia z tym ID.");
+        }
+
+        $report_content = $this->request->getPost("content");
+        $report_files = $this->request->getFiles();
+
+        $model = new ReportsModel();
+
+        $report = new ReportEntity();
+        $report->job_id = (int)$job_id;
+        $report->content = $report_content;
+        $report->created_by = $this->session->user->login;
+
+        $val_result = $model->validate($report);
+
+        if(!$val_result){
+            $errors = $model->errors();
+
+            return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("errors", $errors);
+        }
+
+        $files = [];
+
+        if($report_files){
+            foreach ($report_files['files'] as $file) {
+                if ($file->isValid() && !$file->hasMoved()) {
+                    $newName = $file->getRandomName();
+
+                    $filepath = WRITEPATH . 'uploads';
+
+                    $files[] = $filepath."/".$newName;
+
+                    $file->move($filepath, $newName);
+                }
+            }
+        }
+
+        if(!empty($files)){
+            $report->files = $files;
+        }
+        else{
+            $report->files = null;
+        }
+
+        $result = $model->addReport($report);
+
+        switch($result["status"]){
+            case "success":
+                return redirect()->to("/panel/jobs/")->with("success", true)->with("message", "Dodano raport.");
+
+            case "valerr":
+                return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("errors", $result["errors"]);
+        }
     }
 }
