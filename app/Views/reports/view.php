@@ -66,6 +66,7 @@ if (session()->has('message')){
         </p>
     </div>
     <div id="report-data">
+        TODO: DODAĆ WYŚWIETLANIE ZDJĘĆ
         <p id="report-content" class="text-content">
             <?= $report_data->content?>
         </p>
