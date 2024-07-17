@@ -70,28 +70,30 @@ if (session()->has('message')){
         <p id="report-content" class="text-content">
             <?= str_replace("\n", "<br>", $report_data->content); ?>
         </p>
-        <h6 class="hide-print">Załączniki:</h6>
+        <h6 class="hide-print" <?php if(is_null($report_data->files)){ echo "hidden"; }?>>Załączniki:</h6>
         <div id="report-files" class="file-list hide-print">
             <?php
-            $files = explode(",", $report_data->files);
-            $file_counter = 0;
-            $image_counter = 0;
+            if(!is_null($report_data->files)){
+                $files = explode(",", $report_data->files);
+                $file_counter = 0;
+                $image_counter = 0;
 
-            foreach($files as $file){
-                $extension = explode(".", $file);
+                foreach($files as $file){
+                    $extension = explode(".", $file);
 
-                if(in_array($extension[1], ["jpg", "png", "jpeg", "heic"])){
-                    $image_counter++;
+                    if(in_array($extension[1], ["jpg", "png", "jpeg", "heic"])){
+                        $image_counter++;
 
-                    echo '<a class="document-link image" href="/panel/reports/view/'.$report_data->id.'/file/'.$file.'">
+                        echo '<a class="document-link image" href="/panel/reports/view/'.$report_data->id.'/file/'.$file.'">
                     <span class="material-symbols-outlined">photo_camera</span> Zdjęcie '.$image_counter.'
                     </a>';
-                }
-                else{
-                    $file_counter += 1;
-                    echo '<a class="document-link" href="/panel/reports/view/'.$report_data->id.'/file/'.$file.'">
+                    }
+                    else{
+                        $file_counter += 1;
+                        echo '<a class="document-link" href="/panel/reports/view/'.$report_data->id.'/file/'.$file.'">
                     <span class="material-symbols-outlined">description</span> Dokument '.$file_counter.'
                     </a>';
+                    }
                 }
             }
             ?>
