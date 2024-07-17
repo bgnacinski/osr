@@ -37,7 +37,7 @@ if (session()->has('message')){
         <p>Czy na pewno chcesz potwierdzić zmianę statusu zlecenia <?= $identificator; ?> na <b>wykonane</b>?</p>
         <div id="confirm-buttons">
             <div>
-                <a class="btn btn-primary" href="/panel/jobs/<?= $identificator; ?>">Powrót</a>
+                <a class="btn btn-primary" href="/panel/jobs/view/<?= $identificator; ?>">Powrót</a>
             </div>
             <form method="post">
                 <input type="submit" class="btn btn-danger" value="Potwierdź">
