@@ -154,4 +154,37 @@ class JobModel extends Model
             ];
         }
     }
+
+    public function changeStatus($identificator, $status){
+        $rules = [
+            "status" => "required|in_list[ok,pending,payment,done]"
+        ];
+
+        $validation = service('validation');
+        $validation->setRules($rules);
+
+        $this->validationRules = $rules;
+
+        $val_result = $validation->run(["status" => $status]);
+
+        if($val_result){
+            $job = $this->where("identificator", $identificator)->first();
+            if($job) {
+                $job->status = $status;
+
+                $this->save($job->toArray());
+
+                return ["status" => "success"];
+            }
+            else{
+                return ["status" => "notfound"];
+            }
+        }
+        else{
+            return [
+                "status" => "valerr",
+                "errors" => $validation->getErrors()
+            ];
+        }
+    }
 }

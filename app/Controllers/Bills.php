@@ -7,6 +7,7 @@ use App\Models\BillEntryModel;
 use App\Models\BillModel;
 use App\Models\BillEntityModel;
 use App\Models\ClientModel;
+use App\Models\JobModel;
 use App\Models\ProductModel;
 use App\Models\UserModel;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -113,20 +114,30 @@ class Bills extends BaseController
         return view("bills/view", ["bill_data" => $bill_data["data"], "bill_contents" => $bill_contents["data"], "client_data" => $client_data]);
     }
 
-    public function add_page(){
+    public function add_page($job_identificator = null){
+        if(is_null($job_identificator)){
+            return redirect()->back()->with("success", 0)->with("message", "Nie znaleziono określonego zlecenia.");
+        }
+
         $product_model = new ProductModel();
         $products = $product_model->findAll();
 
-        $clients_model = new ClientModel();
-        $clients = $clients_model->findAll();
+        $job_model = new JobModel();
+        $job = $job_model->getJob($job_identificator);
 
+        if($job["status"] != "success"){
+            return redirect()->back()->with("success", 0)->with("message", "Nie znaleziono określonego zlecenia.");
+        }
 
-        return view("bills/add", ["products" => $products, "clients" => $clients]);
+        return view("bills/add", ["products" => $products, "job" => $job["data"]]);
     }
 
-    public function add(){
-        $nip = (int)$this->request->getPost("nip");
-        $status = $this->request->getPost("status");
+    public function add($job_identificator = null){
+        if(is_null($job_identificator)){
+            return redirect()->back()->with("success", 0)->with("message", "Nie znaleziono określonego zlecenia.");
+        }
+
+        $nip = (int)$this->request->getPost("client");
         $currency = $this->request->getPost("currency");
         $bill_contents_dump = $this->request->getPost("bill_contents");
 
@@ -144,14 +155,19 @@ class Bills extends BaseController
         $created_by = $this->session->user->login;
 
         $model = new BillModel();
-        $result = $model->addBill($nip, $status, $currency, $created_by, $bill_contents);
+        $result = $model->addBill($nip, $job_identificator, $currency, $created_by, $bill_contents);
 
         switch($result["status"]){
             case "success":
-                return redirect()->to("/panel/bills")->with("success", 1)->with("message", "Pomyślnie dodano rachunek");
+                $job_model = new JobModel();
+                $result = $job_model->changeStatus($job_identificator, "payment");
+
+                $bill_id = $model->getInsertID();
+
+                return redirect()->to("/panel/bills/view/$bill_id")->with("success", 1)->with("message", "Pomyślnie dodano rachunek");
 
             default:
-                return redirect()->to("/panel/bills/add")->with("success", 0)->with("errors", $model->errors());
+                return redirect()->back()->with("success", 0)->with("errors", $model->errors());
         }
     }
 }

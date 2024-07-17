@@ -3,15 +3,19 @@
 namespace App\Database\Seeds;
 
 use App\Models\BillModel;
+use App\Models\JobModel;
 use CodeIgniter\Database\Seeder;
 
 class BillSeeder extends Seeder
 {
     public function run()
     {
+        $job_model = new JobModel();
+        $job = $job_model->first();
+
         $data = [
             "client" => "8961017023",
-            "status" => "ok",
+            "job_id" => $job->identificator,
             "currency" => "PLN",
             "created_by" => "anowak"
         ];

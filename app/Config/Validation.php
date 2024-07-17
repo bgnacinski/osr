@@ -144,4 +144,19 @@ class CustomRules
             return false;
         }
     }
+
+    public static function matches_identificator_jobs($str, string $field, array $data, string &$error = null): bool
+    {
+        $model = new JobModel();
+        $job_id = $data["job_id"];
+
+        $result = $model->where("identificator", $job_id)->findAll();
+
+        if(count($result) > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

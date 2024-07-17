@@ -28,9 +28,9 @@ class Bills extends Migration
                 "constraint" => 15,
                 "null" => false
             ],
-            "status" => [
-                "type" => "set",
-                "constraint" => ["ok", "pending", "payment", "returned"],
+            "job_id" => [
+                "type" => "varchar",
+                "constraint" => 50,
                 "null" => false
             ],
             "currency" => [
@@ -59,6 +59,7 @@ class Bills extends Migration
         $this->forge->addPrimaryKey("id");
         $this->forge->addForeignKey("created_by", "users", "login", "CASCADE", "NO ACTION");
         $this->forge->addForeignKey("client", "clients", "nip", "CASCADE", "NO ACTION");
+        $this->forge->addForeignKey("job_id", "jobs", "identificator", "CASCADE", "NO ACTION");
 
         $this->forge->createTable("bills");
 

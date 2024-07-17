@@ -59,6 +59,7 @@ class Jobs extends Migration
         ]);
 
         $this->forge->addPrimaryKey("id");
+        $this->forge->addKey("identificator");
         $this->forge->addForeignKey("client", "clients", "nip", "CASCADE", "CASCADE");
 
         $this->forge->createTable("jobs");

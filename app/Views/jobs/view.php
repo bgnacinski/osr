@@ -96,7 +96,7 @@ if (session()->has('message')){
             $job_id = $job_data->identificator;
 
             if($job_data->status == "done"){
-                echo '<a class="btn btn-success" href="/panel/bills/add/'.$job_id.'">Wystaw rachunek</a>';
+                echo '<a class="btn btn-success" target="_blank" href="/panel/bills/add/'.$job_id.'">Wystaw rachunek</a>';
             }
             else{
                 echo '<a class="btn btn-danger" href="/panel/jobs/confirm/'.$job_id.'">Oznacz jako wykonane</a>';

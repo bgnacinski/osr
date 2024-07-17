@@ -38,25 +38,11 @@ if (session()->has('message')){
 ?>
 <div id="bill">
     <div id="bill-info" class="heading">
-        <p class="hide-print status">
-            <?php
-
-            $session_values = [
-                "ok" => '<span class="material-symbols-outlined ok-icon">check_circle</span>Zrealizowane',
-                "pending" => '<span class="material-symbols-outlined pending-icon">pending</span>W trakcie',
-                "payment" => '<span class="material-symbols-outlined payment-icon">error</span><b>Do opłacenia</b>'
-            ];
-
-            $status = $session_values[$bill_data->status];
-
-            echo $status;
-            ?>
-        </p>
         <p>
             <b>Numer:</b> <?= $bill_data->identificator; ?>
         </p>
         <p>
-            <b>Data dodania:</b> <?= $bill_data->created_at; ?>
+            <b>Data wystawienia:</b> <?php $dateTime = datetime::createfromformat('Y-m-d H:i:s',$bill_data->created_at); echo $dateTime->format("Y-m-d"); ?>
         </p>
         <p class="hide-print">
             <b>Dodane przez:</b> <?= $bill_data->created_by; ?>

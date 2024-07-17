@@ -13,7 +13,7 @@ class BillModel extends Model
     protected $returnType       = BillEntity::class;
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["identificator", "client", "status", "currency", "created_by"];
+    protected $allowedFields    = ["identificator", "client", "job_id", "currency", "created_by"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -31,7 +31,7 @@ class BillModel extends Model
     // Validation
     protected $validationRules      = [
         "client" => "required|min_length[10]|max_length[10]|integer|valid_nip|matches_clients[clients.nip]",
-        "status" => "required|in_list[ok,pending,payment,returned]",
+        "job_id" => "required|matches_identificator_jobs[jobs.identificator]",
         "currency" => "required|in_list[AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BRL, BSD, BTN, BWP, BYN, BZD, CAD, CDF, CHF, CLP, CNY, COP, CRC, CUC, CUP, CVE, CZK, DJF, DKK, DOP, DZD, EGP, ERN, ETB, EUR, FJD, FKP, FOK, GBP, GEL, GGP, GHS, GIP, GMD, GNF, GTQ, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, IMP, INR, IQD, IRR, ISK, JEP, JMD, JOD, JPY, KES, KGS, KHR, KID, KMF, KRW, KWD, KYD, KZT, LAK, LBP, LKR, LRD, LSL, LYD, MAD, MDL, MGA, MKD, MMK, MNT, MOP, MRU, MUR, MVR, MWK, MXN, MYR, MZN, NAD, NGN, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SEK, SGD, SHP, SLL, SOS, SRD, SSP, STN, SYP, SZL, THB, TJS, TMT, TND, TOP, TRY, TTD, TVD, TWD, TZS, UAH, UGX, USD, UYU, UZS, VED, VES, VND, VUV, WST, XAF, XCD, XDR, XOF, XPF, YER, ZAR, ZMW, ZWL]",
         "created_by" => "required|matches_users[users.login]"
     ];
@@ -44,9 +44,9 @@ class BillModel extends Model
             "valid_nip" => "NIP jest niepoprawny.",
             "matches_clients" => "Podany NIP nie jest powiązany z żadnym klientem."
         ],
-        "status" => [
-            "required" => "Pole statusu jest wymagane.",
-            "in_list" => "Wartością pola statusu mogą być tylko ('ok', 'pending', 'payment', 'returned')."
+        "job_id" => [
+            "required" => "Pole identyfikatora zlecenia jest wymagane.",
+            "matches_identificator_jobs" => "Zlecenie o tym identyfikatorze nie znajduje się w bazie danych."
         ],
         "currency" => [
             "required" => "Waluta jest wymagana.",
@@ -97,12 +97,12 @@ class BillModel extends Model
         }
     }
 
-    public function addBill(int $nip, string $status, string $currency, string $created_by, array $bill_contents){
+    public function addBill(int $nip, string $job_identificator, string $currency, string $created_by, array $bill_contents){
         $bill_contents_model = new BillEntryModel();
 
         $bill_data = [
             "client" => (string)$nip,
-            "status" => $status,
+            "job_id" => $job_identificator,
             "currency" => $currency,
             "created_by" => $created_by
         ];

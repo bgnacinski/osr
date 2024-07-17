@@ -46,7 +46,6 @@ if (session()->has('message')){
         <tbody>
         <tr>
             <th>Identyfikator</th>
-            <th>Status</th>
             <th>Data utworzenia</th>
             <th>Data zmiany danych</th>
             <th>Data usunięcia</th>
@@ -57,18 +56,9 @@ if (session()->has('message')){
             $updated_at = $bill->updated_at ?? "-";
             $deleted_at = $bill->deleted_at ?? "-";
 
-            $status_values = [
-                "ok" => '<span class="material-symbols-outlined ok-icon">check_circle</span>Zrealizowane',
-                "pending" => '<span class="material-symbols-outlined pending-icon">pending</span>W trakcie',
-                "payment" => '<span class="material-symbols-outlined payment-icon">error</span><b>Do opłacenia</b>'
-            ];
-
-            $status = $status_values[$bill->status];
-
             echo <<<ENDL
                 <tr class="data">
                     <td>$bill->identificator</td>
-                    <td class="status">$status</td>
                     <td>$bill->created_at</td>
                     <td>$updated_at</td>
                     <td>$deleted_at</td>

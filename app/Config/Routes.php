@@ -48,8 +48,8 @@ $routes->group("panel", ["filter" => "webauth"], function($routes){
 
         $routes->get("view/(:num)", "Bills::view/$1");
 
-        $routes->get("add", "Bills::add_page");
-        $routes->post("add", "Bills::add");
+        $routes->get("add/(:any)", "Bills::add_page/$1"); // job identificator
+        $routes->post("add/(:any)", "Bills::add/$1");
 
         $routes->get("edit/(:num)", "Bills::edit_page/$1");
         $routes->post("edit/(:num)", "Bills::edit/$1");
