@@ -112,6 +112,13 @@ class Reports extends BaseController
             return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("message", "Nie znaleziono pliku.");
         }
 
+        $model = new ReportsModel();
+        $job = $model->where("identificator", $identificator)->first();
+
+        if(!in_array($filename, $job->files)){
+            return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("message", "Nie masz dostępu do tego pliku.");
+        }
+
         helper("filesystem");
         $path = WRITEPATH . 'uploads/';
 
