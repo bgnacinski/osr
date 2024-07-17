@@ -39,13 +39,14 @@ if (session()->has('message')){
     <div id="job-info" class="heading">
         <p class="status">
             <?php
-            $session_values = [
+            $status_values = [
                 "ok" => '<span class="material-symbols-outlined ok-icon">check_circle</span>Zrealizowane',
                 "pending" => '<span class="material-symbols-outlined pending-icon">pending</span>W trakcie',
-                "payment" => '<span class="material-symbols-outlined payment-icon">error</span><b>Do opłacenia</b>'
+                "payment" => '<span class="material-symbols-outlined payment-icon">error</span><b>Do opłacenia</b>',
+                "done" => '<span class="material-symbols-outlined pending-icon">apps</span>Wykonano'
             ];
 
-            $status = $session_values[$job_data->status];
+            $status = $status_values[$job_data->status];
 
             echo $status;
             ?>
