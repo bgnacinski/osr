@@ -98,8 +98,11 @@ if (session()->has('message')){
             if($job_data->status == "done"){
                 echo '<a class="btn btn-success" target="_blank" href="/panel/bills/add/'.$job_id.'">Wystaw rachunek</a>';
             }
-            else{
-                echo '<a class="btn btn-danger" href="/panel/jobs/confirm/'.$job_id.'">Oznacz jako wykonane</a>';
+            else if($job_data->status == "payment"){
+                echo '<a class="btn btn-success" href="/panel/jobs/confirm/ok/'.$job_id.'">Oznacz jako opłacone</a>';
+            }
+            else if($job_data->status == "pending"){
+                echo '<a class="btn btn-danger" href="/panel/jobs/confirm/done/'.$job_id.'">Oznacz jako wykonane</a>';
             }
             ?>
         </div>

@@ -34,7 +34,17 @@ if (session()->has('message')){
 }
 ?>
     <div id="message">
-        <p>Czy na pewno chcesz potwierdzić zmianę statusu zlecenia <?= $identificator; ?> na <b>wykonane</b>?</p>
+        <?php
+        $status_values = [
+            "ok" => 'Zrealizowane',
+            "pending" => 'W trakcie',
+            "payment" => '<b>Do opłacenia</b>',
+            "done" => 'Wykonano'
+        ];
+
+        $status = $status_values[$status] ?? "-";
+        ?>
+        <p>Czy na pewno chcesz potwierdzić zmianę statusu zlecenia <?= $identificator; ?> na <b><?= $status;?></b>?</p>
         <div id="confirm-buttons">
             <div>
                 <a class="btn btn-primary" href="/panel/jobs/view/<?= $identificator; ?>">Powrót</a>

@@ -169,16 +169,16 @@ class Jobs extends BaseController
         }
     }
 
-    public function confirm_view($identificator = null){
+    public function confirm_view($status = null, $identificator = null){
         if(is_null($identificator)){
             return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("message", "Nie znaleziono określonego zlecenia.");
         }
 
-        return view("jobs/confirm", ["identificator" => $identificator]);
+        return view("jobs/confirm", ["status" => $status, "identificator" => $identificator]);
     }
 
-    public function confirm($identificator = null){
-        if(is_null($identificator)){
+    public function confirm($status = null, $identificator = null){
+        if(is_null($status) || is_null($identificator)){
             return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("message", "Nie znaleziono określonego zlecenia.");
         }
 
@@ -186,9 +186,13 @@ class Jobs extends BaseController
         $job = $model->where("identificator", $identificator)->first();
 
         if($job){
-            $job->status = "done";
+            $job->status = $status;
 
             $model->save($job->toArray());
+
+            if(!empty($model->errors())){
+                return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("message", "Niepoprawna wartość statusu.");
+            }
 
             return redirect()->to("/panel/jobs/view/$identificator")->with("success", 1)->with("message", "Pomyślnie zmieniono status zlecenia.");
         }
