@@ -31,7 +31,7 @@ class JobModel extends Model
     // Validation
     protected $validationRules      = [
         "client" => "required|matches_clients[clients.nip]|min_length[10]|max_length[10]|integer|valid_nip",
-        "status" => "required|in_list[ok,pending,payment]",
+        "status" => "required|in_list[ok,pending,payment,done]",
         "description" => "required|min_length[5]|max_length[500]",
         "comment" => "max_length[500]",
         "created_by" => "required|matches_users[users.login]"
@@ -47,7 +47,7 @@ class JobModel extends Model
         ],
         "status" => [
             "required" => "Pole statusu jest wymagane.",
-            "in_list" => "Wartością pola statusu mogą być tylko ('ok', 'pending', 'payment', 'returned')."
+            "in_list" => "Wartością pola statusu mogą być tylko ('ok', 'pending', 'payment', 'done')."
         ],
         "description" => [
             "required" => "Opis zlecenia jest wymagany.",

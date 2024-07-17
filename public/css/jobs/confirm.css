@@ -1,0 +1,8 @@
+#confirm-buttons{
+    display: flex;
+    flex-wrap: wrap;
+}
+#confirm-buttons > *{
+    margin: 1vh 2.5vw;
+    padding: 1vh 1vw;
+}

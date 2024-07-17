@@ -52,7 +52,8 @@ if (session()->has('message')){
                         $status_values = [
                             "ok" => '<span class="material-symbols-outlined ok-icon">check_circle</span>Zrealizowane',
                             "pending" => '<span class="material-symbols-outlined pending-icon">pending</span>W trakcie',
-                            "payment" => '<span class="material-symbols-outlined payment-icon">error</span><b>Do opłacenia</b>'
+                            "payment" => '<span class="material-symbols-outlined payment-icon">error</span><b>Do opłacenia</b>',
+                            "done" => '<span class="material-symbols-outlined pending-icon">apps</span>Wykonano'
                         ];
 
                         $status = $status_values[$job_data->status] ?? "-";
@@ -82,11 +83,25 @@ if (session()->has('message')){
                             <textarea class="form-control" id="comment-input" name="comment" rows="5"><?= $job_data->comment; ?></textarea>
                         </div>
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-primary mb-3">Zaktualizuj</button>
+                            <button type="submit" class="btn btn-secondary mb-3">Zaktualizuj</button>
                         </div>
                     </form>
                 </div>
             </div>
+        </div>
+        <div id="action-buttons" class="heading mb-3">
+            <a class="btn btn-primary" href="/panel/reports/add/<?= $job_data->id; ?>">Dodaj raport</a>
+            <?php
+
+            $job_id = $job_data->identificator;
+
+            if($job_data->status == "done"){
+                echo '<a class="btn btn-success" href="/panel/bills/add/'.$job_id.'">Wystaw rachunek</a>';
+            }
+            else{
+                echo '<a class="btn btn-danger" href="/panel/jobs/confirm/'.$job_id.'">Oznacz jako wykonane</a>';
+            }
+            ?>
         </div>
         <table id="reports">
             <tbody>

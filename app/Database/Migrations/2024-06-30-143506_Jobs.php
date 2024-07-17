@@ -28,7 +28,7 @@ class Jobs extends Migration
             ],
             "status" => [
                 "type" => "set",
-                "constraint" => ["ok", "pending", "payment"],
+                "constraint" => ["ok", "pending", "done", "payment"],
                 "null" => false
             ],
             "description" => [

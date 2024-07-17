@@ -73,6 +73,9 @@ $routes->group("panel", ["filter" => "webauth"], function($routes){
         $routes->get("add", "Jobs::add_page");
         $routes->post("add", "Jobs::add");
 
+        $routes->get("confirm/(:any)", "Jobs::confirm_view/$1");
+        $routes->post("confirm/(:any)", "Jobs::confirm/$1");
+
         $routes->post("update-comment/(:num)", "Jobs::update_comment/$1");
     });
 
