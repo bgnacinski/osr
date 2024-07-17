@@ -68,7 +68,7 @@ $routes->group("panel", ["filter" => "webauth"], function($routes){
 
     $routes->group("jobs", ["filter" => "webauth"], function($routes){
         $routes->get("/", "Jobs::index");
-        $routes->get("view/(:any)", "Jobs::view/$1");
+        $routes->get("view/(:num)", "Jobs::view/$1");
 
         $routes->get("add", "Jobs::add_page");
         $routes->post("add", "Jobs::add");

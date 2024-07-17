@@ -37,7 +37,7 @@ if (session()->has('message')){
 ?>
     <form id="search-bar" method="get">
         <div class="form-floating">
-            <input type="text" name="identificator" class="form-control" id="floatingInput" placeholder="Identyfikator rachunku">
+            <input type="text" value="<?= $_GET["identificator"] ?? ""; ?>" name="identificator" class="form-control" id="floatingInput" placeholder="Identyfikator rachunku">
             <label for="floatingInput">Identyfikator rachunku</label>
         </div>
         <input type="submit" value="Szukaj">
