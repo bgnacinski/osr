@@ -1,6 +1,6 @@
 <?= $this->extend("templates/primary"); ?>
-<?= $this->section("title"); ?>Strona główna<?= $this->endSection(); ?>
-<?= $this->section("logo"); ?>Strona główna<?= $this->endSection(); ?>
+<?= $this->section("title"); ?>Rachunki<?= $this->endSection(); ?>
+<?= $this->section("logo"); ?>Rachunki<?= $this->endSection(); ?>
 <?= $this->section("links"); ?>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/icons.css">
@@ -8,9 +8,9 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section("buttons"); ?>
+<a href="/panel" class="button">Strona główna</a>
 <a href="/panel/bills/add" class="button">Dodaj rachunek</a>
-<a href="/panel/clients/" class="button">Klienci</a>
-    <a href="/account/" class="button">Mój profil</a>
+<a href="/account/" class="button">Mój profil</a>
 <?= $this->endSection(); ?>
 
 <?= $this->section("main"); ?>
@@ -37,7 +37,7 @@ if (session()->has('message')){
 ?>
     <form id="search-bar" method="get">
         <div class="form-floating">
-            <input type="text" name="identificator" class="form-control" id="floatingInput" placeholder="Identyfikator rachunku">
+            <input type="text" value="<?= $_GET["identificator"] ?? ""; ?>" name="identificator" class="form-control" id="floatingInput" placeholder="Identyfikator rachunku">
             <label for="floatingInput">Identyfikator rachunku</label>
         </div>
         <input type="submit" value="Szukaj">
@@ -46,7 +46,6 @@ if (session()->has('message')){
         <tbody>
         <tr>
             <th>Identyfikator</th>
-            <th>Status</th>
             <th>Data utworzenia</th>
             <th>Data zmiany danych</th>
             <th>Data usunięcia</th>
@@ -57,18 +56,9 @@ if (session()->has('message')){
             $updated_at = $bill->updated_at ?? "-";
             $deleted_at = $bill->deleted_at ?? "-";
 
-            $session_values = [
-                "ok" => '<span class="material-symbols-outlined ok-icon">check_circle</span>Zrealizowane',
-                "pending" => '<span class="material-symbols-outlined pending-icon">pending</span>W trakcie',
-                "payment" => '<span class="material-symbols-outlined payment-icon">error</span><b>Do opłacenia</b>'
-            ];
-
-            $status = $session_values[$bill->status];
-
             echo <<<ENDL
                 <tr class="data">
                     <td>$bill->identificator</td>
-                    <td class="status">$status</td>
                     <td>$bill->created_at</td>
                     <td>$updated_at</td>
                     <td>$deleted_at</td>

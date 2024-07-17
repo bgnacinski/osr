@@ -69,7 +69,7 @@
 # logger.threshold = 4
 
 #--------------------------------------------------------------------
-# Company 
+# COMPANY
 #--------------------------------------------------------------------
 company.name = ""
 company.logo = ""
@@ -78,3 +78,14 @@ company.bill_name = ""
 company.address = ""
 company.nip = ""
 company.bank_account = ""
+
+#--------------------------------------------------------------------
+# EMAIL
+#--------------------------------------------------------------------
+#email.protocol = ""
+#email.type = ""
+email.port = 465
+email.host = ""
+email.user = ""
+email.pass = ""
+email.sender = "NEXTO"

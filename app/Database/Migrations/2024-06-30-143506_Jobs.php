@@ -4,17 +4,15 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Bills extends Migration
+class Jobs extends Migration
 {
     public function up()
     {
-        $this->db->disableForeignKeyChecks();
-
         $this->forge->addField([
             "id" => [
-                "type" => "int",
-                "constraint" => 11,
+                "type" => "INT",
                 "auto_increment" => true,
+                "constraint" => 11,
                 "unsigned" => true,
                 "null" => false
             ],
@@ -28,19 +26,23 @@ class Bills extends Migration
                 "constraint" => 15,
                 "null" => false
             ],
-            "job_id" => [
-                "type" => "varchar",
-                "constraint" => 50,
+            "status" => [
+                "type" => "set",
+                "constraint" => ["ok", "pending", "done", "payment"],
                 "null" => false
             ],
-            "currency" => [
-                "type" => "varchar",
-                "constraint" => 3,
+            "description" => [
+                "type" => "text",
                 "null" => false
+            ],
+            "comment" => [
+                "type" => "text",
+                "null" => true
             ],
             "created_by" => [
                 "type" => "varchar",
-                "constraint" => 20
+                "constraint" => 50,
+                "null" => false
             ],
             "created_at" => [
                 "type" => "datetime",
@@ -57,17 +59,14 @@ class Bills extends Migration
         ]);
 
         $this->forge->addPrimaryKey("id");
-        $this->forge->addForeignKey("created_by", "users", "login", "CASCADE", "NO ACTION");
-        $this->forge->addForeignKey("client", "clients", "nip", "CASCADE", "NO ACTION");
-        $this->forge->addForeignKey("job_id", "jobs", "identificator", "CASCADE", "NO ACTION");
+        $this->forge->addKey("identificator");
+        $this->forge->addForeignKey("client", "clients", "nip", "CASCADE", "CASCADE");
 
-        $this->forge->createTable("bills");
-
-        $this->db->enableForeignKeyChecks();
+        $this->forge->createTable("jobs");
     }
 
     public function down()
     {
-        $this->forge->dropTable("bills");
+        $this->forge->dropTable("jobs");
     }
 }

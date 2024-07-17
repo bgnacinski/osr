@@ -1,6 +1,6 @@
 <?= $this->extend("templates/primary"); ?>
-<?= $this->section("title"); ?>Klienci<?= $this->endSection(); ?>
-<?= $this->section("logo"); ?>Klienci<?= $this->endSection(); ?>
+<?= $this->section("title"); ?>Zlecenia<?= $this->endSection(); ?>
+<?= $this->section("logo"); ?>Zlecenia<?= $this->endSection(); ?>
 <?= $this->section("links"); ?>
 <link rel="stylesheet" href="/css/table.css">
 <link rel="stylesheet" href="/css/icons.css">
@@ -8,7 +8,7 @@
 
 <?= $this->section("buttons"); ?>
 <a href="/panel/" class="button">Strona główna</a>
-<a href="/panel/clients/add" class="button">Dodaj klienta</a>
+<a href="/panel/jobs/add" class="button">Dodaj zlecenie</a>
 <a href="/account/" class="button">Mój profil</a>
 <?= $this->endSection(); ?>
 
@@ -36,52 +36,44 @@ if (session()->has('message')){
 ?>
 <form id="search-bar" method="get">
     <div class="form-floating">
-        <input type="text" list="nip" name="nip" class="form-control" id="floatingInput" placeholder="NIP">
-        <label for="floatingInput">NIP</label>
-        <datalist id="nip">
-            <?php
-            foreach($clients as $client){
-                echo <<<ENDL
-                        <option value="$client->nip">$client->nip - $client->name</option>
-                    ENDL;
-            }
-            ?>
-        </datalist>
+        <input type="text" value="<?= $_GET["identificator"] ?? ""; ?>" name="identificator" class="form-control" id="floatingInput" placeholder="Identyfikator">
+        <label for="floatingInput">Identyfikator</label>
     </div>
     <input type="submit" value="Szukaj">
 </form>
 <table id="clients-table">
     <tbody>
     <tr>
-        <th>Nazwa</th>
-        <th>NIP</th>
-        <th>Adres</th>
-        <th>Adres e-mail</th>
+        <th>Identyfikator</th>
+        <th>Status</th>
         <th>Data dodania</th>
         <th>Data zmiany danych</th>
         <th>Data usunięcia</th>
         <th>Operacje</th>
     </tr>
     <?php
-
-    #TODO: Remove view button and add see all jobs(for selected client)
-    foreach($clients as $client){
-        $address = str_replace("|", ", ", $client->address);
+    foreach($jobs as $job){
         $updated_at = $client->updated_at ?? "-";
         $deleted_at = $client->deleted_at ?? "-";
 
+        $status_values = [
+            "ok" => '<span class="material-symbols-outlined ok-icon">check_circle</span>Zrealizowane',
+            "pending" => '<span class="material-symbols-outlined pending-icon">pending</span>W trakcie',
+            "payment" => '<span class="material-symbols-outlined payment-icon">error</span><b>Do opłacenia</b>',
+            "done" => '<span class="material-symbols-outlined pending-icon">apps</span>Wykonano'
+        ];
+
+        $status = $status_values[$job->status] ?? "-";
+
         echo <<<ENDL
                 <tr class="data">
-                    <td>$client->name</td>
-                    <td>$client->nip</td>
-                    <td>$client->email</td>
-                    <td>$address</td>
-                    <td>$client->created_at</td>
+                    <td>$job->identificator</td>
+                    <td class="status">$status</td>
+                    <td>$job->created_at</td>
                     <td>$updated_at</td>
                     <td>$deleted_at</td>
                     <td>
-                        <a class="table-button" href="/panel/jobs/?client=$client->nip" title="Wyświetl wszystkie zlecenia tego klienta"><span class="material-symbols-outlined pending-icon">work</span></a>
-                        <a class="table-button" href="/panel/bills/?client=$client->nip" title="Wyświetl wszystkie rachunki dla tego klienta"><span class="material-symbols-outlined ok-icon">payments</span></a>
+                        <a class="table-button" href="/panel/jobs/view/$job->identificator"><span class="material-symbols-outlined view-icon">visibility</span></a>
                     </td>
                 </tr>
             ENDL;

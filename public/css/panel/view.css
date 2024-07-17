@@ -1,9 +1,9 @@
-#bill-info{
+.heading{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
-#bill-info > *{
+.heading > *{
     margin: 1vh 1vw;
 }
 
@@ -23,4 +23,42 @@
     margin: 2.5vh 0;
 
     display: none;
+}
+
+.text-content{
+    text-align: justify;
+    width: 90%;
+
+    margin: auto;
+}
+
+.file-list{
+    display: flex;
+    flex-wrap: wrap;
+}
+.file-list > *{
+    margin: 1vh 2.5vw;
+    padding: 1vh 1vw;
+}
+
+.document-link{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    text-decoration: none;
+
+    color: inherit;
+    border-radius: 10px;
+
+    transition: .3s ease-in-out;
+}
+.document-link:hover{
+    background-color: var(--accent-white);
+}
+.document-link > span{
+    color: #0000EE;
+}
+.document-link.image > span{
+    color: orange;
 }

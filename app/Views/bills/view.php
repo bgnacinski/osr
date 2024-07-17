@@ -37,12 +37,12 @@ if (session()->has('message')){
 }
 ?>
 <div id="bill">
-    <div id="bill-info">
+    <div id="bill-info" class="heading">
         <p>
-            <b>Identyfikator:</b> <?= $bill_data->identificator; ?>
+            <b>Numer:</b> <?= $bill_data->identificator; ?>
         </p>
         <p>
-            <b>Data wystawienia:</b> <?= $bill_data->created_at; ?>
+            <b>Data wystawienia:</b> <?php $dateTime = datetime::createfromformat('Y-m-d H:i:s',$bill_data->created_at); echo $dateTime->format("Y-m-d"); ?>
         </p>
         <p class="hide-print">
             <b>Dodane przez:</b> <?= $bill_data->created_by; ?>

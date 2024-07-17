@@ -1,5 +1,5 @@
 <?= $this->extend("templates/primary"); ?>
-<?= $this->section("title"); ?>Dodawanie rachunku<?= $this->endSection(); ?>
+<?= $this->section("title"); ?>Dodawanie rachunku - zlecenie <?= $job->identificator; ?><?= $this->endSection(); ?>
 <?= $this->section("logo"); ?>Dodawanie rachunku<?= $this->endSection(); ?>
 <?= $this->section("links"); ?>
     <link rel="stylesheet" href="/css/panel/add.css">
@@ -42,19 +42,10 @@ if (session()->has('success')){
 }
 ?>
 
-    <form method="post" onload="refreshTable()">
+    <form method="post" action="/panel/bills/add/<?= $job->identificator; ?>" onload="refreshTable()">
         <div class="form-floating mb-3">
-            <input required list="nip" name="nip" type="numeric" class="form-control" id="floatingName" placeholder="NIP klienta">
+            <input readonly value="<?= $job->client; ?>" required list="nip" name="client" type="numeric" class="form-control" id="floatingName" placeholder="NIP klienta">
             <label for="floatingName">NIP klienta</label>
-            <datalist id="nip">
-                <?php
-                foreach($clients as $client){
-                    echo <<<ENDL
-                        <option value="$client->nip">$client->nip - $client->name</option>
-                    ENDL;
-                }
-                ?>
-            </datalist>
         </div>
         <div class="form-floating mb-3">
             <select required id="currency" class="form-select" name="currency" aria-label="Waluta">
@@ -223,14 +214,6 @@ if (session()->has('success')){
                 <option value='ZWL'>ZWL - Dolar Zimbabwe</option>
             </select>
             <label for="currency">Waluta</label>
-        </div>
-        <div class="form-floating mb-3">
-            <select required id="status" class="form-select" name="status" aria-label="Status">
-                <option value="ok">Zrealizowane</option>
-                <option selected value="pending">W trakcie</option>
-                <option value="payment">Do opłacenia</option>
-            </select>
-            <label for="tax_rate">Status</label>
         </div>
 
         <input type="text" required hidden id="bill_contents" name="bill_contents">

@@ -13,11 +13,13 @@ class BillContents extends Migration
                 "type" => "int",
                 "constraint" => 11,
                 "auto_increment" => true,
+                "unsigned" => true,
                 "null" => false                
             ],
             "bill_id" => [
                 "type" => "int",
                 "constraint" => 11,
+                "unsigned" => true,
                 "null" => false
             ],
             "product_name" => [

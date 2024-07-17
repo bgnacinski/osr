@@ -4,6 +4,7 @@ namespace Config;
 
 use App\Models\BillModel;
 use App\Models\ClientModel;
+use App\Models\JobModel;
 use App\Models\ProductModel;
 use App\Models\UserModel;
 use CodeIgniter\Config\BaseConfig;
@@ -120,6 +121,36 @@ class CustomRules
         $bill_id = $data["bill_id"];
 
         $result = $model->where("id", $bill_id)->findAll();
+
+        if(count($result) > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static function matches_jobs($str, string $field, array $data, string &$error = null): bool
+    {
+        $model = new JobModel();
+        $job_id = $data["job_id"];
+
+        $result = $model->where("id", $job_id)->findAll();
+
+        if(count($result) > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static function matches_identificator_jobs($str, string $field, array $data, string &$error = null): bool
+    {
+        $model = new JobModel();
+        $job_id = $data["job_id"];
+
+        $result = $model->where("identificator", $job_id)->findAll();
 
         if(count($result) > 0){
             return true;
