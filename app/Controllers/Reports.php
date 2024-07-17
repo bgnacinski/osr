@@ -113,9 +113,9 @@ class Reports extends BaseController
         }
 
         $model = new ReportsModel();
-        $job = $model->where("identificator", $identificator)->first();
+        $report = $model->where("id", $identificator)->first();
 
-        if(!in_array($filename, $job->files)){
+        if(!in_array($filename, explode(",", $report->files))){
             return redirect()->to($_SERVER["HTTP_REFERER"])->with("success", 0)->with("message", "Nie masz dostępu do tego pliku.");
         }
 
