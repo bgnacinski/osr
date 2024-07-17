@@ -165,7 +165,7 @@ class Bills extends BaseController
         switch($result["status"]){
             case "success":
                 $job_model = new JobModel();
-                $result = $job_model->changeStatus($job_identificator, "payment");
+                $job_model->changeStatus($job_identificator, "payment");
 
                 $bill_id = $model->getInsertID();
 
