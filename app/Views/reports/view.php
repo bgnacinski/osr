@@ -40,10 +40,10 @@ if (session()->has('message')){
         <p class="status">
             <?php
             $status_values = [
-                "ok" => '<span class="material-symbols-outlined ok-icon">check_circle</span>Zrealizowane',
+                "ok" => '<span class="material-symbols-outlined ok-icon">check_circle</span>Zakończone',
                 "pending" => '<span class="material-symbols-outlined pending-icon">pending</span>W trakcie',
                 "payment" => '<span class="material-symbols-outlined payment-icon">error</span><b>Do opłacenia</b>',
-                "done" => '<span class="material-symbols-outlined pending-icon">apps</span>Wykonano'
+                "done" => '<span class="material-symbols-outlined pending-icon">apps</span>Wykonane'
             ];
 
             $status = $status_values[$job_data->status];
