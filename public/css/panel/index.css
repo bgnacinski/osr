@@ -1,0 +1,48 @@
+main{
+    width: 50vw;
+}
+
+#container{
+    display: flex;
+    flex-direction: row;
+
+    text-align: center;
+}
+#container > div{
+    flex: 2;
+}
+#jobs-data p{
+    margin: auto;
+    text-align: center;
+
+    padding: 1vh 1vw;
+}
+#main-cell{
+    flex: 4;
+}
+#secondary-cell{
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-content: center;
+}
+#secondary-cell > div.cell{
+    flex: 1;
+}
+
+.cell{
+    padding: 1vh 1vw;
+    margin: 1vh 1vw;
+
+    background-color: var(--accent-white);
+    border-radius: 10px;
+
+    text-align: center;
+
+    transition: .3s ease-in-out;
+}
+.cell:hover{
+    background-color: var(--accent-grey);
+}

@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Models\BillModel;
+use App\Models\ClientModel;
+use App\Models\JobModel;
 use App\Models\UserModel;
 
 class Home extends BaseController
@@ -89,6 +92,25 @@ class Home extends BaseController
     }
 
     public function panel(){
-        return view("panel");
+        $job_model = new JobModel();
+        $job_data = [
+            "count" => $job_model->countAllResults(),
+            "ok" => $job_model->where("status", "ok")->countAllResults(),
+            "done" => $job_model->where("status", "done")->countAllResults(),
+            "payment" => $job_model->where("status", "payment")->countAllResults(),
+            "pending" => $job_model->where("status", "pending")->countAllResults()
+        ];
+
+        $bill_model = new BillModel();
+        $bill_data = [
+            "count" => $bill_model->countAllResults()
+        ];
+
+        $client_model = new ClientModel();
+        $client_data = [
+            "count" => $client_model->countallResults()
+        ];
+
+        return view("panel", ["jobs" => $job_data, "bills" => $bill_data, "clients" => $client_data]);
     }
 }

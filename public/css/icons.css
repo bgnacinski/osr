@@ -39,3 +39,8 @@
 .payment-icon{
     color: red;
 }
+
+.status{
+    display: flex;
+    align-content: center;
+}
