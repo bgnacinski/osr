@@ -36,13 +36,14 @@ main{
     padding: 1vh 1vw;
     margin: 1vh 1vw;
 
-    background-color: var(--accent-white);
     border-radius: 10px;
 
     text-align: center;
 
     transition: .3s ease-in-out;
+
+    box-shadow: 0 0 4px #eee;
 }
 .cell:hover{
-    background-color: var(--accent-grey);
+    background-color: var(--accent-white);
 }
