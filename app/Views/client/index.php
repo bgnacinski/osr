@@ -80,7 +80,8 @@ if (session()->has('message')){
                     <td>$updated_at</td>
                     <td>$deleted_at</td>
                     <td>
-                        <a class="table-button" href="/panel/clients/view/$client->id"><span class="material-symbols-outlined view-icon">visibility</span></a>
+                        <a class="table-button" href="/panel/jobs/?client=$client->nip" title="Wyświetl wszystkie zlecenia tego klienta"><span class="material-symbols-outlined pending-icon">work</span></a>
+                        <a class="table-button" href="/panel/bills/?client=$client->nip" title="Wyświetl wszystkie rachunki dla tego klienta"><span class="material-symbols-outlined ok-icon">payments</span></a>
                     </td>
                 </tr>
             ENDL;

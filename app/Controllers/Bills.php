@@ -64,6 +64,11 @@ class Bills extends BaseController
 
             $data = $model->like("identificator", $identificator)->findAll();
         }
+        else if(isset($_GET["client"])){
+            $client = $_GET["client"];
+
+            $data = $model->where("client", $client)->orderBy("id", "DESC")->findAll();
+        }
         else {
             //fetching data
             if (is_null($page)) {

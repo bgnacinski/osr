@@ -59,6 +59,11 @@ class Jobs extends BaseController
 
             $data = $model->like("identificator", $identificator)->findAll();
         }
+        else if(isset($_GET["client"])){
+            $client = $_GET["client"];
+
+            $data = $model->where("client", $client)->orderBy("id", "DESC")->findAll();
+        }
         else{
             if (is_null($page)) {
                 $data = $model->orderBy("id", "DESC")->findAll($limit);
