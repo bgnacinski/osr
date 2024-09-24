@@ -18,6 +18,14 @@ body{
     z-index: 1;
 }
 
+.side-by-side{
+    display: flex;
+    flex-direction: row;
+}
+.side-by-side > div{
+    flex: 1;
+}
+
 nav#main-nav{
     position: fixed;
     left: 0;

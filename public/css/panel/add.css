@@ -1,6 +1,32 @@
-#insert-form{
-    margin-top: 3%;
+#products{
+    margin-top: 5vh;
+}
+#products > div{
+    padding: 1%;
     box-shadow: 0 0 3px #aaa;
     border-radius: 10px;
-    padding: 1%;
+
+    margin: 0 1vw;
+}
+#products-table{
+    flex: 1.5;
+}
+#products-table > table{
+    margin: auto;
+    width: 100%;
+}
+
+#products-table > table > tbody {
+    display: block;
+    height: 25vh;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#products-table > table > tbody > tr,
+#products-table > table > tbody > td{
+    padding: 1vh 1vw;
+}
+#products-table > table > tbody > tr:nth-child(2n){
+    background-color: #ededee;
 }
