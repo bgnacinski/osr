@@ -36,7 +36,7 @@ if (session()->has('message')) {
 ?>
     <div id="container">
         <div class="cell" onclick="redirect('/panel/jobs')">
-            <span class="material-symbols-outlined cell-icon">engineering</span>
+            <span class="material-symbols-outlined cell-icon">work</span>
             <h4 class="cell-heading">Zlecenia</h4>
             <div id="jobs-data">
                 <h3 class="main-info"><?= $jobs["count"]; ?></h3>
