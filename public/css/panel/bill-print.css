@@ -3,6 +3,10 @@
         font-size: 0.8rem !important;
     }
 
+    div.alert{
+        display: none !important;
+    }
+
     h5{
         font-size: 0.9rem;
     }

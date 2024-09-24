@@ -6,11 +6,16 @@ main{
     display: flex;
     flex-direction: row;
 
-    text-align: center;
+    align-items: stretch;
 }
 #container > div{
-    flex: 2;
+    flex: 1;
+
 }
+#container > div:last-child {
+    padding-top: 5vh;
+}
+
 #jobs-data p{
     margin: auto;
     text-align: center;
@@ -42,8 +47,12 @@ main{
 
     transition: .3s ease-in-out;
 
-    box-shadow: 0 0 4px #eee;
+    box-shadow: 0 0 5px #ddd;
 }
 .cell:hover{
     background-color: var(--accent-white);
+}
+
+.cell-icon{
+    font-size: 4rem;
 }
