@@ -10,7 +10,6 @@
 
 <?= $this->section("buttons"); ?>
     <a href="/panel/" class="button">Strona główna</a>
-    <a href="/panel/bills/add" class="button">Dodaj rachunek</a>
     <a href="/account/" class="button">Mój profil</a>
 <?= $this->endSection(); ?>
 
@@ -39,7 +38,7 @@ if (session()->has('message')){
 <div id="bill">
     <div id="bill-info" class="heading">
         <p>
-            <b>Numer:</b> <?= $bill_data->identificator; ?>
+            <b>Numer rachunku:</b> <?= $bill_data->identificator; ?>
         </p>
         <p>
             <b>Data wystawienia:</b> <?php $dateTime = datetime::createfromformat('Y-m-d H:i:s',$bill_data->created_at); echo $dateTime->format("Y-m-d"); ?>
