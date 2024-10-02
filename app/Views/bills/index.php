@@ -9,7 +9,6 @@
 
 <?= $this->section("buttons"); ?>
 <a href="/panel" class="button">Strona główna</a>
-<a href="/panel/bills/add" class="button">Dodaj rachunek</a>
 <a href="/account/" class="button">Mój profil</a>
 <?= $this->endSection(); ?>
 
@@ -64,6 +63,7 @@ if (session()->has('message')){
                     <td>$deleted_at</td>
                     <td>
                         <a class="table-button" href="/panel/bills/view/$bill->id"><span class="material-symbols-outlined view-icon">visibility</span></a>
+                        <a class="table-button" href="/panel/jobs/view/$bill->identificator" title="Wyświetl zlecenie"><span class="material-symbols-outlined pending-icon">work</span></a>
                     </td>
                 </tr>
             ENDL;
@@ -74,13 +74,13 @@ if (session()->has('message')){
     <nav aria-label="pagination">
         <ul class="mt-3 pagination justify-content-center">
             <li class="page-item">
-                <a class="page-link <?= $page_data["previous"]; ?>" href="/panel/<?= $page_data["last_page"]; ?>" aria-label="Previous">
+                <a class="page-link <?= $page_data["previous"]; ?>" href="/panel/bills/<?= $page_data["last_page"]; ?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li class="page-item active"><a class="page-link" href="/panel/<?= $page_data["current"];?>"><?= $page_data["current"];?>/<?= $page_data["available"];?></a></li>
+            <li class="page-item active"><a class="page-link" href="/panel/bills/<?= $page_data["current"];?>"><?= $page_data["current"];?>/<?= $page_data["available"];?></a></li>
             <li class="page-item <?= $page_data["next"]; ?>">
-                <a class="page-link" href="/panel/<?= $page_data["next_page"]; ?>" aria-label="Next">
+                <a class="page-link" href="/panel/bills/<?= $page_data["next_page"]; ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

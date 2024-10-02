@@ -15,6 +15,8 @@ class Jobs extends BaseController
         $limit = 50;
         $model = new JobModel();
 
+        $db = \Config\Database::connect();
+
         // pagination
         $no_jobs = $model->countAllResults();
 
@@ -57,23 +59,35 @@ class Jobs extends BaseController
         if(isset($_GET["identificator"])){
             $identificator = $_GET["identificator"];
 
-            $data = $model->like("identificator", $identificator)->findAll();
+            $builder = $db->table('jobs')
+                ->select("bills.id as 'bill_id', jobs.identificator, jobs.status, jobs.created_at, jobs.updated_at, jobs.deleted_at")
+                ->join("bills", "jobs.identificator = bills.job_id", "left")
+                ->like("jobs.identificator", $identificator);
+            $query = $builder->get();
         }
         else if(isset($_GET["client"])){
             $client = $_GET["client"];
 
-            $data = $model->where("client", $client)->orderBy("id", "DESC")->findAll();
+            $builder = $db->table('jobs')
+                ->select("bills.id as 'bill_id', jobs.identificator, jobs.status, jobs.created_at, jobs.updated_at, jobs.deleted_at")
+                ->join("bills", "jobs.identificator = bills.job_id", "left")
+                ->where("bills.client", $client)
+                ->orderBy("jobs.id", "DESC");
+            $query = $builder->get();
         }
         else{
-            if (is_null($page)) {
-                $data = $model->orderBy("id", "DESC")->findAll($limit);
-            } else {
-                $offset = $page * $limit - $limit;
-                $limit = $offset + $limit;
+            $offset = $page * $limit - $limit;
+            $limit = $offset + $limit;
 
-                $data = $model->orderBy("id", "DESC")->findAll($limit, $offset);
-            }
+            $builder = $db->table('jobs')
+                ->select("`bills`.`id` as 'bill_id', jobs.identificator, jobs.status, jobs.created_at, jobs.updated_at, jobs.deleted_at")
+                ->join("bills", "jobs.identificator = bills.job_id", "left")
+                ->orderBy("jobs.id", "DESC")
+                ->limit($limit, $offset);
+            $query = $builder->get();
         }
+
+        $data = $query->getResult();
 
         return view('jobs/index', ["page_data" => $page_data, "jobs" => $data]);
     }

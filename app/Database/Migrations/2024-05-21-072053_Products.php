@@ -16,6 +16,11 @@ class Products extends Migration
                 "unsigned" => true,
                 "null" => false
             ],
+            "friendly_id" => [
+                "type" => "varchar",
+                "constraint" => 100,
+                "null" => false
+            ],
             "name" => [
                 "type" => "varchar",
                 "constraint" => 100,

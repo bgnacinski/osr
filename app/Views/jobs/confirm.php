@@ -36,10 +36,10 @@ if (session()->has('message')){
     <div id="message">
         <?php
         $status_values = [
-            "ok" => 'Zrealizowane',
+            "ok" => 'Zakończone',
             "pending" => 'W trakcie',
             "payment" => '<b>Do opłacenia</b>',
-            "done" => 'Wykonano'
+            "done" => 'Wykonane'
         ];
 
         $status = $status_values[$status] ?? "-";

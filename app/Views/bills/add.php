@@ -235,25 +235,53 @@ if (session()->has('success')){
         <button type="submit" class="btn btn-primary">Dodaj rachunek</button>
     </form>
 
-    <div id="insert-form">
-        <div class="form-floating mb-3">
-            <select class="form-select" id="product_name" name="role" aria-label="Nazwa produktu">
-                <?php
-                foreach($products as $product){
-                    echo <<<ENDL
-                        <option value="$product->name">$product->name</option>
-                    ENDL;
-                }
-                ?>
-            </select>
-            <label for="product_name">Nazwa produktu</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="numeric" class="form-control" id="quantity" placeholder="Ilość">
-            <label for="quantity">Ilość</label>
-        </div>
+    <div class="side-by-side" id="products">
+        <div id="insert-form">
+            <div class="form-floating mb-3">
+                <select class="form-select" id="product_name" name="role" aria-label="Krótka nazwa produktu">
+                    <?php
+                    foreach($products as $product){
+                        echo <<<ENDL
+                            <option value="$product->name">($product->friendly_id) $product->name</option>
+                        ENDL;
+                    }
+                    ?>
+                </select>
+                <label for="product_name">Krótka nazwa produktu</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="numeric" class="form-control" id="quantity" placeholder="Ilość">
+                <label for="quantity">Ilość</label>
+            </div>
 
-        <button class="btn btn-secondary" onclick="addEntry()">Dodaj do rachunku</button>
+            <button class="btn btn-secondary" onclick="addEntry()">Dodaj do rachunku</button>
+        </div>
+        <div id="products-table">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Krótka nazwa</th>
+                        <th>Nazwa produktu</th>
+                        <th>Opis</th>
+                        <th>Cena</th>
+                        <th>VAT</th>
+                    </tr>
+                    <?php
+                    foreach($products as $product) {
+                        echo <<<ENDL
+                        <tr>
+                            <td>$product->friendly_id</td>
+                            <td>$product->name</td>
+                            <td>$product->description</td>
+                            <td>$product->amount</td>
+                            <td>$product->tax_rate</td>
+                        </tr>  
+                        ENDL;
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 <script src="/js/entry.js"></script>

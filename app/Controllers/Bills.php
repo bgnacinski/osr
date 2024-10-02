@@ -19,6 +19,8 @@ class Bills extends BaseController
         $limit = 30;
         $model = new BillModel();
 
+        $db = \Config\Database::connect();
+
         // pagination
         $no_bills = $model->countAllResults();
 
@@ -62,24 +64,35 @@ class Bills extends BaseController
         if(isset($_GET["identificator"])){
             $identificator = $_GET["identificator"];
 
-            $data = $model->like("identificator", $identificator)->findAll();
+            $builder = $db->table('bills')
+                ->select("`jobs`.`identificator` as 'identificator', bills.id, bills.created_at, bills.updated_at, bills.deleted_at")
+                ->join("jobs", "bills.job_id = jobs.identificator", "left")
+                ->like("bills.job_id", $identificator);
+            $query = $builder->get();
         }
         else if(isset($_GET["client"])){
             $client = $_GET["client"];
 
-            $data = $model->where("client", $client)->orderBy("id", "DESC")->findAll();
+            $builder = $db->table('bills')
+                ->select("jobs.identificator as 'identificator', bills.id, bills.created_at, bills.updated_at, bills.deleted_at")
+                ->join("jobs", "bills.job_id = jobs.identificator", "left")
+                ->like("bills.client", $client)
+                ->orderBy("bills.id", "DESC");
+            $query = $builder->get();
         }
         else {
-            //fetching data
-            if (is_null($page)) {
-                $data = $model->orderBy("id", "DESC")->findAll($limit);
-            } else {
-                $offset = $page * $limit - $limit;
-                $limit = $offset + $limit;
+            $offset = $page * $limit - $limit;
+            $limit = $offset + $limit;
 
-                $data = $model->orderBy("id", "DESC")->findAll($limit, $offset);
-            }
+            $builder = $db->table('bills')
+                ->select("jobs.identificator as 'identificator', bills.id, bills.created_at, bills.updated_at, bills.deleted_at")
+                ->join("jobs", "bills.job_id = jobs.identificator", "left")
+                ->orderBy("bills.id", "DESC")
+                ->limit($limit, $offset);
+            $query = $builder->get();
         }
+
+        $data = $query->getResult();
 
         if(empty($data)){
             $session = session();
@@ -95,28 +108,29 @@ class Bills extends BaseController
             return redirect()->to("/panel/bills")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
 
-        $bill_model = new BillModel();
-        $bill_contents_model = new BillEntryModel();
+        $db = \Config\Database::connect();
+        $builder = $db->table('bills')
+            ->select("bills.identificator, bills.client, bills.currency, bills.created_at, `clients`.`name` as 'client_name', `clients`.`address` as 'client_address', `users`.`name` as 'worker_name'")
+            ->join("users", "bills.created_by = users.login", "left")
+            ->join("clients", "bills.client = clients.nip", "left")
+            ->where("bills.id", $bill_id);
+        $query = $builder->get();
 
-        $bill_data = $bill_model->getBill($bill_id);
+        if($query->getFieldCount() > 0){
+            $bill_data = $query->getResult()[0];
 
-        if($bill_data["status"] == "notfound"){
+            $bill_contents_model = new BillEntryModel();
+            $bill_contents = $bill_contents_model->getBillContents($bill_id);
+        }
+        else{
             return redirect()->to("/panel/bills")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
-
-        $bill_contents = $bill_contents_model->getBillContents($bill_id);
-
-        $client_model = new ClientModel();
-        $client_data = $client_model->getClient($bill_data["data"]->client);
-
-        $user_model = new UserModel();
-        $bill_data["data"]->created_by = $user_model->getUser($bill_data["data"]->created_by)->name;
 
         if($bill_contents["status"] != "success"){
             return redirect()->to("/panel")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
 
-        return view("bills/view", ["bill_data" => $bill_data["data"], "bill_contents" => $bill_contents["data"], "client_data" => $client_data]);
+        return view("bills/view", ["bill_data" => $bill_data, "bill_contents" => $bill_contents["data"]]);
     }
 
     public function add_page($job_identificator = null){

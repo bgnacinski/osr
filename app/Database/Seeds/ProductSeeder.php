@@ -10,6 +10,7 @@ class ProductSeeder extends Seeder
     public function run()
     {
         $data = [
+            "friendly_id" => "w_filtra_oleju_99.99",
             "name" => "Wymiana filtra oleju",
             "description" => "Wymiana filtra bez wymiany oleju",
             "amount" => 99.99,
@@ -18,5 +19,6 @@ class ProductSeeder extends Seeder
 
         $model = new ProductModel();
         $model->save($data);
+        var_dump($model->errors());
     }
 }

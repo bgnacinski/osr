@@ -4,6 +4,7 @@
     --accent-blue-darker: #24418a;
     --accent-white: #e3f1fd;
     --backround-color: white;
+    --accent-grey: #eee;
 
     --main-font: "Open Sans", sans-serif;
     --accent-font: "Gabarito", sans-serif;
@@ -15,6 +16,14 @@ body{
 
     font-family: var(--main-font);
     z-index: 1;
+}
+
+.side-by-side{
+    display: flex;
+    flex-direction: row;
+}
+.side-by-side > div{
+    flex: 1;
 }
 
 nav#main-nav{
