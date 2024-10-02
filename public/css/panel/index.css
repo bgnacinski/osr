@@ -10,10 +10,6 @@ main{
 }
 #container > div{
     flex: 1;
-
-}
-#container > div:last-child {
-    padding-top: 5vh;
 }
 
 #jobs-data p{
@@ -25,7 +21,7 @@ main{
 #main-cell{
     flex: 4;
 }
-#secondary-cell{
+.double-cell{
     flex: 1;
 
     display: flex;
@@ -33,7 +29,7 @@ main{
 
     align-content: center;
 }
-#secondary-cell > div.cell{
+.double-cell > div.cell{
     flex: 1;
 }
 
