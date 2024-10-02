@@ -87,4 +87,9 @@ $routes->group("panel", ["filter" => "webauth"], function($routes){
         $routes->get("add/(:num)", "Reports::add_page/$1");
         $routes->post("add/(:num)", "Reports::add/$1");
     });
+
+    $routes->group("products", ["filter" => "webauth"], function($routes){
+        $routes->get("/", "Products::index");
+        $routes->get("(:num)", "Products::index/$1");
+    });
 });
