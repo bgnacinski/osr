@@ -108,28 +108,29 @@ class Bills extends BaseController
             return redirect()->to("/panel/bills")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
 
-        $bill_model = new BillModel();
-        $bill_contents_model = new BillEntryModel();
+        $db = \Config\Database::connect();
+        $builder = $db->table('bills')
+            ->select("bills.identificator, bills.client, bills.currency, bills.created_at, `clients`.`name` as 'client_name', `clients`.`address` as 'client_address', `users`.`name` as 'worker_name'")
+            ->join("users", "bills.created_by = users.login", "left")
+            ->join("clients", "bills.client = clients.nip", "left")
+            ->where("bills.id", $bill_id);
+        $query = $builder->get();
 
-        $bill_data = $bill_model->getBill($bill_id);
+        if($query->getFieldCount() > 0){
+            $bill_data = $query->getResult()[0];
 
-        if($bill_data["status"] == "notfound"){
+            $bill_contents_model = new BillEntryModel();
+            $bill_contents = $bill_contents_model->getBillContents($bill_id);
+        }
+        else{
             return redirect()->to("/panel/bills")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
-
-        $bill_contents = $bill_contents_model->getBillContents($bill_id);
-
-        $client_model = new ClientModel();
-        $client_data = $client_model->getClient($bill_data["data"]->client);
-
-        $user_model = new UserModel();
-        $bill_data["data"]->created_by = $user_model->getUser($bill_data["data"]->created_by)->name;
 
         if($bill_contents["status"] != "success"){
             return redirect()->to("/panel")->with("success", 0)->with("message", "Nie znaleziono określonego rachunku.");
         }
 
-        return view("bills/view", ["bill_data" => $bill_data["data"], "bill_contents" => $bill_contents["data"], "client_data" => $client_data]);
+        return view("bills/view", ["bill_data" => $bill_data, "bill_contents" => $bill_contents["data"]]);
     }
 
     public function add_page($job_identificator = null){

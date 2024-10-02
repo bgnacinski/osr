@@ -17,9 +17,6 @@ class Reports extends BaseController
     }
 
     public function view($id = null){
-        $reports_model = new ReportsModel();
-        $result = $reports_model->getReport($id);
-
         if(isset($_SERVER["HTTP_REFERER"])){
             $redirect_to = $_SERVER["HTTP_REFERER"];
         }
@@ -27,19 +24,22 @@ class Reports extends BaseController
             $redirect_to = "/panel";
         }
 
-        if($result["status"] != "success"){
+        $db = \Config\Database::connect();
+        $builder = $db->table("reports")
+            ->select("reports.id, reports.content, reports.files, reports.number, reports.created_at, jobs.identificator, jobs.status, `users`.`name` as 'created_by'")
+            ->join("jobs", "reports.job_id = jobs.id", "left")
+            ->join("users", "reports.created_by = users.login", "left")
+            ->where("reports.id", $id);
+        $query = $builder->get();
+
+        if($query->getFieldCount() > 1){
+            $data = $query->getResult()[0];
+        }
+        else{
             return redirect()->to($redirect_to)->with("success", 0)->with("message", "Nie znaleziono określonego raportu.");
         }
 
-        $report_data = $result["data"];
-
-        $jobs_model = new JobModel();
-        $job_data = $jobs_model->find($report_data->job_id);
-
-        $users_model = new UserModel();
-        $report_data->created_by = $users_model->where("login", $report_data->created_by)->first()->name;
-
-        return view("reports/view", ["report_data" => $result["data"], "job_data" => $job_data]);
+        return view("reports/view", ["data" => $data]);
     }
 
     public function add_page($job_id = null){

@@ -44,7 +44,7 @@ if (session()->has('message')){
             <b>Data wystawienia:</b> <?php $dateTime = datetime::createfromformat('Y-m-d H:i:s',$bill_data->created_at); echo $dateTime->format("Y-m-d"); ?>
         </p>
         <p class="hide-print">
-            <b>Dodane przez:</b> <?= $bill_data->created_by; ?>
+            <b>Dodane przez:</b> <?= $bill_data->worker_name; ?>
         </p>
     </div>
     <div id="company-logo">
@@ -66,14 +66,14 @@ if (session()->has('message')){
         </div>
         <div id="consumer">
             <h5>Nabywca</h5>
-            <p><?= $client_data->name; ?></p>
+            <p><?= $bill_data->client_name; ?></p>
             <p>
                 <b>Adres:</b><br>
-                <?= str_replace("|", "<br>", $client_data->address); ?>
+                <?= str_replace("|", "<br>", $bill_data->client_address); ?>
             </p>
             <p>
                 <b>NIP:</b><br>
-                <?= $client_data->nip; ?>
+                <?= $bill_data->client; ?>
             </p>
         </div>
     </div>
