@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\BillModel;
 use App\Models\ClientModel;
 use App\Models\JobModel;
+use App\Models\ProductModel;
 use App\Models\UserModel;
 
 class Home extends BaseController
@@ -20,9 +21,6 @@ class Home extends BaseController
         switch($user->role){
             case "admin":
                 return redirect()->to("/admin");
-            
-            case "manager":
-                return redirect()->to("/manage");
             
             default:
                 return redirect()->to("/panel");
@@ -111,6 +109,14 @@ class Home extends BaseController
             "count" => $client_model->countallResults()
         ];
 
-        return view("panel", ["jobs" => $job_data, "bills" => $bill_data, "clients" => $client_data]);
+        $product_model = new ProductModel();
+        $product_data = [
+            "count" => $product_model->countAllResults()
+        ];
+
+        $session = service("session");
+        $user_data = $session->get("user");
+
+        return view("panel", ["jobs" => $job_data, "bills" => $bill_data, "clients" => $client_data, "products" => $product_data, "user" => $user_data]);
     }
 }
