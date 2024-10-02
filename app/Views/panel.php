@@ -58,7 +58,7 @@ if (session()->has('message')) {
                 </p>
             </div>
         </div>
-        <div id="secondary-cell">
+        <div class="double-cell">
             <div class="cell" onclick="redirect('/panel/bills')">
                 <span class="material-symbols-outlined cell-icon">receipt_long</span>
                 <h4 class="cell-heading">Rachunki</h4>
@@ -74,12 +74,21 @@ if (session()->has('message')) {
                 </div>
             </div>
         </div>
-        <div class="cell" onclick="redirect('/account')">
-            <p>
+        <div class="double-cell">
+            <div class="cell" onclick="redirect('/panel/products')">
+                <span class="material-symbols-outlined cell-icon">inventory</span>
+                <h4 class="cell-heading">Produkty</h4>
+                <div id="jobs-data">
+                    <h3 class="main-info"><?= $products["count"]; ?></h3>
+                </div>
+            </div>
+            <div class="cell" onclick="redirect('/account')">
                 <span class="material-symbols-outlined cell-icon">for_you</span>
-                <br>
                 <h4 class="cell-heading">Mój profil</h4>
-            </p>
+                <div id="jobs-data">
+                    <p class="main-info"><?= $user->name; ?></p>
+                </div>
+            </div>
         </div>
     </div>
 <?= $this->endSection(); ?>
