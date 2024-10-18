@@ -7,6 +7,13 @@
         display: none !important;
     }
 
+    table, tr, th, td{
+        border: 1px solid #bbb;
+    }
+    table{
+        border-collapse: collapse;
+    }
+
     h5{
         font-size: 0.9rem;
     }

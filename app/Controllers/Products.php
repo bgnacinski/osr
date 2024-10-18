@@ -54,6 +54,9 @@ class Products extends BaseController
 
         $products = $model->findAll();
 
-        return view("products/index", ["page_data" => $page_data, "products" => $products]);
+        $session = \Config\Services::session();
+        $user = $session->get("user");
+
+        return view("products/index", ["page_data" => $page_data, "products" => $products, "user" => $user]);
     }
 }

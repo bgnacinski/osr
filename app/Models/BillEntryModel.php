@@ -31,7 +31,7 @@ class BillEntryModel extends Model
     // Validation
     protected $validationRules      = [
         "bill_id" => "required|matches_bills[bills.id]",
-        "product_name" => "required|matches_products[products.name]",
+        "product_name" => "required",
         "quantity" => "required|numeric|greater_than[0]"
     ];
     protected $validationMessages   = [

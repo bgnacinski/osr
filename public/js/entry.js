@@ -52,7 +52,9 @@ function refreshTable(){
 }
 
 function addEntry(){
-    let product_name = document.getElementById("product_name").value;
+    let product_name = document.getElementById("name").value;
+    let description = document.getElementById("description").value;
+    let price = document.getElementById("price").value;
     let quantity = document.getElementById("quantity").value;
 
     let tr = document.createElement("tr");
@@ -61,55 +63,26 @@ function addEntry(){
     // row data
     let data_array = {
         "product_name": product_name,
-        "description": "",
-        "amount": 0,
+        "description": description,
+        "amount": price,
         "quantity": quantity
     };
 
-    bill_input.value += product_name + "," + quantity + ";";
-
-    data.forEach((product) => {
-        if(product.name == product_name){
-            let product_name_el = document.createElement("td");
-            product_name_el.textContent = product_name;
-            tr.appendChild(product_name_el);
-
-            let description = document.createElement("td");
-            description.textContent = product.description
-            tr.appendChild(description);
-
-            let amount = document.createElement("td");
-            amount.textContent = product.amount;
-            tr.appendChild(amount);
-
-            let quantity_el = document.createElement("td");
-            quantity_el.textContent = quantity;
-            tr.appendChild(quantity_el);
-
-            let sum_netto = document.createElement("td");
-            sum_netto.textContent = Math.round(product.amount * parseInt(quantity) * 100) / 100;//round to 2 decimals
-            tr.appendChild(sum_netto);
-
-            let vat = document.createElement("td");
-            vat.textContent = product.tax_rate;
-            tr.appendChild(vat);
-
-            let multiplier = (100 + parseInt(product.tax_rate)) / 100;
-
-            let sum_brutto = document.createElement("td");
-            let brutto_value = ((product.amount * parseInt(quantity)) * multiplier);
-            sum_brutto.textContent = Math.round(brutto_value * 100) / 100;
-            tr.appendChild(sum_brutto);
-
-            let delete_button = document.createElement("td");
-            delete_button.innerHTML = `<a onclick='deleteEntry("` + product_name + "," + quantity +  "." + tr.id + `")'>
+    parent_table.innerHTML += `
+    <tr id="${product_name}${quantity}_row">
+        <td>${product_name}</td>
+        <td>${description}</td>
+        <td>${price} PLN</td>
+        <td>${quantity}</td>
+        <td>${price * quantity} PLN</td>
+        <td>
+            <a onclick='deleteEntry("${product_name},${quantity}.${product_name}${quantity}_row")'>
                 <span class="material-symbols-outlined delete-icon">delete</span>
-            </a>`;
-            tr.appendChild(delete_button);
-        }
-    });
+            </a>
+        </td>
+    </tr>`;
 
-    parent_table.appendChild(tr);
+    bill_input.value += product_name + "," + quantity + ";";
 }
 
 function deleteEntry(input){

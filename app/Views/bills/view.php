@@ -79,8 +79,7 @@ if (session()->has('message')){
     </div>
     <div id="bill-contents">
         <table id="bills-table">
-            <tbody>
-            <tr>
+            <thead>
                 <th>Nazwa</th>
                 <th class="hide-print">Opis</th>
                 <th>Cena</th>
@@ -88,7 +87,8 @@ if (session()->has('message')){
                 <th>Wartość netto</th>
                 <th>VAT</th>
                 <th>Wartość brutto</th>
-            </tr>
+            </thead>
+            <tbody>
             <?php
             $bill_total = 0;
             $bill_total_tax = 0;
@@ -111,34 +111,25 @@ if (session()->has('message')){
                 <tr class="data">
                     <td>$name</td>
                     <td class="hide-print">$description</td>
-                    <td>$amount <span class="hide-print"><?= $bill_data->currency ;?></span></td>
+                    <td>$amount PLN</td>
                     <td>$quantity</td>
-                    <td>$total <span class="hide-print"><?= $bill_data->currency ;?></span></td>
+                    <td>$total PLN</td>
                     <td>$tax_rate%</td>
-                    <td>$total_tax <span class="hide-print"><?= $bill_data->currency ;?></span></td>
+                    <td>$total_tax PLN</td>
                 </tr>
                 ENDL;
             }
             ?>
-            <tr class="sum">
-                <td>Suma</td>
-                <td class="hide-print"></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <?= $bill_total; ?>
-                    <span><?= $bill_data->currency ;?></span>
-                </td>
-                <td>
-                    <?= round($bill_total_tax - $bill_total, 2); ?>
-                    <span><?= $bill_data->currency ;?></span>
-                </td>
-                <td>
-                    <?= $bill_total_tax; ?>
-                    <span><?= $bill_data->currency ;?></span>
-                </td>
-            </tr>
             </tbody>
+            <tfoot>
+                <tr class="sum">
+                    <td colspan="3">Suma</td>
+                    <td class="hide-print"></td>
+                    <td><?= $bill_total; ?> PLN</td>
+                    <td><?= round($bill_total_tax - $bill_total, 2); ?> PLN</td>
+                    <td><?= $bill_total_tax; ?> PLN</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

@@ -33,11 +33,6 @@ class Bills extends Migration
                 "constraint" => 50,
                 "null" => false
             ],
-            "currency" => [
-                "type" => "varchar",
-                "constraint" => 3,
-                "null" => false
-            ],
             "created_by" => [
                 "type" => "varchar",
                 "constraint" => 20

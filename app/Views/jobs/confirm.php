@@ -50,6 +50,7 @@ if (session()->has('message')){
                 <a class="btn btn-primary" href="/panel/jobs/view/<?= $identificator; ?>">Powrót</a>
             </div>
             <form method="post">
+                <?= csrf_field(); ?>
                 <input type="submit" class="btn btn-danger" value="Potwierdź">
             </form>
         </div>

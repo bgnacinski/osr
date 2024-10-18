@@ -37,6 +37,7 @@ table{
 
     box-shadow: 0 0 2px #aaa;
 }
+
 table > tbody > tr.data:nth-child(2n){
     background-color: #ededee;
 }
@@ -45,6 +46,10 @@ table > tbody > tr.data:hover{
 }
 th,td{
     padding: 1vh 1vw;
+}
+
+th{
+    border-bottom: 1px solid #bbb;
 }
 
 .table-button{

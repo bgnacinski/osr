@@ -22,9 +22,7 @@ class BillSeeder extends Seeder
 
         $model = new BillModel();
         try {
-            for($i = 0; $i <= 52; $i++){
-                $model->insert($data);
-            }
+            $model->insert($data);
 
             var_dump($model->errors());
         }

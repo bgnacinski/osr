@@ -73,9 +73,18 @@ if (session()->has('message')){
                     <td>$product->amount PLN</td>
                     <td>$product->tax_rate%</td>
                     <td>$product->created_at</td>
-                    <td>$updated_at</td>
-                </tr>
+                    <td>$updated_at</td>               
             ENDL;
+
+        if($user->role == "manager") {
+            echo <<<ENDL
+                    <td>
+                        <a class="table-button" href="/panel/products/delete/$product->id" title="Usuń produkt"><span class="material-symbols-outlined delete-icon">delete</span></a>
+                    </td>
+            ENDL;
+        }
+
+        echo "</tr>";
     }
     ?>
     </tbody>
