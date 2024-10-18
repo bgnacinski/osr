@@ -32,6 +32,11 @@ class BillContents extends Migration
                 "constraint" => 11,
                 "null" => false
             ],
+            "price" => [
+                "type" => "double",
+                "constraint" => "10,2",
+                "null" => false
+            ],
             "created_at" => [
                 "type" => "datetime",
                 "null" => false
@@ -48,7 +53,6 @@ class BillContents extends Migration
 
         $this->forge->addPrimaryKey("id");
         $this->forge->addForeignKey("bill_id", "bills", "id");
-        $this->forge->addForeignKey("product_name", "products", "name");
 
         $this->forge->createTable("bill_contents");
     }

@@ -12,7 +12,8 @@ class BillContentsSeeder extends Seeder
         $data = [
             "bill_id" => 1,
             "product_name" => "Wymiana filtra oleju",
-            "quantity" => 1
+            "quantity" => 1,
+            "price" => 1000.11
         ];
 
         $model = new BillEntryModel();

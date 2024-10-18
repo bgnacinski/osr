@@ -51,11 +51,21 @@ function refreshTable(){
     }
 }
 
+function isFloat(n){
+    return Number(n) === n && n % 1 !== 0;
+}
+
 function addEntry(){
     let product_name = document.getElementById("name").value;
     let description = document.getElementById("description").value;
-    let price = document.getElementById("price").value;
-    let quantity = document.getElementById("quantity").value;
+    let price = parseFloat(document.getElementById("price").value);
+    let quantity = parseInt(document.getElementById("quantity").value);
+
+    if(!Number.isInteger(price) || !Number.isInteger(quantity)) {
+        if(!isFloat(price) || !Number.isInteger(quantity)){
+            return;
+        }
+    }
 
     let tr = document.createElement("tr");
     tr.id = product_name + quantity + "_row";
