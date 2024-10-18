@@ -42,14 +42,14 @@ if (session()->has('message')){
         <input type="submit" value="Szukaj">
     </form>
     <table id="bills-table">
-        <tbody>
-        <tr>
+        <thead>
             <th>Identyfikator</th>
             <th>Data utworzenia</th>
             <th>Data zmiany danych</th>
             <th>Data usunięcia</th>
             <th>Operacje</th>
-        </tr>
+        </thead>
+        <tbody>
         <?php
         foreach($bills as $bill){
             $updated_at = $bill->updated_at ?? "-";

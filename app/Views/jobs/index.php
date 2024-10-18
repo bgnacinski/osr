@@ -42,15 +42,15 @@ if (session()->has('message')){
     <input type="submit" value="Szukaj">
 </form>
 <table id="clients-table">
-    <tbody>
-    <tr>
+    <thead>
         <th>Identyfikator</th>
         <th>Status</th>
         <th>Data dodania</th>
         <th>Data zmiany danych</th>
         <th>Data usunięcia</th>
         <th>Operacje</th>
-    </tr>
+    </thead>
+    <tbody>
     <?php
     foreach($jobs as $job){
         $updated_at = $client->updated_at ?? "-";

@@ -51,8 +51,7 @@ if (session()->has('message')){
     <input type="submit" value="Szukaj">
 </form>
 <table id="clients-table">
-    <tbody>
-    <tr>
+    <thead>
         <th>Nazwa</th>
         <th>NIP</th>
         <th>Adres</th>
@@ -61,10 +60,9 @@ if (session()->has('message')){
         <th>Data zmiany danych</th>
         <th>Data usunięcia</th>
         <th>Operacje</th>
-    </tr>
+    </thead>
+    <tbody>
     <?php
-
-    #TODO: Remove view button and add see all jobs(for selected client)
     foreach($clients as $client){
         $address = str_replace("|", ", ", $client->address);
         $updated_at = $client->updated_at ?? "-";

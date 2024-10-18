@@ -51,8 +51,7 @@ if (session()->has('message')){
     <input type="submit" value="Szukaj">
 </form>
 <table id="clients-table">
-    <tbody>
-    <tr>
+    <thead>
         <th>Krótka nazwa produktu</th>
         <th>Nazwa</th>
         <th>Opis</th>
@@ -60,7 +59,8 @@ if (session()->has('message')){
         <th>Podatek</th>
         <th>Data dodania</th>
         <th>Data zmiany danych</th>
-    </tr>
+    </thead>
+    <tbody>
     <?php
     foreach($products as $product){
         $updated_at = $product->updated_at ?? "-";
