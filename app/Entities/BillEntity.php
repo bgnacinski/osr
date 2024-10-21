@@ -11,7 +11,7 @@ class BillEntity extends Entity
         "identificator" => "identificator",
         "client" => "client",
         "status" => "status",
-        "currency" => "currency",
+        "tax_rate" => "tax_rate",
         "created_by" => "created_by"
     ];
     protected $dates   = ['created_at', 'updated_at', 'deleted_at'];

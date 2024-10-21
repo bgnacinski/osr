@@ -85,45 +85,40 @@ if (session()->has('message')){
                 <th>Cena</th>
                 <th>Ilość</th>
                 <th>Wartość netto</th>
-                <th>VAT</th>
-                <th>Wartość brutto</th>
             </thead>
             <tbody>
             <?php
             $bill_total = 0;
             $bill_total_tax = 0;
 
-            foreach($bill_contents as $bill){
-                $name = $bill["name"];
-                $description = $bill["description"];
-                $amount = $bill["amount"];
-                $quantity = $bill["quantity"];
-                $tax_rate = $bill["tax_rate"];
+            $tax_rate = $bill_data->tax_rate;
 
-                $total = $bill["total"];
-                $multiplier = (100 + $tax_rate)/100;
-                $total_tax = round($bill["total"] * $multiplier, 2);
+            foreach($bill_contents as $row){
+                $name = $row["name"];
+                $description = $row["description"];
+                $price = $row["price"];
+                $quantity = $row["quantity"];
+                $total = $row["total"];
 
                 $bill_total += $total;
-                $bill_total_tax += $total_tax;
 
                 echo <<<ENDL
                 <tr class="data">
                     <td>$name</td>
                     <td class="hide-print">$description</td>
-                    <td>$amount PLN</td>
+                    <td>$price PLN</td>
                     <td>$quantity</td>
                     <td>$total PLN</td>
-                    <td>$tax_rate%</td>
-                    <td>$total_tax PLN</td>
                 </tr>
                 ENDL;
             }
+
+            $bill_total_tax = $bill_total * (100 + $tax_rate);
             ?>
             </tbody>
             <tfoot>
                 <tr class="sum">
-                    <td colspan="3">Suma</td>
+                    <td>Suma</td>
                     <td class="hide-print"></td>
                     <td><?= $bill_total; ?> PLN</td>
                     <td><?= round($bill_total_tax - $bill_total, 2); ?> PLN</td>

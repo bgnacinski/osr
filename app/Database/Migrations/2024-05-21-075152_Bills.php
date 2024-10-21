@@ -33,6 +33,11 @@ class Bills extends Migration
                 "constraint" => 50,
                 "null" => false
             ],
+            "tax_rate" => [
+                "type" => "set",
+                "constraint" => ["23", "8", "7", "5", "4", "0", "none"],
+                "null" => false
+            ],
             "created_by" => [
                 "type" => "varchar",
                 "constraint" => 20

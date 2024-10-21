@@ -16,7 +16,7 @@ class BillSeeder extends Seeder
         $data = [
             "client" => "8961017023",
             "job_id" => $job->identificator,
-            "currency" => "PLN",
+            "tax_rate" => "none",
             "created_by" => "anowak"
         ];
 

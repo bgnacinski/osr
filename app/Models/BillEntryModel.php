@@ -13,7 +13,7 @@ class BillEntryModel extends Model
     protected $returnType       = BillEntryEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["bill_id", "product_name", "quantity"];
+    protected $allowedFields    = ["bill_id", "product_name", "description", "quantity", "price"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -32,7 +32,9 @@ class BillEntryModel extends Model
     protected $validationRules      = [
         "bill_id" => "required|matches_bills[bills.id]",
         "product_name" => "required",
-        "quantity" => "required|numeric|greater_than[0]"
+        "description" => "permit_empty|min_length[4]|max_length[250]",
+        "quantity" => "required|numeric|greater_than[0]",
+        "price" => "required|numeric"
     ];
     protected $validationMessages   = [
         "bill_id" => [
@@ -43,10 +45,18 @@ class BillEntryModel extends Model
             "required" => "Nazwa produktu jest wymagana",
             "matches_products" => "Produkt o tej nazwie nie istnieje w bazie danych"
         ],
+        "description" => [
+            "min_length" => "Minimalna długość opisu to 4 znaki.",
+            "max_length" => "Maksymalna długość opisu to 250 znaki."
+        ],
         "quantity" => [
             "required" => "Ilość jest wymagana",
-            "integer" => "Ilość musi być liczbą całkowitą",
-            "greater_than" => "Ilość musi być większy od 0"
+            "numeric" => "Ilość musi być liczbą całkowitą",
+            "greater_than" => "Ilość musi być większa od 0"
+        ],
+        "price" => [
+            "required" => "Cena jest wymagana",
+            "numeric" => "Cena musi być liczbą"
         ]
     ];
     protected $skipValidation       = false;
@@ -66,27 +76,22 @@ class BillEntryModel extends Model
     public function getBillContents($bill_id){
         $result = $this->where("bill_id", $bill_id)->findAll();
 
-        $model = new ProductModel();
-
         if(!is_null($result)){
             $data = [];
 
             foreach($result as $entry){
                 $name = $entry->product_name;
                 $quantity = $entry->quantity;
+                $price = $entry->price;
+                $description = $entry->description;
 
-                $product = $model->where("name", $name)->first();
-                $amount = $product->amount;
-                $description = $product->description;
-
-                $total = $quantity * $amount;
+                $total = $quantity * $price;
 
                 $data[] = [
                     "name" => $name,
                     "description" => $description,
                     "quantity" => $quantity,
-                    "amount" => $amount,
-                    "tax_rate" => $product->tax_rate,
+                    "price" => $price,
                     "total" => $total
                 ];
             }
@@ -109,7 +114,9 @@ class BillEntryModel extends Model
             $entry->fill([
                 "bill_id" => $bill_id,
                 "product_name" => $entry_data[0],
-                "quantity" => $entry_data[1]
+                "description" => $entry_data[1],
+                "quantity" => $entry_data[2],
+                "price" => $entry_data[3]
             ]);
 
             $val_result = $this->validate($entry);

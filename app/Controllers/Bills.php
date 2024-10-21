@@ -110,7 +110,7 @@ class Bills extends BaseController
 
         $db = \Config\Database::connect();
         $builder = $db->table('bills')
-            ->select("bills.identificator, bills.client, bills.created_at, `clients`.`name` as 'client_name', `clients`.`address` as 'client_address', `users`.`name` as 'worker_name'")
+            ->select("bills.identificator, bills.client, bills.tax_rate, bills.created_at, `clients`.`name` as 'client_name', `clients`.`address` as 'client_address', `users`.`name` as 'worker_name'")
             ->join("users", "bills.created_by = users.login", "left")
             ->join("clients", "bills.client = clients.nip", "left")
             ->where("bills.id", $bill_id);
@@ -157,6 +157,7 @@ class Bills extends BaseController
         }
 
         $nip = (int)$this->request->getPost("client");
+        $tax_rate = $this->request->getPost("tax_rate");
         $bill_contents_dump = $this->request->getPost("bill_contents");
 
         $bill_contents = [];
@@ -173,7 +174,7 @@ class Bills extends BaseController
         $created_by = $this->session->user->login;
 
         $model = new BillModel();
-        $result = $model->addBill($nip, $job_identificator, $created_by, $bill_contents);
+        $result = $model->addBill($nip, $job_identificator, $tax_rate, $created_by, $bill_contents);
 
         switch($result["status"]){
             case "success":

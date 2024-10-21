@@ -27,6 +27,11 @@ class BillContents extends Migration
                 "constraint" => 100,
                 "null" => false
             ],
+            "description" => [
+                "type" => "text",
+                "constraint" => 250,
+                "null" => true
+            ],
             "quantity" => [
                 "type" => "int",
                 "constraint" => 11,

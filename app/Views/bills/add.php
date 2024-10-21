@@ -42,10 +42,21 @@ if (session()->has('success')){
 }
 ?>
 
-    <form id="bill_form" method="post" action="/panel/bills/add/<?= $job->identificator; ?>" onload="refreshTable()">
+    <form id="bill_form" method="post" action="/panel/bills/add/<?= $job->identificator; ?>">
         <div class="form-floating mb-3">
             <input readonly value="<?= $job->client; ?>" required list="nip" name="client" type="numeric" class="form-control" id="floatingName" placeholder="NIP klienta">
             <label for="floatingName">NIP klienta</label>
+        </div>
+        <div class="form-floating mb-3">
+            <select id="tax_rate" name="tax_rate" class="form-control">
+                <option value="23">23%</option>
+                <option selected value="8">8%</option>
+                <option value="7">7%</option>
+                <option value="5">5%</option>
+                <option value="4">4%</option>
+                <option value="none">Brak</option>
+            </select>
+            <label for="tax_rate">Wysokość podatku VAT</label>
         </div>
 
         <input type="text" required hidden id="bill_contents" name="bill_contents">
@@ -92,5 +103,4 @@ if (session()->has('success')){
         </table>
         <button type="submit" class="btn btn-primary" form="bill_form">Dodaj rachunek</button>
 <script src="/js/entry.js"></script>
-<script>refreshTable();</script>
 <?= $this->endSection(); ?>
