@@ -17,6 +17,8 @@ class BillSeeder extends Seeder
             "client" => "8961017023",
             "job_id" => $job->identificator,
             "tax_rate" => "none",
+            "discount" => "10",
+            "discount_type" => "percentage",
             "created_by" => "anowak"
         ];
 

@@ -13,7 +13,7 @@ class BillModel extends Model
     protected $returnType       = BillEntity::class;
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["identificator", "client", "job_id", "tax_rate", "created_by"];
+    protected $allowedFields    = ["identificator", "client", "job_id", "tax_rate", "discount", "discount_type", "created_by"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -33,6 +33,8 @@ class BillModel extends Model
         "client" => "required|min_length[10]|max_length[10]|integer|valid_nip|matches_clients[clients.nip]",
         "job_id" => "required|matches_identificator_jobs[jobs.identificator]",
         "tax_rate" => "required|in_list[23,8,7,5,4,none]",
+        "discount" => "permit_empty|numeric",
+        "discount_type" => "permit_empty|in_list[money,percentage]",
         "created_by" => "required|matches_users[users.login]"
     ];
     protected $validationMessages   = [
@@ -51,6 +53,12 @@ class BillModel extends Model
         "tax_rate" => [
             "required" => "Wysokość podatku musi zostać określona.",
             "in_list" => "Wysokość podatku może przyjmować tylko określone wartości(23, 8, 7, 5, 4 lub brak)."
+        ],
+        "discount" => [
+            "numeric" => "Wysokość rabatu musi być liczbą."
+        ],
+        "discount_type" => [
+            "in_list" => "Typ rabatu może być pieniężny lub procentowy."
         ],
         "created_by" => [
             "required" => "Podanie autora jest wymagane.",
@@ -97,13 +105,15 @@ class BillModel extends Model
         }
     }
 
-    public function addBill(int $nip, string $job_identificator, string $tax_rate, string $created_by, array $bill_contents){
+    public function addBill(int $nip, string $job_identificator, string $tax_rate, int $discount, string $discount_type, string $created_by, array $bill_contents){
         $bill_contents_model = new BillEntryModel();
 
         $bill_data = [
             "client" => (string)$nip,
             "job_id" => $job_identificator,
             "tax_rate" => $tax_rate,
+            "discount" => $discount,
+            "discount_type" => $discount_type,
             "created_by" => $created_by
         ];
 

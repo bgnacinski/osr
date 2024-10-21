@@ -30,7 +30,7 @@ function addEntry(){
         <td>${total} PLN</td>
         <td>
             <a onclick='deleteEntry("${product_name},${description},${quantity},${price};${product_name}${quantity}_row")'>
-                <span class="material-symbols-outlined delete-icon">delete</span>
+                <span class="material-symbols-outlined delete-icon" style="color: white;">remove</span>
             </a>
         </td>`;
 

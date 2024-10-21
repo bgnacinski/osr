@@ -58,6 +58,14 @@ if (session()->has('success')){
             </select>
             <label for="tax_rate">Wysokość podatku VAT</label>
         </div>
+        <div class="input-group mb-3">
+            <input name="discount" type="numeric" class="form-control" placeholder="Wysokość rabatu">
+            <select name="discount_type" class="form-control" placeholder="Typ rabatu">
+                <option disabled selected value="money">Typ rabatu</option>
+                <option value="money">PLN</option>
+                <option value="percentage">%</option>
+            </select>
+        </div>
 
         <input type="text" required hidden id="bill_contents" name="bill_contents">
     </form>

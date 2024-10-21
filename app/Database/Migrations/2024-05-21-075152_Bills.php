@@ -38,6 +38,18 @@ class Bills extends Migration
                 "constraint" => ["23", "8", "7", "5", "4", "0", "none"],
                 "null" => false
             ],
+            "discount" => [
+                "type" => "int",
+                "constraint" => 11,
+                "null" => false,
+                "default" => 0
+            ],
+            "discount_type" => [
+                "type" => "set",
+                "constraint" => ["money", "percentage"],
+                "null" => false,
+                "default" => "money"
+            ],
             "created_by" => [
                 "type" => "varchar",
                 "constraint" => 20

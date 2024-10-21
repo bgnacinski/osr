@@ -156,9 +156,11 @@ class Bills extends BaseController
             return redirect()->back()->with("success", 0)->with("message", "Nie znaleziono określonego zlecenia.");
         }
 
-        $nip = (int)$this->request->getPost("client");
-        $tax_rate = $this->request->getPost("tax_rate");
-        $bill_contents_dump = $this->request->getPost("bill_contents");
+        $nip = (int)$this->request->getPost("client") ?? null;
+        $tax_rate = $this->request->getPost("tax_rate") ?? null;
+        $discount = (int)$this->request->getPost("discount") ?? null;
+        $discount_type = $this->request->getPost("discount_type") ?? null;
+        $bill_contents_dump = $this->request->getPost("bill_contents") ?? null;
 
         $bill_contents = [];
 
@@ -174,7 +176,7 @@ class Bills extends BaseController
         $created_by = $this->session->user->login;
 
         $model = new BillModel();
-        $result = $model->addBill($nip, $job_identificator, $tax_rate, $created_by, $bill_contents);
+        $result = $model->addBill($nip, $job_identificator, $tax_rate, $discount, $discount_type, $created_by, $bill_contents);
 
         switch($result["status"]){
             case "success":
