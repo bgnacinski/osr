@@ -13,7 +13,7 @@ class BillEntryModel extends Model
     protected $returnType       = BillEntryEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["bill_id", "product_name", "description", "quantity", "price"];
+    protected $allowedFields    = ["bill_id", "product_name", "description", "quantity", "price", "tax_rate"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -34,7 +34,8 @@ class BillEntryModel extends Model
         "product_name" => "required",
         "description" => "permit_empty|min_length[4]|max_length[250]",
         "quantity" => "required|numeric|greater_than[0]",
-        "price" => "required|numeric"
+        "price" => "required|numeric",
+        "tax_rate" => "required|in_list[23,8,5,0]"
     ];
     protected $validationMessages   = [
         "bill_id" => [
@@ -57,6 +58,10 @@ class BillEntryModel extends Model
         "price" => [
             "required" => "Cena jest wymagana",
             "numeric" => "Cena musi być liczbą"
+        ],
+        "tax_rate" => [
+            "required" => "Procent podatku VAT jest wymagana.",
+            "in_list" => "Procent podatku VAT może przyjąć wartość 23%, 8%, 5% lub 0%."
         ]
     ];
     protected $skipValidation       = false;
@@ -84,6 +89,7 @@ class BillEntryModel extends Model
                 $quantity = $entry->quantity;
                 $price = $entry->price;
                 $description = $entry->description;
+                $tax_rate = $entry->tax_rate;
 
                 $total = $quantity * $price;
 
@@ -92,7 +98,8 @@ class BillEntryModel extends Model
                     "description" => $description,
                     "quantity" => $quantity,
                     "price" => $price,
-                    "total" => $total
+                    "total" => $total,
+                    "tax_rate" => $tax_rate
                 ];
             }
 
@@ -116,7 +123,8 @@ class BillEntryModel extends Model
                 "product_name" => $entry_data[0],
                 "description" => $entry_data[1],
                 "quantity" => $entry_data[2],
-                "price" => $entry_data[3]
+                "tax_rate" => $entry_data[3],
+                "price" => $entry_data[4],
             ]);
 
             $val_result = $this->validate($entry);

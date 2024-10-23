@@ -11,7 +11,7 @@ class BillEntity extends Entity
         "identificator" => "identificator",
         "client" => "client",
         "status" => "status",
-        "tax_rate" => "tax_rate",
+        "bill_type" => "bill_type",
         "discount" => "discount",
         "discount_type" => "discount_type",
         "created_by" => "created_by"

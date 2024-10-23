@@ -33,9 +33,9 @@ class Bills extends Migration
                 "constraint" => 50,
                 "null" => false
             ],
-            "tax_rate" => [
-                "type" => "set",
-                "constraint" => ["23", "8", "7", "5", "4", "0", "none"],
+            "bill_type" => [
+                "type" => "enum",
+                "constraint" => ["invoice", "bill"],
                 "null" => false
             ],
             "discount" => [

@@ -48,15 +48,11 @@ if (session()->has('success')){
             <label for="floatingName">NIP klienta</label>
         </div>
         <div class="form-floating mb-3">
-            <select id="tax_rate" name="tax_rate" class="form-control">
-                <option value="23">23%</option>
-                <option selected value="8">8%</option>
-                <option value="7">7%</option>
-                <option value="5">5%</option>
-                <option value="4">4%</option>
-                <option value="none">Brak</option>
+            <select class="form-control" name="bill_type" id="bill_type">
+                <option selected value="bill">Rachunek</option>
+                <option value="invoice">Faktura</option>
             </select>
-            <label for="tax_rate">Wysokość podatku VAT</label>
+            <label for="bill_type">Typ rachunku</label>
         </div>
         <div class="input-group mb-3">
             <input name="discount" type="numeric" class="form-control" placeholder="Wysokość rabatu">
@@ -76,6 +72,7 @@ if (session()->has('success')){
                 <th>Opis</th>
                 <th>Cena</th>
                 <th>Ilość</th>
+                <th>Stawka VAT</th>
                 <th>Wartość netto</th>
             </thead>
             <tbody id="bill_contents_table"></tbody>
@@ -100,6 +97,15 @@ if (session()->has('success')){
                 </td>
                 <td>
                     <input type="numeric" class="form-control" min="1" name="quantity" id="quantity" placeholder="Ilość">
+                </td>
+                <td>
+                    <select id="tax_rate" name="tax_rate" class="form-control">
+                        <option selected disabled>Stawka VAT</option>
+                        <option value="23">23%</option>
+                        <option value="8">8%</option>
+                        <option value="5">5%</option>
+                        <option value="0">0%</option>
+                    </select>
                 </td>
                 <td></td>
                 <td>

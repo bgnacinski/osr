@@ -13,7 +13,8 @@ class BillContentsSeeder extends Seeder
             "bill_id" => 1,
             "product_name" => "Wymiana filtra oleju",
             "quantity" => 1,
-            "price" => 1000.11
+            "price" => 1000.11,
+            "tax_rate" => 8
         ];
 
         $model = new BillEntryModel();

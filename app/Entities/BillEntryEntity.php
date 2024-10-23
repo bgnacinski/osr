@@ -12,7 +12,8 @@ class BillEntryEntity extends Entity
         "product_name" => "product_name",
         "description" => "description",
         "quantity" => "quantity",
-        "price" => "price"
+        "price" => "price",
+        "tax_rate" => "tax_rate"
     ];
     protected $dates   = ['created_at', 'updated_at', 'deleted_at'];
     protected $casts   = [];

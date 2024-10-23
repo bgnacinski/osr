@@ -7,7 +7,6 @@ use CodeIgniter\Entity\Entity;
 class ProductEntity extends Entity
 {
     protected $datamap = [
-        "friendly_id" => "friendly_id",
         "name" => "name",
         "description" => "description",
         "amount" => "amount",

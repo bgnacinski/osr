@@ -13,7 +13,7 @@ class ProductModel extends Model
     protected $returnType       = ProductEntity::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["friendly_id", "name", "description", "amount", "tax_rate"];
+    protected $allowedFields    = ["name", "description", "amount", "tax_rate"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -30,19 +30,12 @@ class ProductModel extends Model
 
     // Validation
     protected $validationRules      = [
-        "friendly_id" => "required|min_length[4]|max_length[100]|is_unique[products.friendly_id]",
         "name" => "required|min_length[4]|max_length[100]",
         "description" => "permit_empty|min_length[4]|max_length[250]",
         "amount" => "required|decimal",
         "tax_rate" => "required|in_list[23,8,5,0]"
     ];
     protected $validationMessages   = [
-        "friendly_id" => [
-            "required" => "Krótka nazwa jest wymagana.",
-            "min_length" => "Minimalna długość krótkiej nazwy to 4 znaki",
-            "max_length" => "Maksymalna długość krótkiej nazwy to 100 znaków.",
-            "is_unique" => "Usługa o takiej krótkiej nazwie już istnieje."
-        ],
         "name" => [
             "required" => "Nazwa jest wymagana.",
             "min_length" => "Minimalna długość nazwy to 4 znaki",

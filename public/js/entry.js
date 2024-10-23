@@ -10,6 +10,7 @@ function addEntry(){
     let description = document.getElementById("description").value;
     let price = parseFloat(document.getElementById("price").value);
     let quantity = parseInt(document.getElementById("quantity").value);
+    let tax_rate = document.getElementById("tax_rate").value;
     let total = Math.round((price * quantity) * 100) / 100;
 
     if(!Number.isInteger(price) || !Number.isInteger(quantity)) {
@@ -27,20 +28,22 @@ function addEntry(){
         <td>${description}</td>
         <td>${price} PLN</td>
         <td>${quantity}</td>
+        <td>${tax_rate}</td>
         <td>${total} PLN</td>
         <td>
-            <a onclick='deleteEntry("${product_name},${description},${quantity},${price};${product_name}${quantity}_row")'>
+            <a onclick='deleteEntry("${product_name},${description},${quantity},${tax_rate},${price};${product_name}${quantity}_row")'>
                 <span class="material-symbols-outlined delete-icon" style="color: white;">remove</span>
             </a>
         </td>`;
 
-    bill_input.value += `${product_name},${description},${quantity},${price};`;
+    bill_input.value += `${product_name},${description},${quantity},${tax_rate},${price};`;
 
     // clear inputs
     document.getElementById("name").value = "";
     document.getElementById("description").value = "";
     document.getElementById("price").value = "";
     document.getElementById("quantity").value = "";
+    document.getElementById("tax_rate").value = "Stawka VAT";
 }
 
 function deleteEntry(input){
@@ -83,6 +86,7 @@ document.getElementById("name")
 
             document.getElementById("description").value = product.description;
             document.getElementById("price").value = product.amount;
+            document.getElementById("tax_rate").value = product.tax_rate;
         }
     }
 );

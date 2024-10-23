@@ -52,13 +52,11 @@ if (session()->has('message')){
 </form>
 <table id="clients-table">
     <thead>
-        <th>Krótka nazwa produktu</th>
         <th>Nazwa</th>
         <th>Opis</th>
         <th>Cena</th>
-        <th>Podatek</th>
+        <th>Stawka VAT</th>
         <th>Data dodania</th>
-        <th>Data zmiany danych</th>
     </thead>
     <tbody>
     <?php
@@ -67,13 +65,11 @@ if (session()->has('message')){
 
         echo <<<ENDL
                 <tr class="data">
-                    <td>$product->friendly_id</td>
                     <td>$product->name</td>
                     <td>$product->description</td>
                     <td>$product->amount PLN</td>
                     <td>$product->tax_rate%</td>
-                    <td>$product->created_at</td>
-                    <td>$updated_at</td>               
+                    <td>$product->created_at</td>    
             ENDL;
 
         if($user->role == "manager") {

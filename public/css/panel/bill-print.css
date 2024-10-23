@@ -38,4 +38,9 @@
     #company-logo > img{
         display: block;
     }
+
+    table#tax_sum{
+        width: 80%;
+        box-shadow: none;
+    }
 }

@@ -11,7 +11,7 @@ class JobSeeder extends Seeder
     {
         $data = [
             "client" => "8961017023",
-            "status" => "pending",
+            "status" => "ok",
             "description" => "Test job description. 1 PC to build",
             "comment" => "AMD-based",
             "created_by" => "anowak"
